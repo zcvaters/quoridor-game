@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-public class GameBoard extends JFrame implements ActionListener{
+public class GameBoard extends JPanel implements ActionListener{
 	
 	//note:  this would eventually have to be changed to "extends JPanel", so that it can be nested in a higher-level frame with menus, etc.
 	//Frames cannot be nested!	
@@ -75,12 +75,12 @@ public class GameBoard extends JFrame implements ActionListener{
 		
 		
 		//add panel to the main game window/frame
-		getContentPane().setLayout(new BorderLayout());		
-		getContentPane().add(gridPanel, BorderLayout.CENTER);
+		//getContentPane().setLayout(new BorderLayout());
+		//getContentPane().add(gridPanel, BorderLayout.CENTER);
 		
 		// housekeeping
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setResizable(false);
 		setVisible(true);
 	}
 	

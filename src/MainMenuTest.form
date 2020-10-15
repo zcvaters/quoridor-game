@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainMenuTest">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="1112" height="1000"/>
+    </constraints>
+    <properties>
+      <minimumSize width="1000" height="1000"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="d3ee1" layout-manager="GridBagLayout">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <alignmentX value="0.5"/>
+          <maximumSize width="1000" height="500"/>
+          <minimumSize width="1000" height="500"/>
+          <preferredSize width="1000" height="700"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e0d4c" class="javax.swing.JButton" binding="button1" default-binding="true">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="50" bottom="200" right="50" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+            </constraints>
+            <properties>
+              <doubleBuffered value="false"/>
+              <label value="1"/>
+              <text value="1"/>
+            </properties>
+          </component>
+          <component id="f582b" class="javax.swing.JButton" binding="button2" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="50" bottom="200" right="50" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+            </constraints>
+            <properties>
+              <text value="2"/>
+            </properties>
+          </component>
+          <component id="889f6" class="javax.swing.JButton" binding="a3Button" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="50" bottom="200" right="50" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+            </constraints>
+            <properties>
+              <text value="3"/>
+            </properties>
+          </component>
+          <component id="4b663" class="javax.swing.JButton" binding="a4Button" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="50" bottom="200" right="50" weightx="0.0" weighty="0.0" ipadx="100" ipady="100"/>
+            </constraints>
+            <properties>
+              <text value="4"/>
+            </properties>
+          </component>
+          <component id="347db" class="javax.swing.JButton" binding="button5" default-binding="true">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag top="50" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="50" ipady="50"/>
+            </constraints>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <label value="Back To Menu"/>
+              <text value="Back To Menu"/>
+            </properties>
+          </component>
+          <component id="dd9a8" class="javax.swing.JButton" binding="button6" default-binding="true">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="50" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="50" ipady="50"/>
+            </constraints>
+            <properties>
+              <label value="Next"/>
+              <name value=""/>
+              <text value="Next"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="f96bc" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties>
+          <preferredSize width="1000" height="300"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="60b6f" class="javax.swing.JLabel">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <font size="48"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <iconTextGap value="4"/>
+              <inheritsPopupMenu value="true"/>
+              <text value="Click On Number Of Human players"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
