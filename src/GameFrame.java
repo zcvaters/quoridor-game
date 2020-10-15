@@ -11,7 +11,7 @@ public class GameFrame extends JFrame{
         Menu newMenu = new Menu();
         add(newMenu);
 
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 

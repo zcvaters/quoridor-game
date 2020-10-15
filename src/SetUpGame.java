@@ -33,7 +33,6 @@ public class SetUpGame extends MainPanel{
         panel1.add(panel2, BorderLayout.CENTER);
         button1 = new JButton();
         button1.setDoubleBuffered(false);
-        button1.setLabel("1");
         button1.setText("1");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
@@ -96,7 +95,6 @@ public class SetUpGame extends MainPanel{
         gbc.insets = new Insets(50, 0, 0, 0);
         panel2.add(button5, gbc);
         button6 = new JButton();
-        button6.setLabel("Next");
         button6.setName("");
         button6.setText("Next");
         button6.addMouseListener(new MouseAdapter() {
