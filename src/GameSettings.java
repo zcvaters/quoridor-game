@@ -37,13 +37,13 @@ public class GameSettings {
 	public static final Color player3Color1 = new Color(119,136,153);
 	public static final Color player4Color1 = new Color(210,105,30);
 	
-	public static final Color tileColor2 = new Color(112,128,144);
-	public static final Color wallColor2 = new Color(95,158,160);
-	public static final Color bkgColor2 = new Color(212,55,211);
-	public static final Color player1Color2 = new Color(0,0,255);
-	public static final Color player2Color2 = new Color(240,128,128);
-	public static final Color player3Color2 = new Color(0,255,127);
-	public static final Color player4Color2 = new Color(148,0,211);
+	public static final Color tileColor2 = new Color(201,232,215);
+	public static final Color wallColor2 = new Color(235,110,0);
+	public static final Color bkgColor2 = new Color(63,83,230);
+	public static final Color player1Color2 = new Color(230,223,125);
+	public static final Color player2Color2 = new Color(130,225,230);
+	public static final Color player3Color2 = new Color(230,172,129);
+	public static final Color player4Color2 = new Color(209,151,230);
 	
 	public static final Color tileColor3 = new Color(255,255,255);
 	public static final Color wallColor3 = new Color(7,26,200);
