@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import javax.swing.JPanel;
+
 /* 
  * Player class.  2 Constructors.
  * 
@@ -12,8 +14,9 @@ import java.awt.Color;
  * 
  */
 
-  
-public class Player {
+
+//the player object is a panel!
+public class Player extends JPanel {
 	
 	//unique ID number (1-4)
 	int turnPosition;
@@ -25,40 +28,27 @@ public class Player {
 	Color playerColor;
 	//difficulty setting.  true means player is difficult/challenging.  false = easy.
 	boolean playerIsDifficult;  //note:  human's have this set to "false/easy" by default (does not matter).
-	
-	//**this needs to be implemented.  
-	int[][] playerLocation;  //stores a (row,col) address for the player.
-	//the colour of the player
-	
-	
+		
+	GameTile playerLocation;  //stores the tile player is currently on.
 	
 	int playerWallsRemaining;
 	
-	
-	/* Constructor - Human Player (no difficulty level, default to easy)
-	 * 
-	 * @Params:		id = 	unique ID from 1-4.
-	 * 				name = 	player's name
-	 * 				type = 	human or computer?  accepts "h" or "c".
-	 */
-	public Player(int id, String type, String name, Color color) {
 		
-		//call other constructor, set isDifficult param to false
-		this(id, type, name, color, false);
-	}
-	
-	
-	/* Constructor - AI Player (difficulty level can be overriden)
+	/* Constructor 
 	 * 
-	 * @Params:		turnPosition = 	unique ID from 1-4.  determines who starts. 1, then 2, then 3, etc...
+	 * Player can be human or AI (computer)
+	 * Player can have difficulty.  Computer = hard or easy.   Human = doesn't matter, not applied.
+	 * 
+	 * @Params:		turnPosition = 	unique ID from 1-4.  determines who starts. 1,2,3,4,  1,2,3,4   etc...
 	 * 				name = 	player's name
 	 * 				type = 	human or computer?  accepts "h" or "c".
 	 * 				isDifficult = 	difficulty level for AI play.  true = hard/challenging.  false = easy.
 	 */
-	public Player(int turnPosition, String type, String name, Color color, boolean isDifficult) {
+	public Player(int turnPosition, GameTile playerLocation, String type, String name, Color color, boolean isDifficult) {
 		
 		//set player attributes
 		this.turnPosition = turnPosition;
+		this.playerLocation = playerLocation;
 		this.playerType = type;
 		this.playerName = name;
 		this.playerColor = color;
@@ -69,32 +59,32 @@ public class Player {
 	}
 	
 	//Getters
-	public int getTurnPosition() {
+	public int GetTurnPosition() {
 		return turnPosition;
 	}
 	
-	public String getName() {
+	public String GetName() {
 		return playerName;
 	}
 
-	public String getType() {
+	public String GetType() {
 		return playerType;
 	}
 	
-	public Color getColor() {
+	public Color GetColor() {
 		return playerColor;
 	}
 
-	public boolean getIsDifficult() {
+	public boolean GetIsDifficult() {
 		return playerIsDifficult;
 	}
 
-	public int[][] getLocation() {
+	public GameTile GetTile() {
 		return playerLocation;
 	}
 	
 	//Setters
-	public void setLocation(int[][] newLocation) {
+	public void setTile(GameTile newLocation) {
 		playerLocation = newLocation;
 	}	
 

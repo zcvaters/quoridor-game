@@ -42,11 +42,14 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	private JPanel topWall;
 	private JPanel topRightWall;
 	private JPanel leftWall;
-	private JPanel tile;		//<--- center tile.  Player moves on these.
+	private JLayeredPane tile;		//<--- center tile.  Player moves on these.
 	private JPanel rightWall;
 	private JPanel bottomLeftWall;
 	private JPanel bottomWall;
-	private JPanel bottomRightWall;	
+	private JPanel bottomRightWall;
+	
+	//this var will hold the panel for whichever player is standing on the tile
+	JPanel playerPanel;
 	
 	//using gridBagLayout for 9 panels above
 	private GridBagConstraints gbc = new GridBagConstraints();	
@@ -65,7 +68,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//the color of a non-active wall border
 		this.bkgColor = bkgColor;
 		//the color of a center tile that has been highlighted (player could move to these)
-		this.tileHighlightColor = new Color(200, 0, 100);	//<-----FIX THIS!					
+		this.tileHighlightColor = new Color(232, 163, 156);	//<-----FIX THIS!					
 		
 		//zero-indexed.
 		this.xcoord = xcoord;  //row address
@@ -137,6 +140,20 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		gbc.gridheight = 50;
 		this.add(leftWall, gbc);
 		
+		//CENTER TILE IS A SPECIAL CASE!
+		//it uses JLayeredPane to display the player panel (if player is here)
+		tile = new JLayeredPane();
+		tile.setPreferredSize(new Dimension(width,height));
+		tile.setBounds(0,0,width,height); //for layers		
+		playerPanel = new JPanel();  //<-- empty placeholder.  players will be swapped in here later.		
+		tile.add(playerPanel);
+		tile.setName("tile");
+		tile.setBackground(tileColor);
+		tile.setOpaque(true);		
+		gbc.gridx = 5;
+		gbc.gridy = 5;		
+		this.add(tile, gbc);
+		/*Old version  REMOVE THIS
 		tile = new JPanel();
 		tile.setPreferredSize(new Dimension(width,height));
 		tile.setName("tile");
@@ -145,6 +162,8 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		gbc.gridx = 5;
 		gbc.gridy = 5;		
 		this.add(tile, gbc);
+		*/
+		
 		
 		rightWall = new JPanel();
 		rightWall.setName("rightWall");
@@ -187,7 +206,35 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		this.add(bottomRightWall, gbc);
 	}
 	
+	//getters
+	public int GetXCoord() {
+		return xcoord;
+	}
+	public int GetYCoord() {
+		return ycoord;
+	}
 	
+	//setters
+	public void AddPlayer(Player player) {
+		
+		//SEE ALSO RemovePlayer BELOW!
+		
+		//size of player icon.  move this somewhere else.
+		int playerX = 50;
+		int playerY = 50;
+		
+		//note:  playerPanel is defined as a JPanel, it's ok because Player extends JPanel.
+		playerPanel = player;
+		playerPanel.setBackground(player.GetColor());
+		playerPanel.setOpaque(true);
+		//params:  startX, startY, panelWidth, panelHeight.  configured to center the player on the tile.
+		playerPanel.setBounds((width-playerX)/2,(height-playerY)/2,playerX, playerY);
+		tile.add(playerPanel);
+		
+	}
+	public void RemovePlayer() {		
+		tile.remove(playerPanel);
+	}
 	
 	public void TurnOffCenterTile() {		
 		if(tile.getBackground() == tileHighlightColor) {               //<--------- FIX THIS!
