@@ -38,13 +38,15 @@ public class GameBoard extends JPanel  implements ActionListener{
 						
 		//build  a sub-panel to hold board
 		JPanel gridPanel = new JPanel();
-		gridPanel.setMinimumSize(new Dimension(800, 800));
-		gridPanel.setPreferredSize(new Dimension(800, 800));
+		//gridPanel.setMinimumSize(new Dimension(800, 800));
+		//gridPanel.setPreferredSize(new Dimension(800, 800));
 		this.add(gridPanel);
 		GridLayout tileLayout = new GridLayout(rows, cols);
 		tileLayout.setHgap(0);
 		tileLayout.setVgap(0);		
 		gridPanel.setLayout(tileLayout);
+		gridPanel.setBackground(bkgColor);
+		this.setBackground(bkgColor);
 		
 		
 		//build a grid of GameTiles inside the panel.
@@ -56,11 +58,10 @@ public class GameBoard extends JPanel  implements ActionListener{
 				//add it to the panel
 				gridPanel.add(grid[x][y]);				
 			}
-		}
-		
+		}		
 		
 		//SET THIS VISIBLE OR NO??	
-		setVisible(true);     //NOTE:  this is false!  Is turned on later after initial creation.
+		setVisible(true);     
 	}
 
 	public void DisplayGameBoard() {
