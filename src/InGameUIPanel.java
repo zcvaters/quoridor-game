@@ -2,14 +2,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class InGameUIPanel extends JPanel {
+public class InGameUIPanel extends JPanel implements ActionListener{
 	
 	//the outer (border) panels surrounding the gameboard 
 	private JPanel nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel;
 	private JPanel southGameBoardBorder, westGameBoardBorder, northGameBoardBorder, eastGameBoardBorder;
+	
+	// IngameUIPanel settings button
+	private JButton settingsButton;
 	
 	//the center panel, holds the gameboard
 	private JPanel middlePanel;
@@ -54,7 +61,6 @@ public class InGameUIPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
-		nwCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(nwCornerPanel, gbc);
 
 		// West Border Of Game Board
@@ -81,10 +87,25 @@ public class InGameUIPanel extends JPanel {
 		
 		// North East border Panel.
 		neCornerPanel = new JPanel();
+		neCornerPanel.setLayout(new GridBagLayout());
+		neCornerPanel.setPreferredSize(new Dimension(99, 99));
+		neCornerPanel.setMaximumSize(new Dimension(99, 99));
+		// Create settings button.
+		settingsButton = new JButton();
+		// Set icon to a cog icon
+		settingsButton.addActionListener(this);
+		settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/inGameUiPanel_settingButton.png"))); // Insert icon for settings button
+		settingsButton.setContentAreaFilled(false);
+		settingsButton.setFocusPainted(false);
+		gbc.gridx = 0;
+		gbc.gridx = 0;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		// add button to the North East panel
+		neCornerPanel.add(settingsButton, gbc);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
-		neCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(neCornerPanel, gbc);
 		
 		// East Border of Game Board
@@ -100,7 +121,6 @@ public class InGameUIPanel extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
-		swCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(swCornerPanel, gbc);
 		
 		// South Border of the game board.
@@ -117,7 +137,6 @@ public class InGameUIPanel extends JPanel {
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
-		seCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(seCornerPanel, gbc);
 		
 		
@@ -169,6 +188,13 @@ public class InGameUIPanel extends JPanel {
 	 */
 	public void setEastBorderBG(Color c) {
 		this.eastGameBoardBorder.setBackground(c);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO: Implement settings panel.
+		System.out.println("Settings");
+		
 	}
 	
 	
