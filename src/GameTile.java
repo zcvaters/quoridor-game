@@ -127,6 +127,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		gbc.gridheight = 5;
 		this.add(topRightWall, gbc);
 		
+		
 		leftWall = new JPanel();		
 		leftWall.setName("leftWall");
 		leftWall.setBackground(bkgColor);

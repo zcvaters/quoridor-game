@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public class BuildAssets{
 	private Color wallColor;
 	private Color bkgColor;
 	
+	
 	//ref to the object that will handle user input
 	InputManager inputManager;
 	
@@ -52,6 +55,9 @@ public class BuildAssets{
 		//BOARD
 		this.rows = GameSettings.GetRows();
 		this.cols = GameSettings.GetCols();
+		
+		// Build In Game Menu UI.
+		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		
 		//Build a new game board (returns a JPanel with a grid of configured GameTiles and extra methods)
 		GameBoard gameBoard = new GameBoard(tileColor, wallColor, bkgColor, rows, cols);      //<----THE BOARD
@@ -91,17 +97,22 @@ public class BuildAssets{
 			//build a player
 			Player newPlayer = new Player(playerTurn, playerType, playerName, playerColor, isDifficult);
 			//add it to array in proper ordered position.  -1 for zero indexing.
-			players[newPlayer.getTurnPosition() - 1] = newPlayer;			
+			players[newPlayer.getTurnPosition() - 1] = newPlayer;
 		}
+		
 		
 		//NEXT PLAYER
 		int nextPlayer = 0;   //<--new game, so we start with players[0];
 		
+		// Set Borders
+		inGameUIPanel.setSouthBorderBG(players[0].getColor());
+		inGameUIPanel.setWestBorderBG(players[1].getColor());
+		inGameUIPanel.setNorthBorderBG(players[2].getColor());
+		inGameUIPanel.setEastBorderBG(players[3].getColor());
 		
 		//start the game controller
-		GameController game = new GameController(gameBoard, players, nextPlayer);
-			
-			
+		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer);
+		inGameUIPanel.middlePanel.add(gameBoard);
 		
 		
 	}

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
-public class GameBoard extends JPanel implements ActionListener{
+public class GameBoard extends JPanel  implements ActionListener{
 	
 	//note:  this would eventually have to be changed to "extends JPanel", so that it can be nested in a higher-level frame with menus, etc.
 	//Frames cannot be nested!	
@@ -16,7 +16,7 @@ public class GameBoard extends JPanel implements ActionListener{
 	
 	//panel to display the gridTile objs in a grid-style layout.
 	JPanel gridPanel;
-	
+
 	//two-dim array, or table, to store the game tiles. [row][col].
 	GameTile [] [] grid;
 	
@@ -32,22 +32,20 @@ public class GameBoard extends JPanel implements ActionListener{
 	
 	//constructor
 	public GameBoard(Color tileColor, Color wallColor, Color bkgColor, int rows, int cols) {
-		
-		super();  //creates a frame.
-		
 		//get rows, cols, and panel size
 		this.rows = rows;
 		this.cols = cols;
-		this.setMinimumSize(new Dimension(1000, 1000));
 						
 		//build  a sub-panel to hold board
 		JPanel gridPanel = new JPanel();
+		gridPanel.setMinimumSize(new Dimension(800, 800));
+		gridPanel.setPreferredSize(new Dimension(800, 800));
+		this.add(gridPanel);
 		GridLayout tileLayout = new GridLayout(rows, cols);
 		tileLayout.setHgap(0);
 		tileLayout.setVgap(0);		
 		gridPanel.setLayout(tileLayout);
 		
-		//NEED TO ADD NSEW borders here (players sitting around edge, stats, other UI, etc)
 		
 		//build a grid of GameTiles inside the panel.
 		grid = new GameTile[GameSettings.GetRows()][GameSettings.GetCols()];
@@ -60,14 +58,11 @@ public class GameBoard extends JPanel implements ActionListener{
 			}
 		}
 		
-		//add the grid to the gameBoard panel
-		this.setLayout(new BorderLayout());		
-		this.add(gridPanel, BorderLayout.CENTER);  //add border edges at NSEW?
 		
 		//SET THIS VISIBLE OR NO??	
 		setVisible(true);     //NOTE:  this is false!  Is turned on later after initial creation.
 	}
-	
+
 	public void DisplayGameBoard() {
 		setVisible(true);
 	}
