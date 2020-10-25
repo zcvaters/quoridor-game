@@ -4,13 +4,6 @@ import java.util.ArrayList;
 /*
  * The GameState holds a list of assets and attributes that define a game in progress (possibly just starting). 
  */
-
-
-
-//TESTING GITHUB.  EDITED FILE!!  DELETE THIS COMMENT!
-
-
-
 public class GameState {
 	
 	//can be 1, 2, or 3.  
@@ -40,7 +33,6 @@ public class GameState {
 	public GameState(Color tileColor, Color wallColor,  int turnNum, Player next) {
 		
 		///FIX THIS UP!
-		
 		
 		
 	}		

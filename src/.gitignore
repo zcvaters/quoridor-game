@@ -10,3 +10,8 @@
 /MainWindow.class
 /Player.class
 /Quoridor.class
+/InGameUI.class
+/InGameUIPanel.class
+/DeleteMeTesting.class
+/TestDeleteThis.class
+/.gitignore

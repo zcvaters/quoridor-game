@@ -63,7 +63,7 @@ public class GameBoard extends JPanel  implements ActionListener{
 		//SET THIS VISIBLE OR NO??	
 		setVisible(true);     
 	}
-
+	
 	public void DisplayGameBoard() {
 		setVisible(true);
 	}
@@ -86,7 +86,7 @@ public class GameBoard extends JPanel  implements ActionListener{
 	
 	public int GetNumCols() {
 		return cols; 
-	}	
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
