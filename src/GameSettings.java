@@ -79,8 +79,8 @@ public class GameSettings {
 		
 		//set tile size (includes 1/2 wall width on each side)
 		//recommend 90x90 if using a 1000x1000 frame.
-		tileWidth = 90;
-		tileHeight = 90;
+		tileWidth = 80;
+		tileHeight = 80;
 		
 		//set grid size for play
 		rows = 9;
@@ -91,7 +91,7 @@ public class GameSettings {
 		
 		//create a random list for assigning player ID's
 		playerIDList = new ArrayList<>();
-		playerIDList = BuildPlayerIDList();
+		playerIDList = buildPlayerIDList();
 		
 		//build and store an input manager to interface with user (mouse move/click)
 		inputManager = new InputManager();
@@ -132,37 +132,37 @@ public class GameSettings {
 	}
 	
 	//get player ID List (randomized 1-4)
-	public static List<Integer> GetPlayerIDList(){
+	public static List<Integer> getPlayerIDList(){
 		return playerIDList;
 	}	
 	
 	//returns a single color
 	//use index 0, 1, or 2
-	public static Color GetTileColor(int tileIndex) {
+	public static Color getTileColor(int tileIndex) {
 		return tileColors[tileIndex];
 	}
 	
 	//returns a single color
 	//use index 0, 1, or 2
-	public static Color GetWallColor(int wallIndex) {
+	public static Color getWallColor(int wallIndex) {
 		return wallColors[wallIndex];
 	}
 	
 	//returns a single color
 	//use index 0, 1, or 2
-	public static Color GetBkgColor(int bkgIndex) {
+	public static Color getBkgColor(int bkgIndex) {
 		return bkgColors[bkgIndex];
 	}
 	
 	//this returns an array of 4 colors
 	//use index 0, 1, or 2
-	public static Color[] GetPlayerColors(int playersIndex) {
+	public static Color[] getPlayerColors(int playersIndex) {
 		return playerColors[playersIndex];
 	}
 	
 	
 	//helper methods
-	private List<Integer> BuildPlayerIDList(){
+	private List<Integer> buildPlayerIDList(){
 		//randomize the numbers 1-4 inside an array.  use collections->shuffle().
 		//ex:  [1, 3, 4, 2]   or   [2, 1, 4, 3]  etc...				
 		List<Integer> sourceList = Arrays.asList(1, 2, 3, 4);

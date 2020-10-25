@@ -532,26 +532,26 @@ public class MainWindow extends JFrame implements ActionListener {
 			//was it color option #1?
 			if(selected.equals(color1Button)) {
 				//get the first color palette from Game Settings
-				tileColorSelected = GameSettings.GetTileColor(0);  //<---zero indexed!
-				wallColorSelected = GameSettings.GetWallColor(0);
-				bkgColorSelected = GameSettings.GetBkgColor(0);
-				playerColorsSelected = GameSettings.GetPlayerColors(0);				
+				tileColorSelected = GameSettings.getTileColor(0);  //<---zero indexed!
+				wallColorSelected = GameSettings.getWallColor(0);
+				bkgColorSelected = GameSettings.getBkgColor(0);
+				playerColorsSelected = GameSettings.getPlayerColors(0);				
 			}
 			//was it color option #2?
 			if(selected.equals(color2Button)) {
 				//get the second color palette from Game Settings
-				tileColorSelected = GameSettings.GetTileColor(1);
-				wallColorSelected = GameSettings.GetWallColor(1);
-				bkgColorSelected = GameSettings.GetBkgColor(1);
-				playerColorsSelected = GameSettings.GetPlayerColors(1);				
+				tileColorSelected = GameSettings.getTileColor(1);
+				wallColorSelected = GameSettings.getWallColor(1);
+				bkgColorSelected = GameSettings.getBkgColor(1);
+				playerColorsSelected = GameSettings.getPlayerColors(1);				
 			}
 			//was it color option #3?
 			if(selected.equals(color3Button)) {
 				//get the third color palette from Game Settings
-				tileColorSelected = GameSettings.GetTileColor(2);
-				wallColorSelected = GameSettings.GetWallColor(2);
-				bkgColorSelected = GameSettings.GetBkgColor(2);
-				playerColorsSelected = GameSettings.GetPlayerColors(2);	
+				tileColorSelected = GameSettings.getTileColor(2);
+				wallColorSelected = GameSettings.getWallColor(2);
+				bkgColorSelected = GameSettings.getBkgColor(2);
+				playerColorsSelected = GameSettings.getPlayerColors(2);	
 			}
 			//after setting colors, display the "configure players" options
 			DisplayPlayerColors();
@@ -641,7 +641,7 @@ public class MainWindow extends JFrame implements ActionListener {
 			playerTypes.add(thirdComboBox.getSelectedItem().toString());
 			playerTypes.add(fourthComboBox.getSelectedItem().toString());
 			//generate a random list to determine order of play
-			List<Integer> turnOrder = GameSettings.GetPlayerIDList();
+			List<Integer> turnOrder = GameSettings.getPlayerIDList();
 			
 			//build assets based on settings
 			BuildAssets thisBuild = new BuildAssets(tileColorSelected,              //<----NEW GAME STARTS HERE
