@@ -22,20 +22,15 @@ public class GameSettings {
 	static int tileWidth;
 	static int tileHeight;
 	
-	//store collection of names that AI can use
-	static String[] computerNames;
-	
-	//a collection of 1, 2, 3, 4 in a random order.  used to assign ID's.
-	static List<Integer> playerIDList;
 	
 	//COLORS   
-	public static final Color tileColor1 = new Color(102,51,0);
-	public static final Color wallColor1 = new Color(160,82,45);
-	public static final Color bkgColor1 = new Color(123,21,144);
-	public static final Color player1Color1 = new Color(255,255,224);
-	public static final Color player2Color1 = new Color(0,0,0);
-	public static final Color player3Color1 = new Color(119,136,153);
-	public static final Color player4Color1 = new Color(210,105,30);
+	public static final Color tileColor1 = new Color(85,27,20);
+	public static final Color wallColor1 = new Color(109,61,20);
+	public static final Color bkgColor1 = new Color(0,0,0);
+	public static final Color player1Color1 = new Color(137,185,184);
+	public static final Color player2Color1 = new Color(88, 66, 47);
+	public static final Color player3Color1 = new Color(238, 180, 89);
+	public static final Color player4Color1 = new Color(205,197,180);
 	
 	public static final Color tileColor2 = new Color(201,232,215);
 	public static final Color wallColor2 = new Color(235,110,0);
@@ -66,6 +61,12 @@ public class GameSettings {
 							{player1Color2, player2Color2, player3Color2, player4Color2},
 							{player1Color3, player2Color3, player3Color3, player4Color3}
 							};
+	
+	//store collection of names that AI can use
+	static String[] computerNames;
+	
+	//a collection of 1, 2, 3, 4 in a random order.  used to assign ID's.
+	static List<Integer> playerIDList;
 	
 	/* Constructor - GameSettings
 	 * 

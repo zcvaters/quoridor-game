@@ -22,9 +22,15 @@ import javax.swing.JPanel;
 
 public class BuildAssets{
 	
-	//size of grid. set in const'.
+	//size of grid. 
 	int rows;
 	int cols;
+	
+	//the game board (collection of GameTiles).
+	GameBoard gameBoard;
+	
+	//the players(4)
+	Player[] players;
 	
 	//the colors to be used    (necessary to store here? not!?)
 	private Color tileColor;
@@ -48,7 +54,7 @@ public class BuildAssets{
 		
 		//in order to generate a GameState we need 
 		//a board (has colors, size, quantity of tiles, etc, attached)
-		//4 players (have name, color, etc attached)
+		//4 players (have location, name, color, etc attached)
 		//an indication of which is the next player.  (player 1 for a new game).
 		//since this is a new game, some assets will be given default values from GameSettings
 		
@@ -60,22 +66,22 @@ public class BuildAssets{
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		
 		//Build a new game board (returns a JPanel with a grid of configured GameTiles and extra methods)
-		GameBoard gameBoard = new GameBoard(tileColor, wallColor, bkgColor, rows, cols);      //<----THE BOARD
+		gameBoard = new GameBoard(tileColor, wallColor, bkgColor, rows, cols);      //<----THE BOARD
 		
 		//give the game tiles to the InputManager for handling user input
 		GameSettings.inputManager.SetGridTiles(gameBoard.GetGrid());
 		
 		//PLAYERS (4)		
 		//get an empty array that will hold 4 configured players, in proper turn order (1, 2, 3, 4).
-		Player[] players = new Player[4];
+		players = new Player[4];
 		//loop players.  turn order is currently randomized (from GameSettings)
 		//unrandomize it, store new players in proper order (starting with whomever was chosen as first player)
-		for(int i = 0; i < turnOrder.size(); i++) {
-			
-			//NEED TO IMPLEMENT PLAYER STARTING POSITIONS HERE!
-			
+		for(int i = 0; i < turnOrder.size(); i++) {	
+
 			//turn
 			int playerTurn = turnOrder.get(i);
+			//player location
+			GameTile playerLocation = DetermineStartingPosition(playerTurn);
 			//type and difficulty
 			String playerType = playerTypes.get(i);
 			Boolean isDifficult = false;
@@ -95,14 +101,17 @@ public class BuildAssets{
 			Color playerColor = playerColors[i];
 			
 			//build a player
-			Player newPlayer = new Player(playerTurn, playerType, playerName, playerColor, isDifficult);
+			Player newPlayer = new Player(playerTurn, playerLocation, playerType, playerName, playerColor, isDifficult);
 			//add it to array in proper ordered position.  -1 for zero indexing.
-			players[newPlayer.getTurnPosition() - 1] = newPlayer;
+
+			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
+			//repeat until 4 players.
+
 		}
 		
 		
 		//NEXT PLAYER
-		int nextPlayer = 0;   //<--new game, so we start with players[0];
+		int nextPlayer = 0;   //<--new game, so players[0] will be first to act;
 		
 		// Set Border colors to corresponding player.
 		inGameUIPanel.setSouthBorderBG(players[0].getColor());
@@ -115,8 +124,44 @@ public class BuildAssets{
 		
 		// Adds the game board to the center of the UI panel.
 		inGameUIPanel.middlePanel.add(gameBoard);
+
+	}
+	
+	//helper method
+	private GameTile DetermineStartingPosition(int turnOrder) {
+		
+		//player order determines starting position on board
+		//1 = bottom row, middle col
+		//2 = left column, middle row
+		//3 = top row, middle col
+		//4 = right column, middle row
+		
+		GameTile thisTile = null;
+		int bottom = rows - 1;
+		int left = 0;
+		int top = 0;
+		int right = cols-1;
+		int rowMiddle = (cols-1)/2;
+		int colMiddle = (rows-1)/2;
 		
 		
+		if(turnOrder == 1) {
+			thisTile = gameBoard.GetGameTile(bottom, rowMiddle);  //<---row, col
+		}
+		else if(turnOrder ==2) {
+			thisTile = gameBoard.GetGameTile(colMiddle, left);
+		} 
+		else if(turnOrder == 3) {
+			thisTile = gameBoard.GetGameTile(top, rowMiddle);
+		}
+		else if(turnOrder == 4) {
+			thisTile = gameBoard.GetGameTile(colMiddle, right);
+		}
+		else {
+			System.out.println("Cannot assign turn order!!");
+		}
+		
+		return thisTile;
 	}
 	
 	
