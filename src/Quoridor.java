@@ -5,8 +5,10 @@ import java.io.IOException;
 
 public class Quoridor {
 
-	public static void main(String[] args) throws IOException {
-
+	public static void main(String[] args){
+		
+		DeleteMeTesting deleteMe = new DeleteMeTesting();
+		
 		GameSettings runGame = new GameSettings();
 	}
 	
