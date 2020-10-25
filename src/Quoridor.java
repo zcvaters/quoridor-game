@@ -7,7 +7,8 @@ public class Quoridor {
 
 	public static void main(String[] args){
 		
-		DeleteMeTesting deleteMe = new DeleteMeTesting();
+		TestDeleteThis otherTest = new TestDeleteThis();
+		
 		
 		GameSettings runGame = new GameSettings();
 	}
