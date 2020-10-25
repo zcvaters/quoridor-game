@@ -5,7 +5,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-public class InGameUIPanel extends JPanel{
+public class InGameUIPanel extends JPanel {
 	
 	private JPanel nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel;
 	private JPanel southGameBoardBorder, westGameBoardBorder, northGameBoardBorder, eastGameBoardBorder;
@@ -13,8 +13,7 @@ public class InGameUIPanel extends JPanel{
 	GridBagConstraints gbc = new GridBagConstraints();
 	
 	
-	public InGameUIPanel()
-	{
+	public InGameUIPanel() {
 		super(); // Creates a frame
 		
 		this.setMinimumSize(new Dimension(1000, 1000));
@@ -30,8 +29,7 @@ public class InGameUIPanel extends JPanel{
 	 * for the players of the game.
 	 * 
 	 */
-	public void alignedPerimeterBorders()
-	{
+	public void alignedPerimeterBorders() {
 		// Outer Border Dimension
 		Dimension outerBorderX = new Dimension(800, 100);
 		Dimension outerBorderY = new Dimension(100, 800);
@@ -46,12 +44,12 @@ public class InGameUIPanel extends JPanel{
 		this.add(northGameBoardBorder, gbc);
 		
 		
-		// Top Left border square.
+		// North West border square.
 		nwCornerPanel = new JPanel();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
-		nwCornerPanel.setBackground(Color.black);
+		nwCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(nwCornerPanel, gbc);
 
 		// West Border Of Game Board
@@ -63,19 +61,19 @@ public class InGameUIPanel extends JPanel{
 		westGameBoardBorder.setPreferredSize(outerBorderY);
 		this.add(westGameBoardBorder, gbc);
 		
+		// Center Panel to house game board.
 		middlePanel = new JPanel();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		this.add(middlePanel, gbc);
 		
-		
-		// North East border square.
+		// North East border Panel.
 		neCornerPanel = new JPanel();
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
-		neCornerPanel.setBackground(Color.black);
+		neCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(neCornerPanel, gbc);
 		
 		// East Border of Game Board
@@ -86,15 +84,15 @@ public class InGameUIPanel extends JPanel{
 		eastGameBoardBorder.setPreferredSize(outerBorderY);
 		this.add(eastGameBoardBorder, gbc);
 		
-		// Bottom Left Border of the Grid Panel.
+		// South West Border of the Grid Panel.
 		swCornerPanel = new JPanel();
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
-		swCornerPanel.setBackground(Color.black);
+		swCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(swCornerPanel, gbc);
 		
-		// Bottom Border of the Grid Panel.
+		// South Border of the game board.
 		southGameBoardBorder = new JPanel();
 		gbc.gridx = 1;
 		gbc.gridy = 2;
@@ -103,34 +101,50 @@ public class InGameUIPanel extends JPanel{
 		southGameBoardBorder.setPreferredSize(outerBorderX);
 		this.add(southGameBoardBorder, gbc);
 		
-		// Bottom Right border square.
+		// South East border panel.
 		seCornerPanel = new JPanel();
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
-		seCornerPanel.setBackground(Color.black);
+		seCornerPanel.setBackground(new Color(51, 0, 0));
 		this.add(seCornerPanel, gbc);
 		
 		
 	}
 	
-	public void setSouthBorderBG(Color c)
-	{
+	/*
+	 *  Sets South border panel background color.
+	 *  	@param: Color c 
+	 *  	@returns: void
+	 */
+	public void setSouthBorderBG(Color c) {
 		this.southGameBoardBorder.setBackground(c);
 	}
 	
-	public void setWestBorderBG(Color c)
-	{
+	/*
+	 *  Sets West border panel background color.
+	 *  	@param: Color c
+	 *  	@returns: void
+	 */
+	public void setWestBorderBG(Color c) {
 		this.westGameBoardBorder.setBackground(c);
 	}
 	
-	public void setNorthBorderBG(Color c)
-	{
+	/*
+	 *  Sets the North border panel background color.
+	 *  	@param: Color c
+	 *  	@returns: void
+	 */
+	public void setNorthBorderBG(Color c) {
 		this.northGameBoardBorder.setBackground(c);
 	}
 	
-	public void setEastBorderBG(Color c)
-	{
+	/*
+	 * 	Sets the East border panel background color.
+	 * 		@param: Color c
+	 * 		@returns: void
+	 */
+	public void setEastBorderBG(Color c) {
 		this.eastGameBoardBorder.setBackground(c);
 	}
 	

@@ -104,7 +104,7 @@ public class BuildAssets{
 		//NEXT PLAYER
 		int nextPlayer = 0;   //<--new game, so we start with players[0];
 		
-		// Set Borders
+		// Set Border colors to corresponding player.
 		inGameUIPanel.setSouthBorderBG(players[0].getColor());
 		inGameUIPanel.setWestBorderBG(players[1].getColor());
 		inGameUIPanel.setNorthBorderBG(players[2].getColor());
@@ -112,6 +112,8 @@ public class BuildAssets{
 		
 		//start the game controller
 		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer);
+		
+		// Adds the game board to the center of the UI panel.
 		inGameUIPanel.middlePanel.add(gameBoard);
 		
 		
