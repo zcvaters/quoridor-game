@@ -9,10 +9,10 @@ public class GameController {
 	 * @Params:
 	 * 		
 	 */	
-	public GameController(GameBoard board, Player[] players, int nextTurn) {
-				
+
+	public GameController(InGameUIPanel inGameUIPanel, GameBoard gameBoard, Player[] players, int nextTurn) {
 		//debugging, delete this stuff
-		GameTile[][] tiles = board.GetGrid();
+		GameTile[][] tiles = gameBoard.GetGrid();
 		
 		System.out.println("Board is " +tiles[0].length+ "x" +tiles[1].length+ "\n");
 		for(int i = 0; i < players.length; i++) {
@@ -39,7 +39,7 @@ public class GameController {
 		
 		
 		//show the gameboard!
-		GameSettings.GetMainWindow().ShowPanel(board);
+		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
 		GameSettings.GetMainWindow().pack();		
 	}
 
