@@ -1,7 +1,9 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,12 +19,14 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	
 	// IngameUIPanel settings button
 	private JButton settingsButton;
+	private JButton resumeGameButton, quitToMenu, quit;
 	
 	//the center panel, holds the gameboard
 	private JPanel middlePanel;
 
 	//constraints for this layout
 	GridBagConstraints gbc = new GridBagConstraints();
+	private JPanel settingsPanel;
 	
 	//constructor
 	public InGameUIPanel() {
@@ -139,6 +143,43 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		gbc.fill = GridBagConstraints.BOTH;
 		this.add(seCornerPanel, gbc);
 		
+		// Create settings panel
+		setSettingsPanel();
+		
+	}
+	
+	// Panel Methods
+	public void setSettingsPanel()
+	{
+		settingsPanel = new JPanel(new GridBagLayout());
+		settingsPanel.setVisible(false);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.anchor = GridBagConstraints.SOUTH;
+		this.add(settingsPanel, gbc);
+		resumeGameButton = new JButton("Resume Game");
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(20, 20, 20, 20);
+		settingsPanel.add(resumeGameButton, gbc);
+		quitToMenu = new JButton("Quit to Menu");
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(20, 20, 20, 20);
+		settingsPanel.add(quitToMenu, gbc);
+		quit = new JButton("Quit Game");
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(20, 20, 20, 20);
+		settingsPanel.add(quit, gbc);
+		settingsButton.setVisible(true);
 		
 	}
 	
@@ -189,11 +230,37 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	public void setEastBorderBG(Color c) {
 		this.eastGameBoardBorder.setBackground(c);
 	}
+	
+	/* 
+	 * 	Sets the setting panel background color.
+	 * 		@param: Color c
+	 * 		@returns: void
+	 */
+	public void setSettingsPanelBG(Color c) {
+		this.settingsPanel.setBackground(c);
+	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO: Implement settings panel.
-		System.out.println("Settings");
+	public void actionPerformed(ActionEvent event) {
+		
+		// Get the object that the event happened
+		Object selected = event.getSource();
+		
+		if(selected.equals(settingsButton)) {
+			// Selected button was settings button
+			
+			if(this.settingsPanel.isVisible()) {
+				// If the settings panel is visible, toggle it off and game board on	
+				settingsPanel.setVisible(false);
+				middlePanel.setVisible(true);
+			}
+			else {
+				// The settings panel is not visible set visible
+				this.settingsPanel.setVisible(true);
+				this.middlePanel.setVisible(false);
+			}
+			
+		}
 		
 	}
 	

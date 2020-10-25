@@ -127,6 +127,8 @@ public class BuildAssets{
 		for(JPanel thisPanel : inGameUIPanel.GetCornerPanels()) {
 			thisPanel.setBackground(bkgColor);
 		}
+		// set background of the settings panel to the appropiate bkg color
+		inGameUIPanel.setSettingsPanelBG(bkgColor);
 		
 		//add the gameboard to the middle panel of in-game UI.
 		middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
