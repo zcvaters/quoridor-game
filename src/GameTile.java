@@ -154,17 +154,6 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		gbc.gridx = 5;
 		gbc.gridy = 5;		
 		this.add(tile, gbc);
-		/*Old version  REMOVE THIS
-		tile = new JPanel();
-		tile.setPreferredSize(new Dimension(width,height));
-		tile.setName("tile");
-		tile.setBackground(tileColor);
-		tile.setOpaque(true);		
-		gbc.gridx = 5;
-		gbc.gridy = 5;		
-		this.add(tile, gbc);
-		*/
-		
 		
 		rightWall = new JPanel();
 		rightWall.setName("rightWall");
@@ -221,8 +210,8 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//SEE ALSO RemovePlayer BELOW!
 		
 		//size of player icon.  move this somewhere else.
-		int playerX = 50;
-		int playerY = 50;
+		int playerX = 20;
+		int playerY = 20;
 		
 		//note:  playerPanel is defined as a JPanel, it's ok because Player extends JPanel.
 		playerPanel = player;
@@ -373,6 +362,18 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//get mouse position
 		Point point = e.getPoint();		
 		//System.out.println("On tile (" +xcoord+ ", " +ycoord+ ")   At position (" +point.x+ ", " +point.y+ ")");
+		
+		//ignore the mouse if at the corner panels of the tile (removes placing-wall jitters)
+		//REMOVE THIS?  Causes deadzones at the corners
+		int x = point.x;
+		int y = point.y;		
+		if((x < 3 && y < 3) || 
+		   (x > width-3 && y < 3) ||
+		   (x < 3 && y > height-3) ||
+		   (x > width-3 && y > height-3)) {
+			//ignore the event
+			return;
+		}
 		
 		//send to InputManager for handling
 		inputManager.TrackMouseMovement(xcoord, ycoord, point);

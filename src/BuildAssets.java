@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 /*
@@ -61,10 +62,7 @@ public class BuildAssets{
 		//BOARD
 		this.rows = GameSettings.GetRows();
 		this.cols = GameSettings.GetCols();
-		
-		// Build In Game Menu UI.
-		InGameUIPanel inGameUIPanel = new InGameUIPanel();
-		
+				
 		//Build a new game board (returns a JPanel with a grid of configured GameTiles and extra methods)
 		gameBoard = new GameBoard(tileColor, wallColor, bkgColor, rows, cols);      //<----THE BOARD
 		
@@ -113,18 +111,29 @@ public class BuildAssets{
 		//NEXT PLAYER
 		int nextPlayer = 0;   //<--new game, so players[0] will be first to act;
 		
-		// Set Border colors to corresponding player.
-		inGameUIPanel.setSouthBorderBG(players[0].getColor());
-		inGameUIPanel.setWestBorderBG(players[1].getColor());
-		inGameUIPanel.setNorthBorderBG(players[2].getColor());
-		inGameUIPanel.setEastBorderBG(players[3].getColor());
+		// Build In-Game Menu UI  (Panels surrounding the gameboard to display information).
+		InGameUIPanel inGameUIPanel = new InGameUIPanel();
+		
+		//get ref to the middle panel, which will hold the game board.		
+		JPanel middlePanel = inGameUIPanel.GetMiddlePanel();
+		
+		// Set Border colors to corresponding player.  Set center background to match tile background
+		inGameUIPanel.setSouthBorderBG(players[0].GetColor());
+		inGameUIPanel.setWestBorderBG(players[1].GetColor());
+		inGameUIPanel.setNorthBorderBG(players[2].GetColor());
+		inGameUIPanel.setEastBorderBG(players[3].GetColor());
+		//set backgrounds of the middle panel and the corners to the appropriate bkg color
+		middlePanel.setBackground(bkgColor);
+		for(JPanel thisPanel : inGameUIPanel.GetCornerPanels()) {
+			thisPanel.setBackground(bkgColor);
+		}
+		
+		//add the gameboard to the middle panel of in-game UI.
+		middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
+		middlePanel.add(gameBoard);		
 		
 		//start the game controller
 		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer);
-		
-		// Adds the game board to the center of the UI panel.
-		inGameUIPanel.middlePanel.add(gameBoard);
-
 	}
 	
 	//helper method

@@ -51,7 +51,8 @@ public class InputManager {
 		//track mouse position within the tile.  
 		//if user is close to center of tile, highlight center tile
 		//if user is closer to one edge, highlight that edge.
-		//don't forget to activate corner walls too.
+		//don't forget to activate corner walls too.		
+		
 		
 		//check for mouse at center.  special case, handle separately.
 		if((point.x > width/20) && (point.x < width-(width/20)) && (point.y > height/20) && (point.y < (height-(height/20)))) {			

@@ -7,14 +7,19 @@ import javax.swing.JPanel;
 
 public class InGameUIPanel extends JPanel {
 	
+	//the outer (border) panels surrounding the gameboard 
 	private JPanel nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel;
 	private JPanel southGameBoardBorder, westGameBoardBorder, northGameBoardBorder, eastGameBoardBorder;
-	JPanel middlePanel;
+	
+	//the center panel, holds the gameboard
+	private JPanel middlePanel;
+
+	//constraints for this layout
 	GridBagConstraints gbc = new GridBagConstraints();
 	
-	
+	//constructor
 	public InGameUIPanel() {
-		super(); // Creates a frame
+		super(); // Creates a panel
 		
 		this.setMinimumSize(new Dimension(1000, 1000));
 		this.setPreferredSize(new Dimension(1000, 1000));
@@ -62,10 +67,16 @@ public class InGameUIPanel extends JPanel {
 		this.add(westGameBoardBorder, gbc);
 		
 		// Center Panel to house game board.
-		middlePanel = new JPanel();
+		middlePanel = new JPanel();		
 		gbc.gridx = 1;
 		gbc.gridy = 1;
+		//stretch gridbag layout as necessary to accomodate height/width
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
 		gbc.fill = GridBagConstraints.BOTH;
+		//align to center
+		gbc.anchor = GridBagConstraints.SOUTH;
+		//add the middle panel
 		this.add(middlePanel, gbc);
 		
 		// North East border Panel.
@@ -111,6 +122,18 @@ public class InGameUIPanel extends JPanel {
 		
 		
 	}
+	
+	//Getters
+	public JPanel GetMiddlePanel() {
+		return middlePanel;
+	}
+	
+	public JPanel[] GetCornerPanels() {
+		JPanel[] cornerPanels = {nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel};
+		return cornerPanels;
+	}
+	
+	//Helpers
 	
 	/*
 	 *  Sets South border panel background color.
