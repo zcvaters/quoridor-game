@@ -19,7 +19,7 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	
 	// IngameUIPanel settings button
 	private JButton settingsButton;
-	private JButton resumeGameButton, quitToMenu, quit;
+	private JButton saveGameButton, backToMenuButton, quitButton;
 	
 	//the center panel, holds the gameboard
 	private JPanel middlePanel;
@@ -28,10 +28,12 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel settingsPanel;
 	
+	MainWindow mainWindow;
+	
 	//constructor
 	public InGameUIPanel() {
 		super(); // Creates a panel
-		
+	
 		this.setMinimumSize(new Dimension(1000, 1000));
 		this.setPreferredSize(new Dimension(1000, 1000));
 		setLayout(new GridBagLayout());
@@ -161,24 +163,27 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.anchor = GridBagConstraints.SOUTH;
 		this.add(settingsPanel, gbc);
-		resumeGameButton = new JButton("Resume Game");
+		saveGameButton = new JButton("Save Game");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(20, 20, 20, 20);
-		settingsPanel.add(resumeGameButton, gbc);
-		quitToMenu = new JButton("Quit to Menu");
+		saveGameButton.addActionListener(this);
+		settingsPanel.add(saveGameButton, gbc);
+		backToMenuButton = new JButton("Back To Main Menu");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(20, 20, 20, 20);
-		settingsPanel.add(quitToMenu, gbc);
-		quit = new JButton("Quit Game");
+		backToMenuButton.addActionListener(this);
+		settingsPanel.add(backToMenuButton, gbc);
+		quitButton = new JButton("Quit Game");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(20, 20, 20, 20);
-		settingsPanel.add(quit, gbc);
+		quitButton.addActionListener(e -> System.exit(0));
+		settingsPanel.add(quitButton, gbc);
 		settingsButton.setVisible(true);
 		
 	}
@@ -246,6 +251,7 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		// Get the object that the event happened
 		Object selected = event.getSource();
 		
+		// Settings button control flow
 		if(selected.equals(settingsButton)) {
 			// Selected button was settings button
 			
@@ -260,6 +266,16 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 				this.middlePanel.setVisible(false);
 			}
 			
+		}
+		
+		if(selected.equals(saveGameButton)) {
+			//TODO: Implement save the game state.
+			System.out.println("Save Game");
+		}
+		if(selected.equals(backToMenuButton)) {
+			// If back to menu is selected, toggle this panel, show mainMenu Panel
+			this.setVisible(false);
+			GameSettings.showMainMenu();
 		}
 		
 	}
