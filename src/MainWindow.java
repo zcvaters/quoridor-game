@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -110,6 +112,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	Color wallColorSelected;
 	Color bkgColorSelected;
 	Color[] playerColorsSelected;
+	private ImageIcon image1;
 	
 
 	//constructor
@@ -177,10 +180,12 @@ public class MainWindow extends JFrame implements ActionListener {
 		//the MainMenu panel
 		mainMenuPanel = new JPanel();
 		//mainMenuPanel.setSize(1000, 1000);
-		mainMenuPanel.setBackground(new Color(255, 255, 255));
+		mainMenuPanel.setLayout(getLayout());
+		mainMenuPanel.setBackground(new Color(39, 44, 54));
 		
 		//the labels for the header/footer
-		mainMenuHeaderLabel = new JLabel("MAIN MENU");		
+		image1= new ImageIcon(getClass().getResource("quoridor2.jpg"));
+		mainMenuHeaderLabel= new JLabel(image1);
 		mainMenuHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		mainMenuHeaderLabel.setVerticalAlignment(JLabel.CENTER);		
 		JLabel bottomPlaceholder = new JLabel();
