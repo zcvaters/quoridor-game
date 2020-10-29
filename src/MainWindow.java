@@ -184,7 +184,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		mainMenuPanel.setBackground(new Color(39, 44, 54));
 		
 		//the labels for the header/footer
-		image1= new ImageIcon(getClass().getResource("quoridor2.jpg"));
+		image1= new ImageIcon(getClass().getResource("/Assets/quoridor2.jpg"));
 		mainMenuHeaderLabel= new JLabel(image1);
 		mainMenuHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		mainMenuHeaderLabel.setVerticalAlignment(JLabel.CENTER);		
