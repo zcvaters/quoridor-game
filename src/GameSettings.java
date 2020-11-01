@@ -170,9 +170,4 @@ public class GameSettings {
 		//return the shuffled source list.
 		return sourceList;		
 	}
-	
-	public static void showMainMenu() {
-		mainWindow.ShowPanel(mainWindow.mainMenuPanel);
-	}
-
 }

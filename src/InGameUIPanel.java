@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -19,7 +18,6 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	
 	// IngameUIPanel settings button
 	private JButton settingsButton;
-	private JButton saveGameButton, backToMenuButton, quitButton;
 	
 	//the center panel, holds the gameboard
 	private JPanel middlePanel;
@@ -27,13 +25,14 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	//constraints for this layout
 	GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel settingsPanel;
-	
-	MainWindow mainWindow;
+	private JButton saveGameButton;
+	private JButton backToMenuButton;
+	private JButton quitButton;
 	
 	//constructor
 	public InGameUIPanel() {
 		super(); // Creates a panel
-	
+		
 		this.setMinimumSize(new Dimension(1000, 1000));
 		this.setPreferredSize(new Dimension(1000, 1000));
 		setLayout(new GridBagLayout());
@@ -145,15 +144,15 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		gbc.fill = GridBagConstraints.BOTH;
 		this.add(seCornerPanel, gbc);
 		
-		// Create settings panel
 		setSettingsPanel();
-		
 	}
+	
 	
 	// Panel Methods
 	public void setSettingsPanel()
 	{
 		settingsPanel = new JPanel(new GridBagLayout());
+		Insets buttonInsets = new Insets(50, 50, 50, 50);
 		settingsPanel.setVisible(false);
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -167,22 +166,22 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(20, 20, 20, 20);
+		gbc.insets = buttonInsets;
 		saveGameButton.addActionListener(this);
 		settingsPanel.add(saveGameButton, gbc);
 		backToMenuButton = new JButton("Back To Main Menu");
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(20, 20, 20, 20);
+		gbc.insets = buttonInsets;
 		backToMenuButton.addActionListener(this);
 		settingsPanel.add(backToMenuButton, gbc);
 		quitButton = new JButton("Quit Game");
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = new Insets(20, 20, 20, 20);
-		quitButton.addActionListener(e -> System.exit(0));
+		gbc.insets = buttonInsets;
+		quitButton.addActionListener(this);
 		settingsPanel.add(quitButton, gbc);
 		settingsButton.setVisible(true);
 		
@@ -235,17 +234,15 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 	public void setEastBorderBG(Color c) {
 		this.eastGameBoardBorder.setBackground(c);
 	}
+	public void setSettingsPanelBG(Color bkgColor) {
+		settingsPanel.setBackground(bkgColor);
+		
+	}	
 	
-	/* 
-	 * 	Sets the setting panel background color.
-	 * 		@param: Color c
-	 * 		@returns: void
-	 */
-	public void setSettingsPanelBG(Color c) {
-		this.settingsPanel.setBackground(c);
-	}
 
-	@Override
+	/*
+	 * Action Listener Implementations for InGameUIPanel.
+	 */
 	public void actionPerformed(ActionEvent event) {
 		
 		// Get the object that the event happened
@@ -270,15 +267,19 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		
 		if(selected.equals(saveGameButton)) {
 			//TODO: Implement save the game state.
-			System.out.println("Save Game");
 		}
 		if(selected.equals(backToMenuButton)) {
-			// If back to menu is selected, toggle this panel, show mainMenu Panel
+			// If back to menu is selected, toggle this panel off, show mainMenu Panel
 			this.setVisible(false);
-			GameSettings.showMainMenu();
+			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainWindow().mainMenuPanel);
+		}
+		if(selected.equals(quitButton)) {
+			
 		}
 		
 	}
+
+
 	
 	
 
