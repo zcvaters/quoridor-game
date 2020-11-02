@@ -1,5 +1,6 @@
 import java.awt.*;
-import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JPanel;
 
 
 //currently top level class.  probably demote this when refactoring.
@@ -14,15 +15,15 @@ public class InputManager {
 	private int rows;
 	private int cols;
 	
-	private int width;
-	private int height;
-	private int xCenter;
-	private int yCenter;
-	
-	
 	//store local ref to gridtiles here.  better way?
 	//use setter below when ready to update.
 	private GameTile[][] gridTiles;
+	
+	//collection of temporary (during mouseover) walls
+	private JPanel[] tempWalls;
+	
+	//collection of all walls currently placed/locked
+	private ArrayList<JPanel> allLockedWalls;
 	
 	//constructor
 	public InputManager(){
@@ -31,156 +32,215 @@ public class InputManager {
 		rows = GameSettings.GetRows() - 1;
 		cols = GameSettings.GetCols() - 1;
 		
-		//get tile width and height settings, calculate the center wrt this tile.
-		this.width = GameSettings.getTileWidth();
-		this.height = GameSettings.getTileHeight();
-		this.xCenter = width/2;
-		this.yCenter = height/2;
+		tempWalls = new JPanel[8];
+		
+		allLockedWalls = new ArrayList<JPanel>();
+						
 	}
 	
-	//Setter.  Tiles provided by GameBoard after spawning.
+	//Setter
 	public void SetGridTiles(GameTile[][] tiles) {
 		gridTiles = tiles;
-	}	
+	}
+	
+	private void DisplayTemporaryWalls() {
 		
-	//method to track mouse movement during gameplay.
-	//this method tracks the mouse while it's moving (hovering) over the game board.
-	public void TrackMouseMovement(int rowAddress, int columnAddress, Point point) {
-		
-		//messages sent here from individual GameTiles.
-		//track mouse position within the tile.  
-		//if user is close to center of tile, highlight center tile
-		//if user is closer to one edge, highlight that edge.
-		//don't forget to activate corner walls too.		
-		
-		
-		//check for mouse at center.  special case, handle separately.
-		if((point.x > width/20) && (point.x < width-(width/20)) && (point.y > height/20) && (point.y < (height-(height/20)))) {			
-			//mouse is at center, let GameGrid know.
-			//no further checks			
-			HandleMouseInput(rowAddress, columnAddress, "c");
-			return;
-		}		
-		//else mouse is not at center of this tile.		
-		//is mouse on left side of tile?
-		if(point.x >= 0 && point.x < xCenter) {
-			//mouse is on the left
-			//is mouse on upper or lower left side?
-			if(point.y < yCenter) {
-				//mouse is on upper left
-				//is mouse more upper, or more left?
-				//get distance to top, and distance to left and choose smaller
-				int upperDist = point.y - 0;
-				int leftDist = point.x - 0;
-				if(upperDist < leftDist) {
-					//mouse is on upper left, closer to upper
-					HandleMouseInput(rowAddress, columnAddress, "ulu");
-				}
-				else {
-					//mouse is on upper left, closer to left
-					HandleMouseInput(rowAddress, columnAddress, "ull");
-				}
-			}
-			else {
-				//mouse is on lower left
-				//is mouse more lower, or more left?
-				//get distance to bottom, and distance to left and choose smaller
-				int bottomDist = height - point.y;
-				int leftDist = point.x - 0;
-				if(bottomDist < leftDist) {
-					//mouse is on lower left, closer to bottom
-					HandleMouseInput(rowAddress, columnAddress, "llb");
-				}
-				else {
-					//mouse is on lower left, closer to left
-					HandleMouseInput(rowAddress, columnAddress, "lll");
-				}
+		//check to see if ANY of the panels listed in the tempWalls array are locked
+		//if any are locked, do not display this entire set
+				
+		//set the wall color of each panel in the tempWall[] to display it
+		for(JPanel thisPanel : tempWalls) {
+			if(thisPanel != null) {
+				//find the parent (the GameTile obj) that is responsible for this panel
+				GameTile parent = (GameTile) thisPanel.getParent();
+				//parent activates the wall (changes it's color to wall)
+				parent.ActivateWallPanel(thisPanel);
+				//repeat until 8 walls have been activated.
 			}
 		}
-		//mouse is on the right
-		else {			
-			//is mouse on upper or lower right side?
-			if(point.y < yCenter) {
-				//mouse is on upper right
-				//is mouse more upper, or more right?
-				//get distance to top, and distance to right and choose smaller
-				int upperDist = point.y - 0;
-				int rightDist = width - point.x;
-				if(upperDist < rightDist) {
-					//mouse is on upper right, closer to upper
-					HandleMouseInput(rowAddress, columnAddress, "uru");
-				}
-				else {
-					//mouse is on upper right, closer to right
-					HandleMouseInput(rowAddress, columnAddress, "urr");
-				}
+	}
+	
+	public void ClearTemporaryWalls() {
+		//set the bkg color of each panel in the tempWall[] to remove it from display, and from list.
+		for(JPanel thisPanel : tempWalls) {
+			if(thisPanel != null) {
+				//find the parent (the GameTile obj) that is responsible for this panel
+				GameTile parent = (GameTile) thisPanel.getParent();
+				//parent deactivates the wall (changes it's color to bkg)
+				parent.DeactivateWallPanel(thisPanel);								
+				//repeat until 8 walls have been removed.
+			}
+		}
+		
+		//clear the array
+		for(int i = 0; i < tempWalls.length; i ++) {
+			tempWalls[i] = null;
+		}		
+	}
+	
+	
+	//method to track mouse movement during gameplay.
+	//this method tracks the mouse while it's moving (hovering) over the game board.
+	public void TrackMouseMovement(JPanel thisPanel, Point point) {
+		
+		//messages sent here from individual GameTiles.
+		//each GameTile has 9 sub-panels (center tile and walls)
+		//this method receives the sub-panel that detected the mouse, and the x,y point of the mouse		
+		//track mouse position within the tile.  
+		
+		//get the name of the sub panel passed as param.
+		String panelName = thisPanel.getName();
+		//get the size of thisPanel
+		Dimension panelSize = thisPanel.getSize();
+		int  panelWidth = (int)panelSize.getWidth();
+		int panelHeight = (int)panelSize.getHeight();
+		
+		//get the parent of this sub panel (the GameTile that holds all 9 sub panels)
+		GameTile parent = (GameTile) thisPanel.getParent();
+		
+		//is mouse on a corner panel? 
+		//if so, ignore mouseover. do not display temporary wall placement when mouse is at a corner.
+		if(panelName.equals("topLeftWall")  ||
+		   panelName.equals("topRightWall") ||
+		   panelName.equals("bottomLeftWall") ||
+		   panelName.equals("bottomRightWall")) {
+			return;
+		}
+		
+		//is mouse over the center tile? if so, highlight the center tile		
+		if(panelName.equals("tile")) {				
+			HandleMouseOverInput(parent, "c");
+			return;
+		}		
+			
+		//is user trying to place a wall on the left side of a tile?
+		//if so, is it upper-left or lower left?
+		if(panelName.equals("leftWall")) {
+			//mouse is on the left
+			//is mouse on upper, or lower, left side?
+			if(point.y < panelHeight/2) {
+				//mouse is on LEFT side of tile, in the UPPER region of left sub panel.
+				HandleMouseOverInput(parent, "lu");				
 			}
 			else {
-				//mouse is on lower right
-				//is mouse more lower, or more right?
-				//get distance to bottom, and distance to right and choose smaller
-				int bottomDist = height - point.y;
-				int rightDist = width - point.x;
-				if(bottomDist < rightDist) {
-					//mouse is on lower right, closer to bottom
-					HandleMouseInput(rowAddress, columnAddress, "lrb");
-				}
-				else {
-					//mouse is on lower right, closer to right
-					HandleMouseInput(rowAddress, columnAddress, "lrr");
-				}
+				//mouse is on LEFT side of tile, in the LOWER region of left sub panel.
+				HandleMouseOverInput(parent, "ll");
+			}			
+			return;
+		}
+		
+		//is user trying to place a wall on the top side of a tile?
+		//if so, is it top-left or top-right?
+		if(panelName.equals("topWall")) {
+			//mouse is on the top
+			//is mouse on left, or right, of the top sub panel?
+			if(point.x < panelWidth/2) {
+				//mouse is on TOP side of tile, in the LEFT region of top sub panel.
+				HandleMouseOverInput(parent, "tl");				
 			}
+			else {
+				//mouse is on TOP side of tile, in the RIGHT region of top sub panel.
+				HandleMouseOverInput(parent, "tr");
+			}			
+			return;
+		}
+		
+		//is user trying to place a wall on the right side of a tile?
+		//if so, is it upper-right or lower right?
+		if(panelName.equals("rightWall")) {
+			//mouse is on the right
+			//is mouse on upper, or lower, right side?
+			if(point.y < panelHeight/2) {
+				//mouse is on RIGHT side of tile, in the UPPER region of right sub panel.
+				HandleMouseOverInput(parent, "ru");				
+			}
+			else {
+				//mouse is on RIGHT side of tile, in the LOWER region of right sub panel.
+				HandleMouseOverInput(parent, "rl");
+			}			
+			return;
+		}
+		
+		//is user trying to place a wall on the bottom side of a tile?
+		//if so, is it bottom-left or bottom-right?
+		if(panelName.equals("bottomWall")) {
+			//mouse is on the bottom
+			//is mouse on left, or right, of the bottom sub panel?
+			if(point.x < panelWidth/2) {
+				//mouse is on BOTTOM side of tile, in the LEFT region of top sub panel.
+				HandleMouseOverInput(parent, "bl");				
+			}
+			else {
+				//mouse is on BOTTOM side of tile, in the RIGHT region of top sub panel.
+				HandleMouseOverInput(parent, "br");
+			}			
+			return;
 		}
 	}
 	
 	
 	
-	//Params:
-    //  xAddress = x-coord of GameTile		yAddress = ycoord of GameTile
-    //	locationCode is where on the tile the mouse currently resides (quadrant and closest border)
-    //  locationCode's:		ulu = upper-left, upper		ull = upper-left, left
-    //						uru = upper-right, upper	urr = upper-right, right
-    //						llb = lower-left, bottom	lll = lower-left, left
-    //						lrb = lower-right, bottom	lrr = lower-right, right
-    //						c = center tile.
-    public void HandleMouseInput(int x, int y, String locationCode) { 
+	/*
+	 * //Params: 
+	 * parent = the GameTile (parent) object which contains the subpanel that detected mouse movement 
+	 * locationCode is where on the sub panel the mouse currently resides (the border panel, and position bias) 
+	 * 
+	 * locationCode's: lu = left side, upper    or       ll = left side, lower 
+	 * 				   tl = top side, left      or       tr = top side, right 
+	 *                 ru = right side, upper   or       rl = right side, lower 
+	 *                 bl = bottom side, left   or       br = bottom side, right 
+	 *                 c = center tile.
+	 */    
+	public void HandleMouseOverInput(GameTile parent, String locationCode) {
     	
-    	//clear temp walls and center tile highlight
-    	gridTiles[x][y].TurnOffWall("all");
-    	gridTiles[x][y].TurnOffCenterTile();
-		TurnOffNeighbouringWalls(x, y);
-		
+    	//Strategy:
+    	//gather the necessary walls for temporary display (mouseover shows temporary walls, they are locked in when user clicks)
+    	//there will always be 8 wall borders or 8 null in the tempWallDisplay
+    	//access to four tiles is necessary in a 2-tile-spanning wall.
+    	//the 8 wall borders are collected from the 4 tiles involved.   
+    	
+    	//get the coordinates of the tile mouse is currently on
+    	//used for checking if neighbours exist
+    	int x = parent.GetXCoord();
+    	int y = parent.GetYCoord();
+    	
+    	//clear temp walls 
+    	ClearTemporaryWalls();
+    	
+		//activate temporary (mouseover) walls, based on switch and location code		
     	switch(locationCode) {
     	
 	    	case "c":	    		
 	    		//highlight tile.
-	    		gridTiles[x][y].TurnOnWall("c");
-	    		break; 
-	        case "ulu":
-	        	//if no north neighbour, return
-	        	if(x == 0) {
+	    		gridTiles[x][y].TurnOnCenterTile();
+	    		//clear any temporary walls
+	    		ClearTemporaryWalls();
+	    		return;                  //<-------Note: returning here.  no execution of code after switch!	    		
+	    		
+	        case "tl":
+	        	//if no north neighbour, or no west neighbour, return
+	        	if(x == 0 || y == 0) {
+	        		ClearTemporaryWalls();
 	        		return;
 	        	}
-	        	//if no west neighbour, return.
-	        	if(y == 0) {
-	        		return;
-	        	}
+	        	
 	        	//light-up top wall/corner on this tile, and top on west neighbour
 	        	//also bottom on north neighbour, and bottom on nw neighbour.
-	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("t");
-	        	gridTiles[x][y].TurnOnWall("tl");
-        		//west
-	        	gridTiles[x][y-1].TurnOnWall("tr");
-	        	gridTiles[x][y-1].TurnOnWall("t");
-        		//north
-	        	gridTiles[x-1][y].TurnOnWall("b");
-	        	gridTiles[x-1][y].TurnOnWall("bl");
-        		//northwest
-	        	gridTiles[x-1][y-1].TurnOnWall("br");
-	        	gridTiles[x-1][y-1].TurnOnWall("b");
+	        	//this
+	        	tempWalls[0] = gridTiles[x][y].GetTop();
+	        	tempWalls[1] = gridTiles[x][y].GetTopLeft();
+	        	//west
+	        	tempWalls[2] = gridTiles[x][y-1].GetTopRight();
+	        	tempWalls[3] = gridTiles[x][y-1].GetTop();
+	        	//north
+	        	tempWalls[4] = gridTiles[x-1][y].GetBottom();
+	        	tempWalls[5] = gridTiles[x-1][y].GetBottomLeft();
+	        	//northwest
+	        	tempWalls[6] = gridTiles[x-1][y-1].GetBottomRight();
+	        	tempWalls[7] = gridTiles[x-1][y-1].GetBottom();	        	
 	            break;
-	        case "ull":
+	            
+	        case "lu":
 	        	//if no north neighbour, return
 	        	if(x == 0) {
 	        		return;
@@ -192,19 +252,20 @@ public class InputManager {
 	        	//light-up left wall/corner on this tile, and right on west neighbour
 	        	//also left on north neighbour, and right on nw neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("l");
-	        	gridTiles[x][y].TurnOnWall("tl");
+	        	tempWalls[0] = gridTiles[x][y].GetLeft();
+	        	tempWalls[1] = gridTiles[x][y].GetTopLeft();
         		//west
-	        	gridTiles[x][y-1].TurnOnWall("r");
-	        	gridTiles[x][y-1].TurnOnWall("tr");
+	        	tempWalls[2] = gridTiles[x][y-1].GetRight();
+	        	tempWalls[3] = gridTiles[x][y-1].GetTopRight();
         		//north
-	        	gridTiles[x-1][y].TurnOnWall("l");
-	        	gridTiles[x-1][y].TurnOnWall("bl");
+	        	tempWalls[4] = gridTiles[x-1][y].GetLeft();
+	        	tempWalls[5] = gridTiles[x-1][y].GetBottomLeft();
         		//northwest
-	        	gridTiles[x-1][y-1].TurnOnWall("r");
-	        	gridTiles[x-1][y-1].TurnOnWall("br");
+	        	tempWalls[6] = gridTiles[x-1][y-1].GetRight();
+	        	tempWalls[7] = gridTiles[x-1][y-1].GetBottomRight();
         		break;
-	        case "uru":
+        		
+	        case "tr":
 	        	//if no north neighbour, return
 	        	if(x == 0) {
 	        		return;
@@ -216,19 +277,20 @@ public class InputManager {
 	        	//light-up top wall/corner on this tile, and bottom on north neighbour
 	        	//also top on east neighbour, and bottom on ne neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("t");
-	        	gridTiles[x][y].TurnOnWall("tr");
+	        	tempWalls[0] = gridTiles[x][y].GetTop();
+	        	tempWalls[1] = gridTiles[x][y].GetTopRight();
         		//north
-	        	gridTiles[x-1][y].TurnOnWall("b");
-	        	gridTiles[x-1][y].TurnOnWall("br");
+	        	tempWalls[2] = gridTiles[x-1][y].GetBottom();
+	        	tempWalls[3] = gridTiles[x-1][y].GetBottomRight();
         		//east
-	        	gridTiles[x][y+1].TurnOnWall("t");
-	        	gridTiles[x][y+1].TurnOnWall("tl");
+	        	tempWalls[4] = gridTiles[x][y+1].GetTop();
+	        	tempWalls[5] = gridTiles[x][y+1].GetTopLeft();
         		//northeast
-	        	gridTiles[x-1][y+1].TurnOnWall("b");
-	        	gridTiles[x-1][y+1].TurnOnWall("bl");
+	        	tempWalls[6] = gridTiles[x-1][y+1].GetBottom();
+	        	tempWalls[7] = gridTiles[x-1][y+1].GetBottomLeft();
         		break;
-	        case "urr":
+        		
+	        case "ru":
 	        	//if no north neighbour, return
 	        	if(x == 0) {
 	        		return;
@@ -240,19 +302,20 @@ public class InputManager {
 	        	//light-up right wall/corner on this tile, and right on north neighbour
 	        	//also left on east neighbour, and left on ne neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("r");
-	        	gridTiles[x][y].TurnOnWall("tr");
+	        	tempWalls[0] = gridTiles[x][y].GetRight();
+	        	tempWalls[1] = gridTiles[x][y].GetTopRight();
         		//north
-	        	gridTiles[x-1][y].TurnOnWall("r");
-	        	gridTiles[x-1][y].TurnOnWall("br");
+	        	tempWalls[2] = gridTiles[x-1][y].GetRight();
+	        	tempWalls[3] = gridTiles[x-1][y].GetBottomRight();
         		//east
-	        	gridTiles[x][y+1].TurnOnWall("l");
-	        	gridTiles[x][y+1].TurnOnWall("tl");
+	        	tempWalls[4] = gridTiles[x][y+1].GetLeft();
+	        	tempWalls[5] = gridTiles[x][y+1].GetTopLeft();
         		//northeast
-	        	gridTiles[x-1][y+1].TurnOnWall("l");
-	        	gridTiles[x-1][y+1].TurnOnWall("bl");
+	        	tempWalls[6] = gridTiles[x-1][y+1].GetLeft();
+	        	tempWalls[7] = gridTiles[x-1][y+1].GetBottomLeft();
         		break;
-	        case "llb":
+        		
+	        case "bl":
 	        	//if no south neighbour, return
 	        	if(x == rows) {
 	        		return;
@@ -264,19 +327,20 @@ public class InputManager {
 	        	//light-up bottom wall/corner on this tile, and top on south neighbour
 	        	//also bottom on west neighbour, and top on sw neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("b");
-	        	gridTiles[x][y].TurnOnWall("bl");
+	        	tempWalls[0] = gridTiles[x][y].GetBottom();
+	        	tempWalls[1] = gridTiles[x][y].GetBottomLeft();
         		//south
-	        	gridTiles[x+1][y].TurnOnWall("t");
-	        	gridTiles[x+1][y].TurnOnWall("tl");
+	        	tempWalls[2] = gridTiles[x+1][y].GetTop();
+	        	tempWalls[3] = gridTiles[x+1][y].GetTopLeft();
         		//west
-	        	gridTiles[x][y-1].TurnOnWall("b");
-	        	gridTiles[x][y-1].TurnOnWall("br");
+	        	tempWalls[4] = gridTiles[x][y-1].GetBottom();
+	        	tempWalls[5] = gridTiles[x][y-1].GetBottomRight();
         		//southwest
-	        	gridTiles[x+1][y-1].TurnOnWall("t");
-	        	gridTiles[x+1][y-1].TurnOnWall("tr");
+	        	tempWalls[6] = gridTiles[x+1][y-1].GetTop();
+	        	tempWalls[7] = gridTiles[x+1][y-1].GetTopRight();
         		break;
-	        case "lll":
+        		
+	        case "ll":
 	        	//if no south neighbour, return
 	        	if(x == rows) {
 	        		return;
@@ -288,19 +352,20 @@ public class InputManager {
 	        	//light-up left wall/corner on this tile, and left on south neighbour
 	        	//also right on west neighbour, and right on sw neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("l");
-	        	gridTiles[x][y].TurnOnWall("bl");
+	        	tempWalls[0] = gridTiles[x][y].GetLeft();
+	        	tempWalls[1] = gridTiles[x][y].GetBottomLeft();
         		//south
-	        	gridTiles[x+1][y].TurnOnWall("l");
-	        	gridTiles[x+1][y].TurnOnWall("tl");
+	        	tempWalls[2] = gridTiles[x+1][y].GetLeft();
+	        	tempWalls[3] = gridTiles[x+1][y].GetTopLeft();
         		//west
-	        	gridTiles[x][y-1].TurnOnWall("r");
-	        	gridTiles[x][y-1].TurnOnWall("br");
+	        	tempWalls[4] = gridTiles[x][y-1].GetRight();
+	        	tempWalls[5] = gridTiles[x][y-1].GetBottomRight();
         		//southwest
-	        	gridTiles[x+1][y-1].TurnOnWall("r");
-	        	gridTiles[x+1][y-1].TurnOnWall("tr");
+	        	tempWalls[6] = gridTiles[x+1][y-1].GetRight();
+	        	tempWalls[7] = gridTiles[x+1][y-1].GetTopRight();
         		break;
-	        case "lrb":
+        		
+	        case "br":
 	        	//if no south neighbour, return
 	        	if(x == rows) {
 	        		return;
@@ -312,19 +377,20 @@ public class InputManager {
 	        	//light-up bottom wall/corner on this tile, and top on south neighbour
 	        	//also bottom on east neighbour, and top on se neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("b");
-	        	gridTiles[x][y].TurnOnWall("br");
+	        	tempWalls[0] = gridTiles[x][y].GetBottom();
+	        	tempWalls[1] = gridTiles[x][y].GetBottomRight();
         		//south
-	        	gridTiles[x+1][y].TurnOnWall("t");
-	        	gridTiles[x+1][y].TurnOnWall("tr");
+	        	tempWalls[2] = gridTiles[x+1][y].GetTop();
+	        	tempWalls[3] = gridTiles[x+1][y].GetTopRight();
         		//east
-	        	gridTiles[x][y+1].TurnOnWall("b");
-	        	gridTiles[x][y+1].TurnOnWall("bl");
+	        	tempWalls[4] = gridTiles[x][y+1].GetBottom();
+	        	tempWalls[5] = gridTiles[x][y+1].GetBottomLeft();
         		//southeast
-	        	gridTiles[x+1][y+1].TurnOnWall("t");
-	        	gridTiles[x+1][y+1].TurnOnWall("tl");
+	        	tempWalls[6] = gridTiles[x+1][y+1].GetTop();
+	        	tempWalls[7] = gridTiles[x+1][y+1].GetTopLeft();
         		break;
-	        case "lrr":
+        		
+	        case "rl":
 	        	//if no south neighbour, return
 	        	if(x == rows) {
 	        		return;
@@ -336,60 +402,74 @@ public class InputManager {
 	        	//light-up right wall/corner on this tile, and right on south neighbour
 	        	//also left on east neighbour, and left on se neighbour.	        	
 	        	//this tile
-	        	gridTiles[x][y].TurnOnWall("r");
-	        	gridTiles[x][y].TurnOnWall("br");
+	        	tempWalls[0] = gridTiles[x][y].GetRight();
+	        	tempWalls[1] = gridTiles[x][y].GetBottomRight();
         		//south
-	        	gridTiles[x+1][y].TurnOnWall("r");
-	        	gridTiles[x+1][y].TurnOnWall("tr");
+	        	tempWalls[2] = gridTiles[x+1][y].GetRight();
+	        	tempWalls[3] = gridTiles[x+1][y].GetTopRight();
         		//east
-	        	gridTiles[x][y+1].TurnOnWall("l");
-	        	gridTiles[x][y+1].TurnOnWall("bl");
+	        	tempWalls[4] = gridTiles[x][y+1].GetLeft();
+	        	tempWalls[5] = gridTiles[x][y+1].GetBottomLeft();
         		//southeast
-	        	gridTiles[x+1][y+1].TurnOnWall("l");
-	        	gridTiles[x+1][y+1].TurnOnWall("tl");
+	        	tempWalls[6] = gridTiles[x+1][y+1].GetLeft();
+	        	tempWalls[7] = gridTiles[x+1][y+1].GetTopLeft();
         		break;	            
 	            
-	        default: 
+	        default:
+	        	ClearTemporaryWalls();
 	            System.out.println("no match for locationCode");
     	}
-    }
-  
-    //put this somewhere else when refactoring?
-    public void TurnOffNeighbouringWalls(int x, int y) {
     	
-    	//NOTE:  0,0 is top left.   (rows, cols) is bottom right.  
-    	//check if neighbour exists, if it exists turn off it's walls.    	
-    	//topleft
-    	if(x > 0 && y > 0) {
-    		gridTiles[x-1][y-1].TurnOffWall("all");
+    	//we now have a set of temporary walls to display.  
+    	//if any of them are locked, discard the set and do nothing    	
+    	for(JPanel panelToCheck : tempWalls) {
+    		if(allLockedWalls.contains(panelToCheck)) {
+    			ClearTemporaryWalls();
+    			return;
+    		}
     	}
-    	//top
-    	if(x > 0) {
-    		gridTiles[x-1][y].TurnOffWall("all");
-    	}
-    	//topright
-    	if(x > 0 && y < cols) {
-    		gridTiles[x-1][y+1].TurnOffWall("all");
-    	}
-    	//left
-    	if(y > 0) {
-    		gridTiles[x][y-1].TurnOffWall("all");
-    	}
-    	//right
-    	if(y < cols) {
-    		gridTiles[x][y+1].TurnOffWall("all");    		
-    	}
-    	//bottomleft
-    	if(x < rows && y > 0) {
-    		gridTiles[x+1][y-1].TurnOffWall("all");
-    	}
-    	//bottom
-    	if(x < rows) {
-    		gridTiles[x+1][y].TurnOffWall("all");
-    	}
-    	//bottomright
-    	if(x < rows && y < cols) {
-    		gridTiles[x+1][y+1].TurnOffWall("all");
-    	}
-    }
+    	
+    	//CAN ADD OTHER CHECKS FOR WALL PLACEMENT HERE!  IE:  IF IT COMPLETELY BLOCKS PLAYER...
+    	
+    	//otherwise, this list is valid.  display it.
+    	DisplayTemporaryWalls();
+    }    
+
+	public void HandleMouseClick(JPanel thisPanel) {
+		//user clicked the mouse on thisPanel
+		//what do they want to do?
+		
+		//try to move the player?
+		if(thisPanel.getName().equals("tile")) {
+			//player clicked on a center tile and is attemping to move
+			System.out.println("Moving player");
+			return;
+		}
+		
+		//if user didn't click on a tile, they clicked on a wall area
+		//tempWalls should always contain 8 wall borders, or 8 null's.
+		//check if temp walls are empty (none to process).  If (any/either) empty, no action.
+		for(JPanel tempPanel : tempWalls) {
+			if(tempPanel == null) {
+				return;
+			}					
+		}		
+						
+		//else, not clicking on center, and we have temp walls from mouseover. place a wall
+		
+		//loop tempWalls and set each of it's panels to locked.
+		//copy to a master list of allLockedWalls here.
+		for(JPanel tempPanel : tempWalls) {
+			//get the panel parent (the full GameTile)
+			GameTile thisTile = (GameTile)tempPanel.getParent();
+			//parent locks it's panel so it can no longer be changed.
+			thisTile.LockWall(tempPanel);
+			//add this panel to the list of all locked walls
+			allLockedWalls.add(tempPanel);
+		}
+		
+		//we have placed this wall.  clear the tempWalls array.
+		ClearTemporaryWalls();
+		
+	}
 }

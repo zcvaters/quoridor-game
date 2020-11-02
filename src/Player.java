@@ -3,14 +3,13 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 /* 
- * Player class.  2 Constructors.
+ * Player class.  
  * 
  * This class should be able to build both human and computer players.
  * Once a game has started, there must always be 4 players in existance.
- * 
- * There are two constructors (one for requesting human player, one for AI player)
+ *  
  * Player's are identified by a unique ID number (1-4)
- * Player's location will change as game progresses. 
+ * Player's location (a GameTile) will change as game progresses. 
  * 
  */
 
