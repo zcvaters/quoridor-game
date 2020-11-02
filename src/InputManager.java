@@ -353,7 +353,7 @@ public class InputManager {
 	            System.out.println("no match for locationCode");
     	}
     }
-    
+  
     //put this somewhere else when refactoring?
     public void TurnOffNeighbouringWalls(int x, int y) {
     	

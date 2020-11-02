@@ -364,7 +364,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//System.out.println("On tile (" +xcoord+ ", " +ycoord+ ")   At position (" +point.x+ ", " +point.y+ ")");
 		
 		//ignore the mouse if at the corner panels of the tile (removes placing-wall jitters)
-		//REMOVE THIS?  Causes deadzones at the corners
+		//REMOVE THIS?  Provides deadzones at the corners
 		int x = point.x;
 		int y = point.y;		
 		if((x < 3 && y < 3) || 
