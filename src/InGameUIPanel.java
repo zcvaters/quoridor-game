@@ -274,7 +274,7 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainWindow().mainMenuPanel);
 		}
 		if(selected.equals(quitButton)) {
-			
+			System.exit(0);
 		}
 		
 	}
