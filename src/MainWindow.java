@@ -699,7 +699,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		//was 'No' requested on quit panel?
 		if(selected.equals(quitNoButton)) {
 			ShowPanel(mainMenuPanel);
-		}		
+		}
 	}
 	
 	private void DisplayPlayerColors() {
@@ -712,6 +712,5 @@ public class MainWindow extends JFrame implements ActionListener {
 		fourthIconLabel.setBackground(playerColorsSelected[3]);
 		fourthIconLabel.setOpaque(true);
 	}
-	
 	
 }
