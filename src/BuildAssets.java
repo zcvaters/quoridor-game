@@ -66,6 +66,10 @@ public class BuildAssets{
 		//Build a new game board (returns a JPanel with a grid of configured GameTiles and extra methods)
 		gameBoard = new GameBoard(tileColor, wallColor, bkgColor, rows, cols);      //<----THE BOARD
 		
+		//give the game tiles to GameSettings for storage.
+		//access these from anywhere with GameSettings.GetGameTiles();  returns a GameTile[][]
+		GameSettings.setGameTiles(gameBoard.GetGrid());
+		
 		//give the game tiles to the InputManager for handling user input
 		GameSettings.inputManager.SetGridTiles(gameBoard.GetGrid());
 		

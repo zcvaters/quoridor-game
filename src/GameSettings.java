@@ -68,6 +68,10 @@ public class GameSettings {
 	//a collection of 1, 2, 3, 4 in a random order.  used to assign ID's.
 	static List<Integer> playerIDList;
 	
+	//storage for the individual tiles needed to comprise a gameboard.
+	//passed here by BuildAssets upon creation.
+	static GameTile[][] gameTiles;
+	
 	/* Constructor - GameSettings
 	 * 
 	 * Intended as a top-level class to provide access for static variables.
@@ -125,6 +129,10 @@ public class GameSettings {
 		return tileHeight;
 	}
 	
+	public static GameTile[][] getGameTiles(){
+		return gameTiles;
+	}
+	
 	//get computer-generated name
 	public static String GetRandomName() {
 		int rnd = new Random().nextInt(computerNames.length);
@@ -158,6 +166,15 @@ public class GameSettings {
 	//use index 0, 1, or 2
 	public static Color[] getPlayerColors(int playersIndex) {
 		return playerColors[playersIndex];
+	}
+	
+	//SETTERS
+	
+	public static void setGameTiles(GameTile[][] allTiles) {
+		//this is only set by two methods:
+			//BuildAssets, in constructor, when building a new game board
+			//LoadGame, in LoadFromFile(), when loading previously saved files.
+		gameTiles = allTiles;
 	}
 	
 	
