@@ -108,9 +108,9 @@ public class BuildAssets{
 
 			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
 			//repeat until 4 players.
-
 		}
-		
+		//send this player array to GameSettings for storage.
+		GameSettings.setPlayers(players);
 		
 		//NEXT PLAYER
 		int nextPlayer = 0;   //<--new game, so players[0] will be first to act;

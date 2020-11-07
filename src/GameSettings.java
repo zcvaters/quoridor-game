@@ -68,9 +68,10 @@ public class GameSettings {
 	//a collection of 1, 2, 3, 4 in a random order.  used to assign ID's.
 	static List<Integer> playerIDList;
 	
-	//storage for the individual tiles needed to comprise a gameboard.
+	//the individual tiles needed to comprise a gameboard and the four players created (or loaded)
 	//passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
+	static Player[] allPlayers;
 	
 	/* Constructor - GameSettings
 	 * 
@@ -133,6 +134,10 @@ public class GameSettings {
 		return gameTiles;
 	}
 	
+	public static Player[] getPlayers(){
+		return allPlayers;
+	}
+	
 	//get computer-generated name
 	public static String GetRandomName() {
 		int rnd = new Random().nextInt(computerNames.length);
@@ -175,6 +180,13 @@ public class GameSettings {
 			//BuildAssets, in constructor, when building a new game board
 			//LoadGame, in LoadFromFile(), when loading previously saved files.
 		gameTiles = allTiles;
+	}
+	
+	public static void setPlayers(Player[] players) {
+		//this is only set by two methods:
+			//BuildAssets, in constructor, when building new players
+			//LoadGame, in LoadFromFile(), when loading previously saved files.
+		allPlayers = players;
 	}
 	
 	
