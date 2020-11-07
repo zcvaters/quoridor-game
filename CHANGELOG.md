@@ -4,6 +4,9 @@
 
 
 ### Added
+- Wall placements
+
+- In game UI settings panel
 
 ### Changed
 

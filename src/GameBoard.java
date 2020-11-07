@@ -95,5 +95,3 @@ public class GameBoard extends JPanel  implements ActionListener{
 	}
 	
 }
-
-	
