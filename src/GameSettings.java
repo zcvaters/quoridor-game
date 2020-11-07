@@ -135,10 +135,6 @@ public class GameSettings implements Serializable {
 	public static GameTile[][] getGameTiles() {
 		return gameTiles;
 	}
-
-	public static Player[] getPlayers(){
-		return allPlayers;
-	}
 	
 	//get computer-generated name
 	public static String GetRandomName() {
