@@ -1,49 +1,51 @@
-
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
-public class LoadGame{
-	
-	//define vars to hold the objects being loaded
-	ArrayList<Player> allPlayers = new ArrayList<Player>();
-	ArrayList<GameTile> gameTiles = new ArrayList<GameTile>();
-	ArrayList<Integer> turnOrder = new ArrayList<Integer>();
-	int nextPlayer = 0;
-	
-	
-	public void LoadFromFile() {
-		
-		//TO DO
-		//add param in method
-		//use param to connect with a particular save file name
-		
-		
-		//try/catch block to trap I/O errors.
-		try{
-		// open file to read from
-		FileInputStream saveFile = new FileInputStream("saveFile.sav");
-		
-		// Create an ObjectInputStream to get objects from save file.
-		ObjectInputStream thisSave = new ObjectInputStream(saveFile);
-		
-		//collect objects from save file.
-		//note, these are returned as generic Object
-		//need to cast into appropriate type
-				
-		//allPlayers = (ArrayList<Player>)save.readObject();
-		
-		//gameTiles = (ArrayList<GameTile>)save.readObject();
-		
-		//turnOrder = (ArrayList<Integer>)save.readObject();
-		
-		//nextPlayer = (Integer)save.readObject();
-				
-		// Close the file.
-		thisSave.close(); // This also closes the fileInputStream saveFile.
+public class LoadGame {
+
+	private LoadGame() {
+	}
+
+	public static void loadGameObjs(String filename) {// TODO: Implement filename lookup in LoadGame
+		// Create the data objects for us to restore.
+		ArrayList<Player> players = new ArrayList<>();
+		GameTile[][] gameTiles = new GameTile[9][9];
+
+		try {
+			// Open file to read Save.sav
+			FileInputStream saveFile = new FileInputStream("Save.sav");
+
+			// Create an ObjectInputStream to get objects from save file.
+			ObjectInputStream save = new ObjectInputStream(saveFile);
+
+			players.addAll((Collection<? extends Player>) save.readObject()); // Restore Player Objects
+			gameTiles = (GameTile[][]) save.readObject();
+
+			// TODO: Load all assets needed to game state.
+
+			save.close(); // Close File.
+		} catch (Exception exc) {
+			exc.printStackTrace(); // If there was an error, print the info.
 		}
-		catch(Exception exc){
-		exc.printStackTrace(); // If there was an error, print the info.
-		}
-	}	
+
+		// Print the values, to see that they've been recovered.
+		System.out.println("\nRestored Object Values:");
+		System.out.println("Player 1 Names: " + players.get(0).GetName());
+		System.out.println("Player 2 Names: " + players.get(1).GetName());
+		System.out.println("Player 3 Names: " + players.get(2).GetName());
+		System.out.println("Player 4 Names: " + players.get(3).GetName());
+
+		System.out.println("Game Tiles Test: " + Arrays.deepToString(gameTiles));
+
+	}
+
+	/*
+	 * Testing purposes, load file.
+	 * Run this class on its own to check Object reading.
+	 */
+	public static void main(String[] args) {
+		LoadGame.loadGameObjs("Save.sav");
+	}
 }

@@ -70,5 +70,5 @@ public class MainWindow extends JFrame {
 		newPanel.setVisible(true);
 		this.add(newPanel);
 	}
-	
+		
 }
