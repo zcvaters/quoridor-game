@@ -267,7 +267,7 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		}
 		
 		if(selected.equals(saveGameButton)) {
-			SaveGame.saveGameObjs();
+			SaveGame.saveGameObjs("Save.sav");
 		}
 		if(selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
