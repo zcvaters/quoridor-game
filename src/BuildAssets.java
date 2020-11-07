@@ -121,7 +121,7 @@ public class BuildAssets{
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		
 		//get ref to the middle panel, which will hold the game board.		
-		JPanel middlePanel = inGameUIPanel.GetMiddlePanel();
+		JPanel middlePanel = inGameUIPanel.getMiddlePanel();
 		
 		// Set Border colors to corresponding player.  Set center background to match tile background
 		inGameUIPanel.setSouthBorderBG(players[0].GetColor());
@@ -130,7 +130,7 @@ public class BuildAssets{
 		inGameUIPanel.setEastBorderBG(players[3].GetColor());
 		//set backgrounds of the middle panel and the corners to the appropriate bkg color
 		middlePanel.setBackground(bkgColor);
-		for(JPanel thisPanel : inGameUIPanel.GetCornerPanels()) {
+		for(JPanel thisPanel : inGameUIPanel.getCornerPanels()) {
 			thisPanel.setBackground(bkgColor);
 		}
 		// set background of the settings panel to the appropiate bkg color
