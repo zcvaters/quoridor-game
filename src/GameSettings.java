@@ -5,11 +5,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 public class GameSettings {
 	
-	//store ref to the main UI window (a frame)
+	//store ref to the main UI window (a frame) and the menu panels (JPanel)
 	//this frame will display a variety of panels depending on user needs
+	//the main menu panel (and all other panels) sit in the main window frame (JFrame).
 	static MainWindow mainWindow;
+	static MainMenu mainMenu;
+	static NewGameMenu newGameMenu;
+	static LoadGameMenu loadGameMenu;
+	static InstructionsMenu instructionsMenu;
+	static QuitMenu quitMenu;
 	
 	//store reference to object which manages all incoming user input
 	static InputManager inputManager;
@@ -68,6 +76,7 @@ public class GameSettings {
 	//a collection of 1, 2, 3, 4 in a random order.  used to assign ID's.
 	static List<Integer> playerIDList;
 	
+	
 	//the individual tiles needed to comprise a gameboard and the four players created (or loaded)
 	//passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
@@ -111,7 +120,31 @@ public class GameSettings {
 	}
 	
 	public static MainWindow GetMainWindow() {
+		//note, this is the main window (JFRAME)
+		//not to be confused with the main menu (below)
 		return mainWindow;
+	}
+	
+	public static MainMenu GetMainMenu() {
+		//this is the main menu.  A JPanel.
+		//contains UI buttons for new, load, quit, etc.
+		return mainMenu;
+	}
+	
+	public static NewGameMenu GetNewGameMenu() {
+		return newGameMenu;
+	}
+	
+	public static LoadGameMenu GetLoadGameMenu() {
+		return loadGameMenu;
+	}
+	
+	public static InstructionsMenu GetInstructionsMenu() {
+		return instructionsMenu;
+	}
+	
+	public static QuitMenu GetQuitMenu() {
+		return quitMenu;
 	}
 	
 	public static int GetRows() {
@@ -174,6 +207,30 @@ public class GameSettings {
 	}
 	
 	//SETTERS
+	
+	public static void SetMainWindow(MainWindow mainWin) {
+		mainWindow = mainWin;
+	}
+	
+	public static void SetMainMenu(MainMenu mMenu) {
+		mainMenu= mMenu;		
+	}
+	
+	public static void SetNewGameMenu(NewGameMenu ngMenu) {
+		newGameMenu = ngMenu;
+	}
+	
+	public static void SetLoadGameMenu(LoadGameMenu lgMenu) {
+		loadGameMenu = lgMenu;
+	}
+	
+	public static void SetInstructionsMenu(InstructionsMenu instMenu) {
+		instructionsMenu = instMenu;
+	}
+	
+	public static void SetQuitMenu(QuitMenu qMenu) {
+		quitMenu = qMenu;
+	}
 	
 	public static void setGameTiles(GameTile[][] allTiles) {
 		//this is only set by two methods:
