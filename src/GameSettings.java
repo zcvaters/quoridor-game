@@ -65,7 +65,7 @@ public class GameSettings implements Serializable {
 
 	// a collection of 1, 2, 3, 4 in a random order. used to assign ID's.
 	static List<Integer> playerIDList;
-
+  
 	// storage for the individual tiles needed to comprise a gameboard.
 	// passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
@@ -73,8 +73,7 @@ public class GameSettings implements Serializable {
 	// Storage for the players Objects
 	static ArrayList<Player> players;
 
-	/*
-	 * Constructor - GameSettings
+	/* Constructor - GameSettings
 	 * 
 	 * Intended as a top-level class to provide access for static variables. Any
 	 * class can access these attributes like this GameSettings.GetInputManager();
@@ -137,7 +136,11 @@ public class GameSettings implements Serializable {
 		return gameTiles;
 	}
 
-	// get computer-generated name
+	public static Player[] getPlayers(){
+		return allPlayers;
+	}
+	
+	//get computer-generated name
 	public static String GetRandomName() {
 		int rnd = new Random().nextInt(computerNames.length);
 		return computerNames[rnd];
@@ -200,11 +203,12 @@ public class GameSettings implements Serializable {
 			players.add(plr);
 		}
 	}
+	
+	//helper methods
+	private List<Integer> buildPlayerIDList(){
+		//randomize the numbers 1-4 inside an array.  use collections->shuffle().
+		//ex:  [1, 3, 4, 2]   or   [2, 1, 4, 3]  etc...				
 
-	// helper methods
-	private List<Integer> buildPlayerIDList() {
-		// randomize the numbers 1-4 inside an array. use collections->shuffle().
-		// ex: [1, 3, 4, 2] or [2, 1, 4, 3] etc...
 		List<Integer> sourceList = Arrays.asList(1, 2, 3, 4);
 		Collections.shuffle(sourceList);
 		// return the shuffled source list.
