@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -42,7 +43,6 @@ public class BuildAssets{
 	//ref to the object that will handle user input
 	InputManager inputManager;
 	
-	
 	//
 	//  NEW GAME Constructor	
 	public BuildAssets(Color tileColor, 
@@ -69,13 +69,16 @@ public class BuildAssets{
 		//give the game tiles to GameSettings for storage.
 		//access these from anywhere with GameSettings.GetGameTiles();  returns a GameTile[][]
 		GameSettings.setGameTiles(gameBoard.GetGrid());
-		
+
 		//give the game tiles to the InputManager for handling user input
 		GameSettings.inputManager.SetGridTiles(gameBoard.GetGrid());
-		
+
 		//PLAYERS (4)		
 		//get an empty array that will hold 4 configured players, in proper turn order (1, 2, 3, 4).
 		players = new Player[4];
+		 
+		ArrayList<Player> playersAttributes = new ArrayList<>();
+		
 		//loop players.  turn order is currently randomized (from GameSettings)
 		//unrandomize it, store new players in proper order (starting with whomever was chosen as first player)
 		for(int i = 0; i < turnOrder.size(); i++) {	
@@ -108,6 +111,7 @@ public class BuildAssets{
 
 			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
 			//repeat until 4 players.
+			
 
 		}
 		
@@ -136,7 +140,11 @@ public class BuildAssets{
 		
 		//add the gameboard to the middle panel of in-game UI.
 		middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
-		middlePanel.add(gameBoard);		
+		middlePanel.add(gameBoard);
+		
+		// Store Player Objects in Game Settings
+		playersAttributes.addAll(Arrays.asList(players));
+		GameSettings.setPlayers(playersAttributes);
 		
 		//start the game controller
 		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer);
@@ -179,8 +187,7 @@ public class BuildAssets{
 		return thisTile;
 	}
 	
-	
-	
+
 						
 						
 

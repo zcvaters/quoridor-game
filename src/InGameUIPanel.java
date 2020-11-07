@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -266,7 +267,7 @@ public class InGameUIPanel extends JPanel implements ActionListener{
 		}
 		
 		if(selected.equals(saveGameButton)) {
-			//TODO: Implement save the game state.
+			SaveGame.saveGameObjs();
 		}
 		if(selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel

@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
 
 
 //the player object is a panel!
-public class Player extends JPanel {
+public class Player extends JPanel{
 	
 	//unique ID number (1-4)
 	int turnPosition;
