@@ -338,8 +338,8 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 
 			if (this.settingsPanel.isVisible()) {
 				// If the settings panel is visible, toggle it off and game board on
-				
 				saveGamePanel.setVisible(false);
+				settingsPanel.setVisible(false);
 				middlePanel.setVisible(true);
 			} else {
 				// The settings panel is not visible set visible
@@ -347,9 +347,10 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 				this.settingsPanel.setVisible(true);
 				this.middlePanel.setVisible(false);
 			}
-			
-			if(this.saveGamePanel.isVisible()) {
+
+			if (this.saveGamePanel.isVisible()) {
 				saveGamePanel.setVisible(false);
+				settingsPanel.setVisible(false);
 			}
 
 		}
@@ -374,16 +375,19 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 			SaveGame.saveGameObjs("Save1.sav");
 			saveGame1.setText("Saved To Save 1 Slot");
 			saveGame1.setBackground(Color.GREEN);
+			saveGame1.setEnabled(false);
 		}
 		if (selected.equals(saveGame2)) {
 			SaveGame.saveGameObjs("Save2.sav");
 			saveGame2.setText("Saved to Save 2 Slot");
 			saveGame2.setBackground(Color.GREEN);
+			saveGame2.setEnabled(false);
 		}
 		if (selected.equals(saveGame3)) {
 			SaveGame.saveGameObjs("Save3.sav");
 			saveGame3.setText("Saved to Save 3 Slot");
 			saveGame3.setBackground(Color.GREEN);
+			saveGame3.setEnabled(false);
 		}
 		if (selected.equals(backToSettingsButton)) {
 			this.saveGamePanel.setVisible(false);
