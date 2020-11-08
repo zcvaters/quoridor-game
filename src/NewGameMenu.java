@@ -65,12 +65,13 @@ public class NewGameMenu extends JPanel implements ActionListener{
 		
 		//build a panel
 		super();
-		
-		this.setBackground(new Color(250, 245, 245));
+		//size to fit frame		
+		this.setBounds(0,0,1000,1000);
+		this.setOpaque(false);
 		
 		//the labels for the header and choose colors
 		newGameHeaderLabel = new JLabel("NEW GAME");
-		EmptyBorder border1 = new EmptyBorder(20, 0, 20,0 );
+		EmptyBorder border1 = new EmptyBorder(190, 0, 20,20 );
 		newGameHeaderLabel.setBorder(border1);
 		newGameHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		//newGameHeaderLabel.setPreferredSize(new Dimension(1000, 100));		

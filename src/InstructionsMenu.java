@@ -1,16 +1,23 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
@@ -31,52 +38,78 @@ public class InstructionsMenu extends JPanel implements ActionListener{
 		//button "Back" at the bottom
 		
 		//the instructions panel		
-		this.setBackground(new Color(9, 132, 227));
-		this.setLayout(null);
+		//size to fit frame		
+		this.setBounds(0,0,1000,1000);
+		this.setOpaque(false);		
         
 		//the label for the header
-		instructionsHeaderLabel = new JLabel("How To Play Quoridor");
-		instructionsHeaderLabel.setBounds(10, 12, 978, 52);
-		instructionsHeaderLabel.setForeground(new Color(0, 0, 0));
-		instructionsHeaderLabel.setBorder(new LineBorder(Color.BLACK, 3, true));
-		instructionsHeaderLabel.setBackground(Color.WHITE);
+		instructionsHeaderLabel = new JLabel("How To Play");
+		EmptyBorder border1 = new EmptyBorder(190, 0, 0,0 );
+		instructionsHeaderLabel.setBorder(border1);
+		instructionsHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		instructionsHeaderLabel.setFont(new Font("Dialog", Font.BOLD, 35));
 		instructionsHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		instructionsHeaderLabel.setVerticalAlignment(JLabel.CENTER);
 		
 		// instructions text
-        instructionsTextLabel = new JTextArea();
-        instructionsTextLabel.setBorder(new EtchedBorder(EtchedBorder.RAISED, Color.BLACK, Color.DARK_GRAY));
-        instructionsTextLabel.setEditable(false);
-        instructionsTextLabel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        instructionsTextLabel.setForeground(Color.BLACK);
-        instructionsTextLabel.setRequestFocusEnabled(false);
-        instructionsTextLabel.setSelectedTextColor(Color.BLACK);
-        instructionsTextLabel.setBackground(new Color(255, 234, 167));
-        instructionsTextLabel.setFont(new Font("Dialog", Font.PLAIN, 18));
-        instructionsTextLabel.setText("Starting a New Game\n  Begin by starting a New Game, choose your set colours these are for the board colour and each pawn\n  colour. You can also choose each players name and if they're a human player or if they're the \n  Computer AI , there must be four players to begin. Computer can be set to Easy or Hard difficulty. \n\n  Click Start to begin play!\n\nStart Of Play\n  Each player starts at one side of the board, each player is given 5 fences. \n  Every player has a unique pawn and a matching side of the board. The players goal is \n  to reach the opposite side they started on. First to get there wins!\n\n  The starting pawn is determined randomly each session.\n  At the start of the match the board is empty except for the starting positions of each pawn.\n\nTaking A Turn\n  A pawn can move one square at a time, horizontally or vertically, forwards or backwards, never diagonally.\n  Fences block a players way and must be moved around by the player.\n  Fences take up two total squares.\n\n  Face to Face pawns can jump over eachother or go in any other direction they choose.\n  Face to Face pawns may also go diagonal if there is a fence behind their opponent.\n  Face to Face pawns may not jump over more than one pawn at a time.\n  Fences are strictly impossible to jump over.\n\nEnd of the Game\n  When a player reaches the opposite side of where they began the game is over, the first player to do \n  so is the Winner!\n");
-        instructionsTextLabel.setBounds(10, 76, 975, 622);
-        
+		JPanel instructionsPanel = new JPanel();
+		EmptyBorder border2 = new EmptyBorder(50, 15, 0, 15);
+		instructionsPanel.setOpaque(false);
+		instructionsPanel.setBorder(border2);
+		JTextArea instructionsText = new JTextArea();		
+		instructionsText.setFont(new Font("Dialog", Font.PLAIN, 14));
+        instructionsText.setText(GetInstructionsText());
+        JScrollPane instructionsScrollPane = new JScrollPane(instructionsText, 
+        										 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        										 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		instructionsScrollPane.setOpaque(false);
+		instructionsScrollPane.setPreferredSize(new Dimension(900, 500));
+		instructionsPanel.add(instructionsScrollPane);
 		
 		//the "back" button and listener
-		instructionsBackButton = new JButton("");
-		instructionsBackButton.setBorderPainted(false);
-		instructionsBackButton.setIcon(new ImageIcon(getClass().getResource("/Assets/back_button.png")));
-		instructionsBackButton.setBorder(null);
-		instructionsBackButton.setBounds(new Rectangle(200, 200, 200, 100));
-		instructionsBackButton.setIconTextGap(5);
-		instructionsBackButton.setBounds(10, 712, 975, 75);
+        JPanel buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
+		instructionsBackButton = new JButton("Back");
+		buttonPanel.add(instructionsBackButton);
+		//instructionsBackButton.setBorderPainted(false);
+		//instructionsBackButton.setIcon(new ImageIcon(getClass().getResource("/Assets/back_button.png")));
 		instructionsBackButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		instructionsBackButton.setRolloverEnabled(true);
-		instructionsBackButton.setRolloverIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
-		instructionsBackButton.setSelectedIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
+		//instructionsBackButton.setRolloverEnabled(true);
+		//instructionsBackButton.setRolloverIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
+		//instructionsBackButton.setSelectedIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
 		instructionsBackButton.addActionListener(this);
 	    
-
+		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+		this.setLayout(boxLayout);
         this.add(instructionsHeaderLabel);
-		this.add(instructionsTextLabel);
-		this.add(instructionsBackButton);        
+		this.add(instructionsPanel);
+		this.add(buttonPanel);        
         this.setVisible(false);	
+	}
+	
+	private String GetInstructionsText() {
+		String text = "\nStarting a New Game\n\n"
+				+ "Begin by starting a New Game, choose your set colours these are for the board colour and each pawn colour.\n"
+				+ "You can also choose each players name and if they're a human player or if they're the computer AI.\n"
+				+ "There must be four players to begin. Computer can be set to Easy or Hard difficulty. \n"
+				+ "Click Start to begin play!\n\n"
+				+ "Start Of Play\n\n"
+				+ "Each player starts at one side of the board, each player is given 5 fences. \n"
+				+ "Every player has a unique pawn and a matching side of the board. \n"
+				+ "The players goal is to reach the opposite side they started on. First to get there wins!\n"
+				+ "The starting pawn is determined randomly each session.\n"
+				+ "At the start of the match the board is empty except for the starting positions of each pawn.\n\n"
+				+ "Taking A Turn\n\n"
+				+ "A pawn can move one square at a time, horizontally or vertically, forwards or backwards, never diagonally.\n"
+				+ "Fences block a players way and must be moved around by the player.  Fences take up two total squares.\n"
+				+ "Face to Face pawns can jump over eachother or go in any other direction they choose.\n"
+				+ "Face to Face pawns may also go diagonal if there is a fence behind their opponent.\n"
+				+ "Face to Face pawns may not jump over more than one pawn at a time.\n"
+				+ "Fences are strictly impossible to jump over.\n\n"
+				+ "End of the Game\n\n"
+				+ "When a player reaches the opposite side of where they began the game is over.\n"
+				+ "The first player to do so is the Winner!\n\n";
+		return text;
 	}
 	
 	

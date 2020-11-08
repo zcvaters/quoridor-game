@@ -1,9 +1,14 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 /**
  * 
@@ -25,28 +30,10 @@ public class MainMenu extends JPanel implements ActionListener{
 		
 		//create a JPanel
 		super();
-		
-		System.out.println("Main menu is awake");
-		
-		//header
+		Dimension panelSize = new Dimension(1000, 1000);
+        this.setPreferredSize(panelSize);
+						
 		//four buttons (newGame, loadGame, instructions, quit)
-		//footer
-		
-		//the MainMenu panel
-		//JPanel mainMenuPanel = new JPanel();
-		//mainMenuPanel.setSize(1000, 1000);		
-		//mainMenuPanel.setBackground(new Color(39, 44, 54));
-		//get background image.  1000X1000 for current frams size
-              
-		
-		//the labels for the header/footer
-		//ImageIcon image1;
-		//image1= new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
-		//mainMenuHeaderLabel= new JLabel(image1);
-		//mainMenuHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
-		//mainMenuHeaderLabel.setVerticalAlignment(JLabel.CENTER);		
-		//JLabel bottomPlaceholder = new JLabel();
-		
 		
 		//the buttons		
 		newGameButton = new JButton("New Game");
@@ -60,8 +47,11 @@ public class MainMenu extends JPanel implements ActionListener{
 		
 		//add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
-		menuButtonsPanel.setOpaque(false);
-		//menuButtonsPanel.setSize(200, 200);
+		menuButtonsPanel.setBounds(0,0,1000,1000);
+		EmptyBorder border1 = new EmptyBorder(300, 0, 400,60 );
+		menuButtonsPanel.setBorder(border1);
+		menuButtonsPanel.setLayout(new GridLayout(4,1));
+		menuButtonsPanel.setOpaque(false);		
 		menuButtonsPanel.add(newGameButton);
 		menuButtonsPanel.add(loadGameButton);
 		menuButtonsPanel.add(instructionsButton);
@@ -70,11 +60,17 @@ public class MainMenu extends JPanel implements ActionListener{
 		
 		
 		//add components to the panel
-		this.setLayout(new GridLayout(1,1));
+		this.setBounds(0,0,1000,1000);
+		this.setLayout(new BorderLayout());
 		//this.add(mainMenuHeaderLabel);
-		this.add(menuButtonsPanel);
+		this.add(menuButtonsPanel, BorderLayout.EAST);
 		//mainMenuPanel.add(bottomPlaceholder);
-		//show this panel 
+		//show this panel
+		
+		
+		//this.setBackground(new Color(110, 245, 245));
+		
+		this.setOpaque(false);
 		this.setVisible(true);	
 		
 		

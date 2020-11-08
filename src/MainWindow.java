@@ -1,21 +1,50 @@
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
 	
 	//container to store all available menu panels
 	//these are swapped in/out of frame window as needed
-	ArrayList<JPanel> allMenuPanels;
-
+	private ArrayList<JPanel> allMenuPanels;
+	
+	private JLayeredPane mainWindow;
+	
+	private Dimension frameSize;
+	
 	//constructor
 	public MainWindow() {
 		
+		//get a frame
+		super();
+		
 		//build master frame to hold all panels, fixed size, no resizing.
-		Dimension frameSize = new Dimension(1000, 1000);
-        setSize(frameSize);
-        setResizable(false);
+		frameSize = new Dimension(1000, 1000);
+        this.setSize(frameSize);
+        this.setResizable(false);
+        this.setLayout(null);   // ?need this?
+        
+        mainWindow = new JLayeredPane();
+        mainWindow.setBounds(0,0,1000,1000);
+        mainWindow.setVisible(true);
+        this.add(mainWindow);
+        
+        //add the background image to this frame (wrapped in a JLabel).
+        //panels displayed on top (ie: instructions panel) will be transparent except for text/buttons
+  		ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
+  		JLabel frameBackground = new JLabel(backgroundImage);  		
+  		frameBackground.setBounds(0,0,1000,1000);
+        mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
+        
         
         //store a static ref to this window in GameSettings.  
         //can be accessed anywhere by GameSettings.GetMainWindow()
@@ -50,8 +79,8 @@ public class MainWindow extends JFrame {
         ShowPanel(GameSettings.GetMainMenu());        
         
         //housekeeping for frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
-        setVisible(true);        		
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+        this.setVisible(true);        		
 	}
 	
 	//use this method to load panels into the main window as necessary.
@@ -63,12 +92,16 @@ public class MainWindow extends JFrame {
 			//set all panels as not-visible
 			panel.setVisible(false);
 			//remove all panels the main menu frame
-			this.remove(panel);						
+			mainWindow.remove(panel);						
 		}
 		
 		//display the requested newPanel in frame
 		newPanel.setVisible(true);
-		this.add(newPanel);
+		mainWindow.add(newPanel, JLayeredPane.MODAL_LAYER);
+		
+		
+		
+		
 	}
 		
 }

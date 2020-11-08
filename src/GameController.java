@@ -39,8 +39,7 @@ public class GameController {
 		
 		
 		//show the gameboard!
-		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
-		GameSettings.GetMainWindow().pack();		
+		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);			
 	}
 
 }

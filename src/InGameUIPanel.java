@@ -39,7 +39,7 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 	// constructor
 	public InGameUIPanel() {
 		super(); // Creates a panel
-
+		this.setBounds(0,0, 1000,1000);
 		this.setMinimumSize(new Dimension(1000, 1000));
 		this.setPreferredSize(new Dimension(1000, 1000));
 		setLayout(new GridBagLayout());

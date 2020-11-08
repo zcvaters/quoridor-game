@@ -1,10 +1,15 @@
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class QuitMenu extends JPanel implements ActionListener{
 
@@ -24,36 +29,48 @@ public class QuitMenu extends JPanel implements ActionListener{
 		//yes and no buttons at the bottom
 		
 		//the quit panel		
-		this.setBackground(new Color(255, 255, 255));
+		this.setBounds(0,0,1000,1000);
+		this.setOpaque(false);
 		
 		//the label for the header
-		quitHeaderLabel = new JLabel("QUIT GAME");
-		quitHeaderLabel.setBounds(0, 0, 1000, 89);
-		quitHeaderLabel.setForeground(new Color(51, 51, 51));
+		quitHeaderLabel = new JLabel("Quit Game");
+		EmptyBorder border1 = new EmptyBorder(190, 0, 0,0 );
+		quitHeaderLabel.setBorder(border1);
+		quitHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
+		quitHeaderLabel.setFont(new Font("Dialog", Font.BOLD, 35));
 		quitHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		quitHeaderLabel.setVerticalAlignment(JLabel.CENTER);
+				
 		
 		//"are you sure" message
+		JPanel quitTextPanel = new JPanel();
+		quitTextPanel.setPreferredSize(new Dimension(100, 100));
+		EmptyBorder border2 = new EmptyBorder(200, 0, 50,0 );
+		quitHeaderLabel.setBorder(border2);		
 		quitTextLabel = new JLabel("Are You Sure You Want to Quit?");
-		quitTextLabel.setBounds(0, 130, 1000, 138);
 		quitTextLabel.setHorizontalAlignment(JLabel.CENTER);
 		quitTextLabel.setVerticalAlignment(JLabel.CENTER);
+		quitTextPanel.add(quitTextLabel);
+		quitTextPanel.setOpaque(false);
 		
 		//yes/no buttons and listeners
-		quitYesButton = new JButton("Yes");
-		quitYesButton.setBounds(150, 400, 700, 200);
+		JPanel buttonPanel = new JPanel();
+		//buttonPanel.setOpaque(false);		
+		quitYesButton = new JButton("Yes");		
 		quitYesButton.addActionListener(this);
-		quitNoButton = new JButton("No");
-		quitNoButton.setBounds(150, 615, 700, 200);
+		quitNoButton = new JButton("No");		
 		quitNoButton.addActionListener(this);
+		buttonPanel.add(quitYesButton);
+		buttonPanel.add(quitNoButton);
+		buttonPanel.setOpaque(false);
 		
-		this.setLayout(null);
-		this.add(quitHeaderLabel);
-		this.add(quitTextLabel);
-		this.add(quitYesButton);
-		this.add(quitNoButton);		
+		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+		this.setLayout(boxLayout);
+        this.add(quitHeaderLabel);
+		this.add(quitTextPanel);
+		this.add(buttonPanel);
 		//hide this panel
-		this.setVisible(false);
+        this.setVisible(false);	
 	}
 	
 	@Override
