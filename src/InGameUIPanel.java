@@ -358,7 +358,7 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
 			this.setVisible(false);
-			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainWindow().mainMenuPanel);
+			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
 		if (selected.equals(quitButton)) {
 			System.exit(0);

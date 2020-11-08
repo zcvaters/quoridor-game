@@ -11,6 +11,11 @@ public class GameSettings implements Serializable{
 	// store ref to the main UI window (a frame)
 	// this frame will display a variety of panels depending on user needs
 	static MainWindow mainWindow;
+	static MainMenu mainMenu;
+	static NewGameMenu newGameMenu;
+	static LoadGameMenu loadGameMenu;
+	static InstructionsMenu instructionsMenu;
+	static QuitMenu quitMenu;	
 
 	// store reference to object which manages all incoming user input
 	static InputManager inputManager;
@@ -115,6 +120,27 @@ public class GameSettings implements Serializable{
 	public static MainWindow GetMainWindow() {
 		return mainWindow;
 	}
+	
+	public static MainMenu GetMainMenu() {
+		return mainMenu;
+	}
+
+	public static NewGameMenu GetNewGameMenu() {
+		return newGameMenu;
+	}
+
+	public static LoadGameMenu GetLoadGameMenu() {
+		return loadGameMenu;
+	}
+
+	public static InstructionsMenu GetInstructionsMenu() {
+		return instructionsMenu;
+	}
+	
+	public static QuitMenu GetQuitMenu() {
+		return quitMenu;
+	}
+	
 
 	public static int GetRows() {
 		return rows;
@@ -181,6 +207,30 @@ public class GameSettings implements Serializable{
 	}
 
 	// SETTERS
+	
+	public static void SetMainWindow(MainWindow mainWin) {
+		GameSettings.mainWindow = mainWin;
+	}
+	
+	public static void SetMainMenu(MainMenu mainMenu) {
+		GameSettings.mainMenu = mainMenu;
+	}
+
+	public static void SetNewGameMenu(NewGameMenu newGameMenu) {
+		GameSettings.newGameMenu = newGameMenu;
+	}
+
+	public static void SetLoadGameMenu(LoadGameMenu loadGameMenu) {
+		GameSettings.loadGameMenu = loadGameMenu;
+	}
+
+	public static void SetInstructionsMenu(InstructionsMenu instructionsMenu) {
+		GameSettings.instructionsMenu = instructionsMenu;
+	}
+
+	public static void SetQuitMenu(QuitMenu quitMenu) {
+		GameSettings.quitMenu = quitMenu;
+	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {
 		// this is only set by two methods:
