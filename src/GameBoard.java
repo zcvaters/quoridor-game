@@ -1,12 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-//import java.io.File;
-//import java.io.FileInputStream;
-import java.io.IOException;
-
 
 public class GameBoard extends JPanel  implements ActionListener{
 	

@@ -1,12 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import javax.swing.border.*;
-//import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Random;
-
 
 /**
  * 
@@ -56,13 +51,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	
 	//the width and height of this tile
 	private int width;
-	private int height;	 
-	
-	//coords of the center of this tile, relative to this tile panel. 
-	//top-left of this obj is (0,0)
-	private int xCenter;
-	private int yCenter;
-	
+	private int height;
 	//this object will contain a center tile panel, which is surrounded on NSEW by wall panels.
 	//additional panels for 4 corners
 	//combine these in a grid to make a 3x3 square tile.
@@ -130,8 +119,6 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//set the width/height of the center tile, find the center point
 		this.width = GameSettings.getTileWidth();
 		this.height = GameSettings.getTileHeight();
-		this.xCenter = width/2;
-		this.yCenter = height/2;		
 		//stretch gridbag layout as necessary to accomodate height/width
 		gbc.weightx = 1.0;
 		gbc.weighty = 1.0;

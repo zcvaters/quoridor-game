@@ -33,22 +33,22 @@ public class NewGameMenu extends JPanel implements ActionListener{
 	JLabel firstIconLabel;
 	JLabel firstNameLabel;
 	JTextField firstTextField;
-	JComboBox firstComboBox;
+	JComboBox<String> firstComboBox;
 	JPanel secondPanel;
 	JLabel secondIconLabel;
 	JLabel secondNameLabel;
 	JTextField secondTextField;
-	JComboBox secondComboBox;
+	JComboBox<String> secondComboBox;
 	JPanel thirdPanel;
 	JLabel thirdIconLabel;
 	JLabel thirdNameLabel;
 	JTextField thirdTextField;
-	JComboBox thirdComboBox;
+	JComboBox<String> thirdComboBox;
 	JPanel fourthPanel;
 	JLabel fourthIconLabel;
 	JLabel fourthNameLabel;
 	JTextField fourthTextField;
-	JComboBox fourthComboBox;
+	JComboBox<String> fourthComboBox;
 	//sub-panel to hold "play" and "back" buttons on the new game panel
 	JPanel playBackButtonsPanel;	
 	JButton newGameBackButton;
@@ -126,7 +126,7 @@ public class NewGameMenu extends JPanel implements ActionListener{
 		firstIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		firstIconLabel.setVerticalAlignment(JLabel.CENTER);				
 		firstTextField = new JTextField("<<Your Name Here>>", 1);		
-		firstComboBox = new JComboBox(comboBoxOptions);
+		firstComboBox = new JComboBox<String>(comboBoxOptions);
 		firstComboBox.addActionListener(this);
 		firstPanel.add(firstIconLabel);		
 		firstPanel.add(firstTextField);
@@ -140,7 +140,7 @@ public class NewGameMenu extends JPanel implements ActionListener{
 		secondIconLabel.setVerticalAlignment(JLabel.CENTER);				
 		secondTextField = new JTextField("<<Your Name Here>>", 1);
 		//secondTextField.setColumns(12);
-		secondComboBox = new JComboBox(comboBoxOptions);
+		secondComboBox = new JComboBox<String>(comboBoxOptions);
 		secondComboBox.addActionListener(this);
 		secondPanel.add(secondIconLabel);		
 		secondPanel.add(secondTextField);
@@ -154,7 +154,7 @@ public class NewGameMenu extends JPanel implements ActionListener{
 		thirdIconLabel.setVerticalAlignment(JLabel.CENTER);			
 		thirdTextField = new JTextField("<<Your Name Here>>", 1);
 		//thirdTextField.setColumns(12);
-		thirdComboBox = new JComboBox(comboBoxOptions);
+		thirdComboBox = new JComboBox<String>(comboBoxOptions);
 		thirdComboBox.addActionListener(this);
 		thirdPanel.add(thirdIconLabel);		
 		thirdPanel.add(thirdTextField);
@@ -168,7 +168,7 @@ public class NewGameMenu extends JPanel implements ActionListener{
 		fourthIconLabel.setVerticalAlignment(JLabel.CENTER);				
 		fourthTextField = new JTextField("<<Your Name Here>>", 1);
 		//fourthTextField.setColumns(12);
-		fourthComboBox = new JComboBox(comboBoxOptions);
+		fourthComboBox = new JComboBox<String>(comboBoxOptions);
 		fourthComboBox.addActionListener(this);
 		fourthPanel.add(fourthIconLabel);		
 		fourthPanel.add(fourthTextField);

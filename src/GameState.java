@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.util.ArrayList;
 
 /*
  * The GameState holds a list of assets and attributes that define a game in progress (possibly just starting). 

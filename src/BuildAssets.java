@@ -1,7 +1,5 @@
-import java.awt.BorderLayout;
+
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,11 +31,6 @@ public class BuildAssets{
 	
 	//the players(4)
 	Player[] players;
-	
-	//the colors to be used    (necessary to store here? not!?)
-	private Color tileColor;
-	private Color wallColor;
-	private Color bkgColor;
 	
 	
 	//ref to the object that will handle user input
