@@ -15,10 +15,16 @@ public class GameSettings implements Serializable{
 	static NewGameMenu newGameMenu;
 	static LoadGameMenu loadGameMenu;
 	static InstructionsMenu instructionsMenu;
-	static QuitMenu quitMenu;	
+	static QuitMenu quitMenu;
+	
+	//the in game message panel.  has it's own methods for setting in-game text to display
+	static InGameMessagePanel messagePanel;
 
 	// store reference to object which manages all incoming user input
 	static InputManager inputManager;
+	
+	//store ref to the object which will run the gameplay
+	static GameController gameController;
 
 	// the number of rows for game board
 	static int rows;
@@ -77,6 +83,9 @@ public class GameSettings implements Serializable{
 
 	// Storage for the players Objects
 	static ArrayList<Player> players;
+	
+	//for locking controls/input when necessary (ie: between turn changes)
+	static Boolean gameIsPaused;
 
 	/* Constructor - GameSettings
 	 * 
@@ -110,9 +119,16 @@ public class GameSettings implements Serializable{
 
 		// Player Object storing
 		players = new ArrayList<Player>();
+		
+		//game is not paused
+		gameIsPaused = false;
 	}
 
-	// getters
+	// getters	
+	public static GameController GetGameController() {
+		return gameController;
+	}
+	
 	public static InputManager GetInputManager() {
 		return inputManager;
 	}
@@ -141,6 +157,9 @@ public class GameSettings implements Serializable{
 		return quitMenu;
 	}
 	
+	public static InGameMessagePanel GetMessagePanel() {
+		return messagePanel;
+	}
 
 	public static int GetRows() {
 		return rows;
@@ -196,15 +215,15 @@ public class GameSettings implements Serializable{
 	public static Color[] getPlayerColors(int playersIndex) {
 		return playerColors[playersIndex];
 	}
-
-	/*
-	 * Gets player ArrayList object
-	 * 
-	 * @returns: ArrayList<Player>
-	 */
+	
 	public static ArrayList<Player> getPlayers() {
 		return players;
 	}
+	
+	public static Boolean GetGameIsPaused() {
+		return gameIsPaused;
+	}
+	
 
 	// SETTERS
 	
@@ -231,6 +250,10 @@ public class GameSettings implements Serializable{
 	public static void SetQuitMenu(QuitMenu quitMenu) {
 		GameSettings.quitMenu = quitMenu;
 	}
+	
+	public static void SetMessagePanel(InGameMessagePanel msgPanel) {
+		GameSettings.messagePanel = msgPanel;
+	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {
 		// this is only set by two methods:
@@ -238,17 +261,22 @@ public class GameSettings implements Serializable{
 		// LoadGame, in LoadFromFile(), when loading previously saved files.
 		gameTiles = allTiles;
 	}
-
-	/*
-	 * Sets playerArray to current Player objects.
-	 * 
-	 * @Params: playerArray of type Player
-	 */
+	
 	public static void setPlayers(ArrayList<Player> playerArray) {
 		for (Player plr : playerArray) {
 			players.add(plr);
 		}
 	}
+	
+	public static void SetGameIsPaused(Boolean isPaused) {
+		GameSettings.gameIsPaused = isPaused;
+	}
+	
+	public static void SetGameController(GameController controller) {
+		GameSettings.gameController= controller;
+	}
+	
+	
 	
 	//helper methods
 	private List<Integer> buildPlayerIDList(){
