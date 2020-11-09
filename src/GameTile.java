@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.util.ArrayList;
 
 /**
@@ -63,6 +65,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	private JPanel topRightWall;
 	private JPanel leftWall;
 	private JLayeredPane tile;		//<--- center tile.  Player moves on these.
+	private JPanel centerPanel;
 	private JPanel rightWall;
 	private JPanel bottomLeftWall;
 	private JPanel bottomWall;
@@ -71,10 +74,11 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	//this var will hold the panel for whichever player is standing on the tile
 	JPanel playerPanel;
 	
-	
-	
 	//container for holding any wall borders that player has legally placed in play.  
-	ArrayList<JPanel> lockedWalls;          
+	ArrayList<JPanel> lockedWalls;
+	
+	Boolean canAcceptPlayer;
+	Boolean playerIsHere;
 	
 	//using gridBagLayout for 9 panels above
 	private GridBagConstraints gbc = new GridBagConstraints();	
@@ -83,7 +87,12 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	//constructor
 	public GameTile(Color tileColor, Color wallColor, Color bkgColor, int xcoord, int ycoord)  
 	{		
-		super();  //create a JPanel			
+		super();  //create a JPanel
+		
+		//flag as unavailable to accept player yet.
+		//GameController will arm this tile if it can be moved to legally
+		canAcceptPlayer = false;
+		playerIsHere = false;
 		
 		//Colors
 		//the color of the center tiles (player moves on these)
@@ -177,16 +186,24 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//useful for displaying the "player" panel on the center tile.
 		//CENTER TILE IS A SPECIAL CASE!
 		//it uses JLayeredPane to display the player panel (if player is here)
-		tile = new JLayeredPane();
+		tile = new JLayeredPane();		
 		tile.setPreferredSize(new Dimension(width,height));
-		tile.setBounds(0,0,width,height); //for layers		
+		tile.setBounds(0,0,width,height); //for layers
+		centerPanel = new JPanel();
+		centerPanel.setBounds(0,0,width,height); //for layers
+		centerPanel.setOpaque(false);
+		centerPanel.setName("centerPanel");
+		centerPanel.addMouseListener(this);
+		centerPanel.addMouseMotionListener(this);
+		tile.add(centerPanel, JLayeredPane.PALETTE_LAYER);
 		playerPanel = new JPanel();  //<-- empty placeholder.  players will be swapped in here later.		
-		tile.add(playerPanel);
+		tile.add(playerPanel, JLayeredPane.MODAL_LAYER);
 		tile.setName("tile");
 		tile.setBackground(tileColor);
 		tile.setOpaque(true);		
 		gbc.gridx = 5;
-		gbc.gridy = 5;		
+		gbc.gridy = 5;
+		
 		this.add(tile, gbc);
 		
 		rightWall = new JPanel();
@@ -278,6 +295,79 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		return lockedWalls;
 	}
 	
+	//this method returns the player (obj) that is standing on this tile, if any
+	public Player GetPlayer() {		
+		return (Player)playerPanel;		
+	}
+	//getter to determine if a player is standing on this tile (bool).
+	public Boolean PlayerIsHere() {		
+		return playerIsHere;		
+	}
+	
+	//does a particular neighbor exist?
+	public Boolean HasNorthTile() {		
+		return xcoord != 0;		
+	}	
+	public Boolean HasNorthEastTile() {		
+		return xcoord != 0 && (ycoord != GameSettings.GetCols()-1);		
+	}	
+	public Boolean HasEastTile() {		
+		return ycoord != GameSettings.GetCols()-1;		
+	}
+	public Boolean HasSouthEastTile() {		
+		return (xcoord != GameSettings.GetRows() -1) && (ycoord != GameSettings.GetCols()-1);		
+	}
+	public Boolean HasSouthTile() {		
+		return (xcoord != GameSettings.GetRows() -1);		
+	}
+	public Boolean HasSouthWestTile() {		
+		return (xcoord != GameSettings.GetRows() -1) && (ycoord != 0);		
+	}
+	public Boolean HasWestTile() {		
+		return ycoord != 0;		
+	}
+	public Boolean HasNorthWestTile() {		
+		return xcoord != 0 && ycoord != 0;		
+	}
+	
+	//are their walls on a particular side of this tile?
+	public Boolean HasNorthWall() {		
+		return lockedWalls.contains(topWall);	
+	}
+	public Boolean HasSouthWall() {		
+		return lockedWalls.contains(bottomWall);	
+	}
+	public Boolean HasEastWall() {		
+		return lockedWalls.contains(rightWall);	
+	}
+	public Boolean HasWestWall() {		
+		return lockedWalls.contains(leftWall);	
+	}
+	
+	
+	
+	public void ActivateTile() {		
+		Border yellowLine = BorderFactory.createLineBorder(Color.YELLOW, 3);
+		tile.setBorder(yellowLine);
+		//set as active
+		canAcceptPlayer = true;
+	}
+	
+	public void DeactivateTile() {			
+		tile.setBorder(null);
+		//deactivate tile
+		canAcceptPlayer = false;
+	}
+	
+	//for handling inquiries if player can move here.
+	public Boolean CanAcceptPlayer() {
+		return canAcceptPlayer;
+	}
+	
+	
+	
+	
+	
 	//CHANGE WALL BORDER COLORS  (called by Input Manager on mouse over)
 	public void ActivateWallPanel(JPanel panelToDisplay) {
 		if(panelToDisplay.getBackground() == bkgColor) {
@@ -318,6 +408,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		
+		
 				
 		//get the sub-panel that detected the movement
 		//get the position of the mouse with respect to this sub panel.
@@ -325,8 +416,10 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		Point point = e.getPoint();			
 		
 		//System.out.println("On tile (" +xcoord+ ", " +ycoord+ 
-		//				   ")   At position (" +point.x+ ", " +point.y+
-		//				   ")   On panel (" +thisPanel.getName()+ ")");
+				   //")   At position (" +point.x+ ", " +point.y+
+				  // ")   On panel (" +thisPanel.getName()+
+				  // ")   Parent is (" +thisPanel.getParent()+ ")");
+		
 		
 		//send to InputManager for handling
 		inputManager.TrackMouseMovement(thisPanel, point);
@@ -347,44 +440,26 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		playerPanel.setOpaque(true);
 		//params:  startX, startY, panelWidth, panelHeight.  configured to center the player on the tile.
 		playerPanel.setBounds((width-playerX)/2,(height-playerY)/2,playerX, playerY);
-		tile.add(playerPanel);
+		tile.add(playerPanel, JLayeredPane.PALETTE_LAYER);
+		//flag bool to show player is here
+		playerIsHere = true;
 		
 	}
 	public void RemovePlayer() {		
 		tile.remove(playerPanel);
-	}
-	
-	public void TurnOnCenterTile() {
-		if(tile.getBackground() == tileColor) {               //<--------- FIX THIS!
-			tile.setBackground(tileHighlightColor);		
-		}
-	}
-	
-	public void TurnOffCenterTile() {		
-		if(tile.getBackground() == tileHighlightColor) {               //<--------- FIX THIS!
-			tile.setBackground(tileColor);		
-		} 
-	}
-	
+		playerIsHere = false;
+		repaint();
+	}	
 	
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		//inputManager.ClearTemporaryWalls();
-		JPanel thisPanel = (JPanel) e.getComponent();
-		if(thisPanel.getName().equals("tile")) {
-			this.TurnOnCenterTile();			
-		}		
+		
 	}
 	
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
-		//inputManager.ClearTemporaryWalls();
-		JPanel thisPanel = (JPanel) e.getComponent();
-		if(thisPanel.getName().equals("tile")) {
-			this.TurnOffCenterTile();			
-		}			
+					
 	}
 
 
@@ -393,8 +468,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		
 		JPanel thisPanel = (JPanel) e.getComponent();
 				
-		inputManager.HandleMouseClick(thisPanel);
-		// Activate place (lock?) walls, or move player, here.		
+		inputManager.HandleMouseClick(thisPanel);				
 	}
 
 	

@@ -18,6 +18,8 @@ public class MainWindow extends JFrame {
 	private ArrayList<JPanel> allMenuPanels;
 	
 	private JLayeredPane mainWindow;
+	//used to overlay in-game messages (player's turn, illegal move, etc)
+	private InGameMessagePanel messagePanel;
 	
 	private Dimension frameSize;
 	
@@ -43,6 +45,7 @@ public class MainWindow extends JFrame {
   		ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
   		JLabel frameBackground = new JLabel(backgroundImage);  		
   		frameBackground.setBounds(0,0,1000,1000);
+  		//background image is on DEFAULT (bottom) layer.
         mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
         
         
@@ -50,11 +53,16 @@ public class MainWindow extends JFrame {
         //can be accessed anywhere by GameSettings.GetMainWindow()
         GameSettings.SetMainWindow(this);
         
+        //these are the main menu and associated panels (displayed on PALETTE layer, on top of DEFAULT)
         MainMenu mainMenu = new MainMenu();
         NewGameMenu newGameMenu = new NewGameMenu();
         LoadGameMenu loadGameMenu = new LoadGameMenu();
         InstructionsMenu instructionsMenu = new InstructionsMenu();
         QuitMenu quitMenu = new QuitMenu();
+        //this panel is reserved for inGame Messages (displayed on MODAL layer, on top of PALETTE)
+        //it has it's own methods for setting text messages. accessible through GameSettings.
+        //NOT added to menuPanel array list below (it's not a menu).
+        messagePanel = new InGameMessagePanel();
         
         //define array to hold all menu panels
         //this list holds all of the panels that have been created
@@ -73,7 +81,9 @@ public class MainWindow extends JFrame {
         GameSettings.SetNewGameMenu(newGameMenu);
         GameSettings.SetLoadGameMenu(loadGameMenu);
         GameSettings.SetInstructionsMenu(instructionsMenu);
-        GameSettings.SetQuitMenu(quitMenu);
+        GameSettings.SetQuitMenu(quitMenu);        
+        //add the message panel
+        GameSettings.SetMessagePanel(messagePanel);
         
         //add the mainMenuPanel to the frame, providing user with starting options 
         ShowPanel(GameSettings.GetMainMenu());        
@@ -97,11 +107,30 @@ public class MainWindow extends JFrame {
 		
 		//display the requested newPanel in frame
 		newPanel.setVisible(true);
-		mainWindow.add(newPanel, JLayeredPane.MODAL_LAYER);
+		mainWindow.add(newPanel, JLayeredPane.PALETTE_LAYER);		
+	}
+	
+	//used to display in-game messages to the players.
+	//ie: "Player 2 has next turn".  or "Illegal Move".
+	public void ShowMessage(String message) {
 		
+		//get the message panel
+		//update the message text
+		//display the panel
+		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
 		
+		messagePanel.SetMessageText(message);
+		messagePanel.setVisible(true);
+		mainWindow.add(messagePanel, JLayeredPane.MODAL_LAYER);				
 		
+	}
+	
+	public void RemoveMessage() {
 		
+		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
+		mainWindow.remove(messagePanel);
+		//refresh display for whatever was underneath this message
+		this.repaint();
 	}
 		
 }

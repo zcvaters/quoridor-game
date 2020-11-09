@@ -40,7 +40,7 @@ public class GameController {
 		//show the gameboard!
 		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
 		//advance to next turn, pass player list index as ref.
-		//AdvanceToNextTurn();
+		AdvanceToNextTurn();
 	}
 	
 	//GETTERS
@@ -49,7 +49,7 @@ public class GameController {
 		return currentPlayer;
 	}
 	
-	/*
+	
 	public void AdvanceToNextTurn() {
 		
 		//get the next player to play
@@ -109,28 +109,46 @@ public class GameController {
 		
 		System.out.println(currentPlayer.GetName() + " is on tile (" +rowAddress+ ", " +colAddress+ ")");
 		
-		//does player have north?
-		if(location.HasNorth()) {
-			tiles[rowAddress-1][colAddress].ActivateTile();
+		//does player have north option?
+		if(location.HasNorthTile()) {
+			//the north neighbor tile exists.
+			//check this tile for blocking walls and north tile for other players.
+			GameTile northTile = tiles[rowAddress-1][colAddress];
+			if(!location.HasNorthWall() && !northTile.PlayerIsHere()) {
+				northTile.ActivateTile();
+			}
 		}
-		//does player have east?
-		if(location.HasEast()) {
-			tiles[rowAddress][colAddress+1].ActivateTile();
+		//does player have east option?
+		if(location.HasEastTile()) {
+			//the east neighbor tile exists.
+			//check this tile for blocking walls and east tile for other players.
+			GameTile eastTile = tiles[rowAddress][colAddress+1];
+			if(!location.HasEastWall() && !eastTile.PlayerIsHere()) {
+				eastTile.ActivateTile();
+			}
 		}
-		//does player have south?
-		if(location.HasSouth()) {
-			tiles[rowAddress+1][colAddress].ActivateTile();
+		//does player have south option?
+		if(location.HasSouthTile()) {
+			//the south neighbor tile exists.
+			//check this tile for blocking walls and south tile for other players.
+			GameTile southTile = tiles[rowAddress+1][colAddress];
+			if(!location.HasSouthWall() && !southTile.PlayerIsHere()) {
+				southTile.ActivateTile();
+			}
 		}
-		//does player have west?
-		if(location.HasWest()) {
-			tiles[rowAddress][colAddress-1].ActivateTile();
+		//does player have west option?
+		if(location.HasWestTile()) {
+			//the west neighbor tile exists.
+			//check this tile for blocking walls and west tile for other players.
+			GameTile westTile = tiles[rowAddress][colAddress-1];
+			if(!location.HasWestWall() && !westTile.PlayerIsHere()) {
+				westTile.ActivateTile();
+			}			
 		}
 		
 		
 		
-	}
-	
-	*/
+	}	
 	
 	
 

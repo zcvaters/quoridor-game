@@ -17,20 +17,22 @@ import javax.swing.JPanel;
 public class Player extends JPanel{
 	
 	//unique ID number (1-4)
-	int turnPosition;
+	private int turnPosition;
 	//type of player, human ("h") or computer ("c")
-	String playerType;
+	private String playerType;
 	//name of player, displayed on UI
-	String playerName;
+	private String playerName;
 	//this player's color
-	Color playerColor;
+	private Color playerColor;
 	//difficulty setting.  true means player is difficult/challenging.  false = easy.
-	boolean playerIsDifficult;  //note:  human's have this set to "false/easy" by default (does not matter).
+	private boolean playerIsDifficult;  //note:  human's have this set to "false/easy" by default (does not matter).
 		
-	GameTile playerLocation;  //stores the tile player is currently on.
+	private GameTile playerLocation;  //stores the tile player is currently on.
 	
-	int playerWallsRemaining;
+	private int playerWallsRemaining;
 	
+	//player is trying to reach north, east, south, or west side of board.
+	private String playerGoal;
 		
 	/* Constructor 
 	 * 
@@ -47,6 +49,7 @@ public class Player extends JPanel{
 		//set player attributes
 		this.turnPosition = turnPosition;
 		this.playerLocation = playerLocation;
+		SetPlayerGoal(playerLocation);
 		this.playerType = type;
 		this.playerName = name;
 		this.playerColor = color;
@@ -81,9 +84,48 @@ public class Player extends JPanel{
 		return playerLocation;
 	}
 	
+	public int GetWallsRemaining() {
+		return playerWallsRemaining;
+	}
+	
+	public String GetPlayerGoal() {
+		//returns north, east, south, or west
+		return playerGoal;
+	}
+	
 	//Setters
 	public void setTile(GameTile newLocation) {
 		playerLocation = newLocation;
-	}	
+	}
+	
+	public void setWallsRemaining(int numWalls) {
+		playerWallsRemaining = numWalls;
+	}
+	
+	//HELPERS
+	private void SetPlayerGoal(GameTile startTile) {
+		//if the player is on the bottom, their goal is "north"
+		//if player is on left, goal is "east"
+		//if player is on top, goal is "south"
+		//if player is on right, goal is "west"
+		
+		if(startTile.GetXCoord() == GameSettings.GetRows()-1) {
+			//player is on bottom, moving north
+			playerGoal = "north";
+		}
+		if(startTile.GetXCoord() == 0) {
+			//player is on top, moving south
+			playerGoal = "south";
+		}
+		if(startTile.GetYCoord() == GameSettings.GetCols()-1) {
+			//player is on right, moving west
+			playerGoal = "west";
+		}
+		if(startTile.GetYCoord() == 0) {
+			//player is on left, moving east
+			playerGoal = "east";
+		}
+		
+	}
 
 }

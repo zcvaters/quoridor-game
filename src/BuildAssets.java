@@ -101,7 +101,6 @@ public class BuildAssets{
 			//build a player
 			Player newPlayer = new Player(playerTurn, playerLocation, playerType, playerName, playerColor, isDifficult);
 			//add it to array in proper ordered position.  -1 for zero indexing.
-
 			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
 			//repeat until 4 players.
 
