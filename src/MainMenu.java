@@ -107,6 +107,7 @@ public class MainMenu extends JPanel implements ActionListener {
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					button.setForeground(new Color(140, 15, 15));
+					GameSettings.play();
 				}
 
 				@Override

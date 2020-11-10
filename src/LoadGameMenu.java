@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -10,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class LoadGameMenu extends JPanel implements ActionListener {
@@ -84,10 +86,9 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		buttonPanel.setOpaque(false);
 		loadGameBackButton.addActionListener(this);
 
-		selectionLabel = new JLabel();
+		selectionLabel = new JLabel("", SwingConstants.CENTER);
 		gbc.gridx = 0;
 		gbc.gridy = 5;
-		selectionLabel.setText("");
 		buttonPanel.add(selectionLabel, gbc);
 
 		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -97,6 +98,15 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		// hide this panel
 		this.setVisible(false);
 
+	}
+	
+	public JLabel getSelectionLabel() {
+		return selectionLabel;
+	}
+	
+	public void setSelectionLabel(String label) {
+		selectionLabel.setText(label);
+		selectionLabel.setForeground(Color.red);
 	}
 
 	@Override
@@ -119,7 +129,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 			filename = "Save3.sav";
 		}
 		if (selected.equals(loadGamePlayButton)) {
-			LoadGame.loadGameObjs(filename);
+			LoadGame.loadGameObjs(filename);	
 		}
 
 		// was 'back' requested on load game panel?

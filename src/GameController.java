@@ -27,7 +27,7 @@ public class GameController {
 		// cache the tiles
 		this.tiles = gameBoard.GetGrid();
 
-		if (isNewGame == true) {
+		if (isNewGame) {
 			// put the players in position on the board
 			for (Player thisPlayer : players) {
 				// get the assigned starting tile
@@ -40,7 +40,9 @@ public class GameController {
 		// show the gameboard!
 		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
 		// advance to next turn, pass player list index as ref.
-		// AdvanceToNextTurn();
+		AdvanceToNextTurn();
+		
+		GameSettings.GetGameController().setNextPlayer(nextPlayerIndex);
 	}
 
 	// GETTERS
@@ -49,38 +51,39 @@ public class GameController {
 		return currentPlayer;
 	}
 
+	public void AdvanceToNextTurn() {
+
+		// get the next player to play
+		// Player nextPlayer = allPlayers[nextPlayerIndex];
+		// System.out.println("Advancing to next turn. Next player is " +
+		// nextPlayer.GetName());
+
+		// loop through the tiles, deactivate all highlights for(int x = 0; x <
+		// GameSettings.GetRows(); x++) { for(int y = 0; y < GameSettings.GetCols();
+		// y++) { tiles[x][y].DeactivateTile(); } }
+
+		// pause the game, lock the controls (activated when player clicks on message)
+		// GameSettings.SetGameIsPaused(true); System.out.println("game paused? "
+		// +GameSettings.GetGameIsPaused());
+		// GameSettings.GetMainWindow().ShowMessage(nextPlayer.GetName() +
+		// ", it's your turn!"); currentPlayer = nextPlayer;
+
+		// increment the nextPlayerIndex, so the turns will advance through different
+		nextPlayerIndex++; // if past end, loop back to start
+		if (nextPlayerIndex > 3) {
+			nextPlayerIndex = 0;
+		}
+	}
+
+	// public void BeginTurn() { //remove the popup notification
+	// GameSettings.GetMainWindow().RemoveMessage(); //allow tracking of input
+	// GameSettings.SetGameIsPaused(false); System.out.println("game paused? "
+	// +GameSettings.GetGameIsPaused()); System.out.println("Starting turn for "
+	// +currentPlayer.GetName()); //it is now "currentPlayer"'s turn
+	// ActivateLegalTiles(currentPlayer);
+	// }
+
 	/*
-	 * public void AdvanceToNextTurn() {
-	 * 
-	 * //get the next player to play Player nextPlayer =
-	 * allPlayers[nextPlayerIndex];
-	 * System.out.println("Advancing to next turn. Next player is "
-	 * +nextPlayer.GetName());
-	 * 
-	 * //loop through the tiles, deactivate all highlights for(int x = 0; x <
-	 * GameSettings.GetRows(); x++) { for(int y = 0; y < GameSettings.GetCols();
-	 * y++) { tiles[x][y].DeactivateTile(); } }
-	 * 
-	 * //pause the game, lock the controls (activated when player clicks on message)
-	 * GameSettings.SetGameIsPaused(true); System.out.println("game paused? "
-	 * +GameSettings.GetGameIsPaused());
-	 * GameSettings.GetMainWindow().ShowMessage(nextPlayer.GetName() +
-	 * ", it's your turn!"); currentPlayer = nextPlayer;
-	 * 
-	 * //increment the nextPlayerIndex, so the turns will advance through different
-	 * players nextPlayerIndex++; //if past end, loop back to start
-	 * if(nextPlayerIndex >3) { nextPlayerIndex = 0; } }
-	 * 
-	 * public void BeginTurn() { //remove the popup notification
-	 * GameSettings.GetMainWindow().RemoveMessage(); //allow tracking of input
-	 * GameSettings.SetGameIsPaused(false); System.out.println("game paused? "
-	 * +GameSettings.GetGameIsPaused()); System.out.println("Starting turn for "
-	 * +currentPlayer.GetName()); //it is now "currentPlayer"'s turn
-	 * ActivateLegalTiles(currentPlayer);
-	 * 
-	 * 
-	 * }
-	 * 
 	 * private void ActivateLegalTiles(Player currentPlayer) {
 	 * 
 	 * //move this to GameBoard class?
@@ -110,5 +113,13 @@ public class GameController {
 	 * }
 	 * 
 	 */
+	
+	public int getNextPlayer() {
+		return this.nextPlayerIndex;
+	}
+	
+	public void setNextPlayer(int nextPlayer) {
+		this.nextPlayerIndex = nextPlayer;
+	}
 
 }
