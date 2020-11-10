@@ -83,7 +83,7 @@ public class GameSettings implements Serializable {
 	static GameTile[][] gameTiles;
 
 	// Storage for the players Objects
-	static ArrayList<Player> players;
+	static Player[] players;
 
 	// for locking controls/input when necessary (ie: between turn changes)
 	static Boolean gameIsPaused;
@@ -120,7 +120,7 @@ public class GameSettings implements Serializable {
 		mainWindow = new MainWindow();
 
 		// Player Object storing
-		players = new ArrayList<Player>();
+		players = new Player[4];
 
 		// game is not paused
 		gameIsPaused = false;
@@ -218,7 +218,7 @@ public class GameSettings implements Serializable {
 		return playerColors[playersIndex];
 	}
 
-	public static ArrayList<Player> getPlayers() {
+	public static Player[] getPlayers() {
 		return players;
 	}
 
@@ -263,10 +263,8 @@ public class GameSettings implements Serializable {
 		gameTiles = allTiles;
 	}
 
-	public static void setPlayers(ArrayList<Player> playerArray) {
-		for (Player plr : playerArray) {
-			players.add(plr);
-		}
+	public static void setPlayers(Player[] players2) {
+		players = players2;
 	}
 
 	public static void SetGameIsPaused(Boolean isPaused) {

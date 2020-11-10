@@ -1,6 +1,5 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 public class SaveGame {
 
@@ -14,12 +13,8 @@ public class SaveGame {
 	}
 
 	public static void saveGameObjs(String filename) {
-		ArrayList<Player> players = GameSettings.getPlayers();
 		Player[] playersInOrder = new Player[4];
-
-		for (Player thisPlayer : players) {
-			playersInOrder[thisPlayer.GetTurnPosition() - 1] = thisPlayer;
-		}
+		playersInOrder = GameSettings.getPlayers();
 
 		GameTile[][] gameTiles = GameSettings.getGameTiles();
 		nextTurn = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition();
@@ -35,7 +30,7 @@ public class SaveGame {
 			save.writeObject(playersInOrder); // Saves Players order
 			save.writeObject(gameTiles); // Saves GameTile objects.
 			save.writeObject(nextTurn); // Turn position object
-			save.writeObject(players); // Player Objects.
+			//save.writeObject(players); // Player Objects.
 
 			System.out.println("Saved to " + filename);
 			save.close(); // Close file.

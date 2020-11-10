@@ -104,7 +104,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
 	// Setters
 	public void setGameGrid(GameTile[][] gameTiles) {
-		grid = gameTiles;
+		grid = gameTiles.clone();
 	}
 
 	@Override

@@ -136,8 +136,8 @@ public class BuildAssets {
 		middlePanel.add(gameBoard);
 
 		// Store Player Objects in Game Settings
-		playersAttributes.addAll(Arrays.asList(players));
-		GameSettings.setPlayers(playersAttributes);
+		//playersAttributes.addAll(Arrays.asList(players));
+		GameSettings.setPlayers(players);
 
 		// start the game controller
 		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer, true);
@@ -148,7 +148,7 @@ public class BuildAssets {
 	 */
 	public BuildAssets(Player[] players, GameTile[][] gameTiles, int nextTurn) {
 
-		ArrayList<Player> playersAttributes = new ArrayList<>();
+		//ArrayList<Player> playersAttributes = new ArrayList<>();
 
 		// Re create the game board from the save.
 		this.rows = GameSettings.GetRows();
@@ -159,9 +159,9 @@ public class BuildAssets {
 		// give the game tiles to GameSettings for storage.
 		// access these from anywhere with GameSettings.GetGameTiles(); returns a
 		// GameTile[][]
-		GameSettings.setGameTiles(reloadedGameBoard.GetGrid());
+		GameSettings.setGameTiles(gameTiles);
 
-		GameSettings.inputManager.SetGridTiles(reloadedGameBoard.GetGrid());
+		GameSettings.inputManager.SetGridTiles(gameTiles);
 
 		// In game UI panel
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
@@ -190,8 +190,7 @@ public class BuildAssets {
 		middlePanel.add(reloadedGameBoard);
 
 		// Store Player Objects in Game Settings
-		playersAttributes.addAll(Arrays.asList(players));
-		GameSettings.setPlayers(playersAttributes);
+		GameSettings.setPlayers(players);
 
 		reloadedGameBoard.setBackground(gameTiles[0][0].getBkgColor());
 
