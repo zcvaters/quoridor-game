@@ -180,7 +180,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		configPlayersPanel.add(secondPanel);
 		configPlayersPanel.add(thirdPanel);
 		configPlayersPanel.add(fourthPanel);
-
+	
 		// the "back" button and listener
 		newGameBackButton = new JButton("Back");
 		newGameBackButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -189,6 +189,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		newGamePlayButton = new JButton("Let's Play!");
 		newGamePlayButton.setAlignmentX(CENTER_ALIGNMENT);
 		newGamePlayButton.addActionListener(this);
+		
 		// add the buttons to a panel
 		playBackButtonsPanel = new JPanel();
 		playBackButtonsPanel.setOpaque(false);

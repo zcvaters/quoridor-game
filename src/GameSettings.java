@@ -1,10 +1,14 @@
 import java.awt.Color;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class GameSettings implements Serializable {
 
@@ -124,6 +128,23 @@ public class GameSettings implements Serializable {
 
 		// game is not paused
 		gameIsPaused = false;
+	}
+	
+	/*
+	 * Playsounds on hover
+	 */
+	public static void play()
+	{
+	    try
+	    {
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(AudioSystem.getAudioInputStream(new File("Assets/Sounds/button_sound.wav")));
+	        clip.start();
+	    }
+	    catch (Exception exc)
+	    {
+	        exc.printStackTrace(System.out);
+	    }
 	}
 
 	// getters

@@ -17,7 +17,7 @@ public class SaveGame {
 		playersInOrder = GameSettings.getPlayers();
 
 		GameTile[][] gameTiles = GameSettings.getGameTiles();
-		nextTurn = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition();
+		nextTurn = GameSettings.GetGameController().getNextPlayer();
 
 		try { // Catch errors in I/O if necessary.
 				// Open a file to write to Save.sav

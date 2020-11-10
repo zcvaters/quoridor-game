@@ -1,12 +1,14 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
+
 
 public class LoadGame {
 
 	private LoadGame() {
 	}
 
-	public static void loadGameObjs(String filename) {
+	public static void loadGameObjs(String filename){
 		// Create the data objects for us to restore.
 		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];
@@ -37,8 +39,8 @@ public class LoadGame {
 			
 			save.close(); // Close File.
 			saveFile.close();
-		} catch (Exception exc) {
-			exc.printStackTrace(); // If there was an error, print the info.
+		} catch (Exception FileNotFoundException) {
+			GameSettings.GetLoadGameMenu().setSelectionLabel("No Save File.");
 		}
 
 
@@ -55,7 +57,7 @@ public class LoadGame {
 	 * reading.
 	 */
 	public static void main(String[] args) {
-		LoadGame.loadGameObjs("Save1.sav");
+		//LoadGame.loadGameObjs("Save1.sav");
 	}
 
 }
