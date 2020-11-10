@@ -4,14 +4,26 @@ import java.util.ArrayList;
 
 public class SaveGame {
 
+	// fields here
+	static Player[] playersInOrder;
+	static GameTile[][] gameTiles;
+	static int nextTurn;
+
+	// constructor
 	private SaveGame() {
 	}
 
-	private static ArrayList<Player> players = GameSettings.getPlayers();
-	private static GameTile[][] gameTiles = GameSettings.getGameTiles();
-
 	public static void saveGameObjs(String filename) {
-		// TODO: Implement save filename, save1, save2, save3.
+		ArrayList<Player> players = GameSettings.getPlayers();
+		Player[] playersInOrder = new Player[4];
+
+		for (Player thisPlayer : players) {
+			playersInOrder[thisPlayer.GetTurnPosition() - 1] = thisPlayer;
+		}
+
+		GameTile[][] gameTiles = GameSettings.getGameTiles();
+		nextTurn = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition();
+
 		try { // Catch errors in I/O if necessary.
 				// Open a file to write to Save.sav
 			FileOutputStream saveFile = new FileOutputStream(filename);
@@ -20,15 +32,19 @@ public class SaveGame {
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
 
 			// Saving objects
-			save.writeObject(players); // Saves all Player Objects.
+			save.writeObject(playersInOrder); // Saves Players order
 			save.writeObject(gameTiles); // Saves GameTile objects.
+			save.writeObject(nextTurn); // Turn position object
+			save.writeObject(players); // Player Objects.
 
-			// TODO: Save all assets needed to game state.
-			
 			System.out.println("Saved to " + filename);
 			save.close(); // Close file.
+			save.flush();
+			saveFile.close();
+			saveFile.flush();
 		} catch (Exception exc) {
 			exc.printStackTrace(); // If there was an error, print the info.
 		}
 	}
+
 }
