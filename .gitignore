@@ -1,1 +1,10 @@
 /bin/
+/BuildAssets.class
+/DeleteMeTesting.class
+/GameBoard.class
+/GameController.class
+/GameSettings.class
+/GameState.class
+/GameTile.class
+/InGameUIPanel.class
+/InputManager.class
