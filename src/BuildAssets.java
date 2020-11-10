@@ -1,7 +1,5 @@
-
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -67,8 +65,6 @@ public class BuildAssets {
 		// get an empty array that will hold 4 configured players, in proper turn order
 		// (1, 2, 3, 4).
 		players = new Player[4];
-
-		ArrayList<Player> playersAttributes = new ArrayList<>();
 
 		// loop players. turn order is currently randomized (from GameSettings)
 		// unrandomize it, store new players in proper order (starting with whomever was
@@ -136,7 +132,7 @@ public class BuildAssets {
 		middlePanel.add(gameBoard);
 
 		// Store Player Objects in Game Settings
-		//playersAttributes.addAll(Arrays.asList(players));
+		// playersAttributes.addAll(Arrays.asList(players));
 		GameSettings.setPlayers(players);
 
 		// start the game controller
@@ -148,7 +144,7 @@ public class BuildAssets {
 	 */
 	public BuildAssets(Player[] players, GameTile[][] gameTiles, int nextTurn) {
 
-		//ArrayList<Player> playersAttributes = new ArrayList<>();
+		// ArrayList<Player> playersAttributes = new ArrayList<>();
 
 		// Re create the game board from the save.
 		this.rows = GameSettings.GetRows();

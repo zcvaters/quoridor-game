@@ -40,28 +40,28 @@ public class MainMenu extends JPanel implements ActionListener {
 		super();
 		Dimension panelSize = new Dimension(1000, 1000);
 		this.setPreferredSize(panelSize);
-		
+
 		JLabel gameLabel = new JLabel("Quoridor", SwingConstants.CENTER);
 		gameLabel.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 		gameLabel.setFont(MainWindow.orbitron.deriveFont(144f));
 		gameLabel.setForeground(Color.black);
-		
+
 		// four buttons (newGame, loadGame, instructions, quit)
 		mainMenuButtons = new ArrayList<>();
 		// the buttons
 		newGameButton = new JButton("New Game");
-	
+
 		loadGameButton = new JButton("Load Game");
-		
+
 		instructionsButton = new JButton("Instructions");
-		
+
 		quitButton = new JButton("Quit");
-		
+
 		mainMenuButtons.add(newGameButton);
 		mainMenuButtons.add(loadGameButton);
 		mainMenuButtons.add(instructionsButton);
 		mainMenuButtons.add(quitButton);
-		
+
 		// add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
 		menuButtonsPanel.setBounds(0, 0, 1000, 1000);
@@ -70,14 +70,14 @@ public class MainMenu extends JPanel implements ActionListener {
 		menuButtonsPanel.setLayout(new GridLayout(4, 1));
 		menuButtonsPanel.setOpaque(false);
 		menuButtonsPanel.add(newGameButton);
-		menuButtonsPanel.add(loadGameButton );
-		menuButtonsPanel.add(instructionsButton );
+		menuButtonsPanel.add(loadGameButton);
+		menuButtonsPanel.add(instructionsButton);
 		menuButtonsPanel.add(quitButton);
 		menuButtonsPanel.setVisible(true);
-		
+
 		// Set button properties
 		defineButtonProperties(mainMenuButtons);
-		
+
 		// add components to the panel
 		this.setBounds(0, 0, 1000, 1000);
 		this.setLayout(new BorderLayout());
@@ -88,10 +88,11 @@ public class MainMenu extends JPanel implements ActionListener {
 		this.setVisible(true);
 
 	}
-	
+
 	/*
-	 * Defines the button properties for a set of buttons
-	 * 	@param: List<Jbutton> someButtons
+	 * Defines the button properties for a collection of buttons
+	 * 
+	 * @param: List<Jbutton> someButtons
 	 */
 	public void defineButtonProperties(List<JButton> someButtons) {
 		someButtons.forEach(button -> {
@@ -107,6 +108,7 @@ public class MainMenu extends JPanel implements ActionListener {
 				public void mouseEntered(MouseEvent e) {
 					button.setForeground(new Color(140, 15, 15));
 				}
+
 				@Override
 				public void mouseExited(MouseEvent e) {
 					button.setForeground(Color.black);
@@ -146,7 +148,6 @@ public class MainMenu extends JPanel implements ActionListener {
 			mainWindow.ShowPanel(quitPanel);
 		}
 		mainMenuButtons.forEach(e -> e.setForeground(Color.black)); // Fixes persistent hover color on back bttn.
-		
 
 	}
 
