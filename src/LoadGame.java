@@ -7,7 +7,7 @@ public class LoadGame {
 	private LoadGame() {
 	}
 
-	public static void loadGameObjs(String filename) {// TODO: Implement filename lookup in LoadGame
+	public static void loadGameObjs(String filename) {
 		// Create the data objects for us to restore.
 		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];

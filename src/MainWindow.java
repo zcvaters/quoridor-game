@@ -1,4 +1,7 @@
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -17,13 +20,23 @@ public class MainWindow extends JFrame {
 
 	private Dimension frameSize;
 
+	static Font orbitron;
+
 	// constructor
 	public MainWindow() {
 
 		// get a frame
 		super("Quoridor");
 		this.setIconImage(new ImageIcon(getClass().getResource("/Assets/frameIcon.png")).getImage());
+		
+		try {
+			orbitron = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/orbitron/Orbitron-Black.ttf")).deriveFont(30f);
+			GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			graphics.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Assets/orbitron/Orbitron-Black.ttf")));
+		} catch (Exception IOException) {
 
+		}
+		
 		// build master frame to hold all panels, fixed size, no resizing.
 		frameSize = new Dimension(1000, 1000);
 		this.setSize(frameSize);
@@ -81,7 +94,7 @@ public class MainWindow extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-
+	
 	// use this method to load panels into the main window as necessary.
 	// this will remove any other visible panels, and set the param as the visible
 	// one.
