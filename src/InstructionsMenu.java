@@ -21,79 +21,80 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 
-public class InstructionsMenu extends JPanel implements ActionListener{
+public class InstructionsMenu extends JPanel implements ActionListener {
 
-	//instructions
+	// instructions
 	JLabel instructionsHeaderLabel;
 	JTextArea instructionsTextLabel;
 	JButton instructionsBackButton;
-	
+
 	public InstructionsMenu() {
-		
-		//build a panel
+
+		// build a panel
 		super();
-		
-		//header label at the top
-		//instructions label in the center
-		//button "Back" at the bottom
-		
-		//the instructions panel		
-		//size to fit frame		
-		this.setBounds(0,0,1000,1000);
-		this.setOpaque(false);		
-        
-		//the label for the header
+
+		// header label at the top
+		// instructions label in the center
+		// button "Back" at the bottom
+
+		// the instructions panel
+		// size to fit frame
+		this.setBounds(0, 0, 1000, 1000);
+		this.setOpaque(false);
+
+		// the label for the header
 		instructionsHeaderLabel = new JLabel("How To Play");
-		EmptyBorder border1 = new EmptyBorder(190, 0, 0,0 );
+		EmptyBorder border1 = new EmptyBorder(190, 0, 0, 0);
 		instructionsHeaderLabel.setBorder(border1);
 		instructionsHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		instructionsHeaderLabel.setFont(new Font("Dialog", Font.BOLD, 35));
 		instructionsHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		instructionsHeaderLabel.setVerticalAlignment(JLabel.CENTER);
-		
+
 		// instructions text
 		JPanel instructionsPanel = new JPanel();
 		EmptyBorder border2 = new EmptyBorder(50, 15, 0, 15);
 		instructionsPanel.setOpaque(false);
 		instructionsPanel.setBorder(border2);
-		JTextArea instructionsText = new JTextArea();		
+		JTextArea instructionsText = new JTextArea();
 		instructionsText.setFont(new Font("Dialog", Font.PLAIN, 14));
-        instructionsText.setText(GetInstructionsText());
-        JScrollPane instructionsScrollPane = new JScrollPane(instructionsText, 
-        										 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        										 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		instructionsText.setText(GetInstructionsText());
+		JScrollPane instructionsScrollPane = new JScrollPane(instructionsText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		instructionsScrollPane.setOpaque(false);
 		instructionsScrollPane.setPreferredSize(new Dimension(900, 500));
 		instructionsPanel.add(instructionsScrollPane);
-		
-		//the "back" button and listener
-        JPanel buttonPanel = new JPanel();
+
+		// the "back" button and listener
+		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
 		instructionsBackButton = new JButton("Back");
 		buttonPanel.add(instructionsBackButton);
-		//instructionsBackButton.setBorderPainted(false);
-		//instructionsBackButton.setIcon(new ImageIcon(getClass().getResource("/Assets/back_button.png")));
+		// instructionsBackButton.setBorderPainted(false);
+		// instructionsBackButton.setIcon(new
+		// ImageIcon(getClass().getResource("/Assets/back_button.png")));
 		instructionsBackButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		//instructionsBackButton.setRolloverEnabled(true);
-		//instructionsBackButton.setRolloverIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
-		//instructionsBackButton.setSelectedIcon(new ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
+		// instructionsBackButton.setRolloverEnabled(true);
+		// instructionsBackButton.setRolloverIcon(new
+		// ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
+		// instructionsBackButton.setSelectedIcon(new
+		// ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
 		instructionsBackButton.addActionListener(this);
-	    
+
 		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
 		this.setLayout(boxLayout);
-        this.add(instructionsHeaderLabel);
+		this.add(instructionsHeaderLabel);
 		this.add(instructionsPanel);
-		this.add(buttonPanel);        
-        this.setVisible(false);	
+		this.add(buttonPanel);
+		this.setVisible(false);
 	}
-	
+
 	private String GetInstructionsText() {
 		String text = "\nStarting a New Game\n\n"
 				+ "Begin by starting a New Game, choose your set colours these are for the board colour and each pawn colour.\n"
 				+ "You can also choose each players name and if they're a human player or if they're the computer AI.\n"
 				+ "There must be four players to begin. Computer can be set to Easy or Hard difficulty. \n"
-				+ "Click Start to begin play!\n\n"
-				+ "Start Of Play\n\n"
+				+ "Click Start to begin play!\n\n" + "Start Of Play\n\n"
 				+ "Each player starts at one side of the board, each player is given 5 fences. \n"
 				+ "Every player has a unique pawn and a matching side of the board. \n"
 				+ "The players goal is to reach the opposite side they started on. First to get there wins!\n"
@@ -105,24 +106,22 @@ public class InstructionsMenu extends JPanel implements ActionListener{
 				+ "Face to Face pawns can jump over eachother or go in any other direction they choose.\n"
 				+ "Face to Face pawns may also go diagonal if there is a fence behind their opponent.\n"
 				+ "Face to Face pawns may not jump over more than one pawn at a time.\n"
-				+ "Fences are strictly impossible to jump over.\n\n"
-				+ "End of the Game\n\n"
+				+ "Fences are strictly impossible to jump over.\n\n" + "End of the Game\n\n"
 				+ "When a player reaches the opposite side of where they began the game is over.\n"
 				+ "The first player to do so is the Winner!\n\n";
 		return text;
 	}
-	
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		//get the object that performed the action, respond accordingly		
+		// get the object that performed the action, respond accordingly
 		Object selected = event.getSource();
-		
-		//was 'back' requested on instructions panel?
-		if(selected.equals(instructionsBackButton)) {
+
+		// was 'back' requested on instructions panel?
+		if (selected.equals(instructionsBackButton)) {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
-		
+
 	}
 
 }

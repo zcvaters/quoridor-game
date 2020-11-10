@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class GameSettings implements Serializable{
+public class GameSettings implements Serializable {
 
 	// store ref to the main UI window (a frame)
 	// this frame will display a variety of panels depending on user needs
@@ -16,14 +16,15 @@ public class GameSettings implements Serializable{
 	static LoadGameMenu loadGameMenu;
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
-	
-	//the in game message panel.  has it's own methods for setting in-game text to display
-	static InGameMessagePanel messagePanel;
+
+	// the in game message panel. has it's own methods for setting in-game text to
+	// display
+	// static InGameMessagePanel messagePanel;
 
 	// store reference to object which manages all incoming user input
 	static InputManager inputManager;
-	
-	//store ref to the object which will run the gameplay
+
+	// store ref to the object which will run the gameplay
 	static GameController gameController;
 
 	// the number of rows for game board
@@ -76,18 +77,19 @@ public class GameSettings implements Serializable{
 
 	// a collection of 1, 2, 3, 4 in a random order. used to assign ID's.
 	static List<Integer> playerIDList;
-  
+
 	// storage for the individual tiles needed to comprise a gameboard.
 	// passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
 
 	// Storage for the players Objects
 	static ArrayList<Player> players;
-	
-	//for locking controls/input when necessary (ie: between turn changes)
+
+	// for locking controls/input when necessary (ie: between turn changes)
 	static Boolean gameIsPaused;
 
-	/* Constructor - GameSettings
+	/*
+	 * Constructor - GameSettings
 	 * 
 	 * Intended as a top-level class to provide access for static variables. Any
 	 * class can access these attributes like this GameSettings.GetInputManager();
@@ -119,16 +121,16 @@ public class GameSettings implements Serializable{
 
 		// Player Object storing
 		players = new ArrayList<Player>();
-		
-		//game is not paused
+
+		// game is not paused
 		gameIsPaused = false;
 	}
 
-	// getters	
+	// getters
 	public static GameController GetGameController() {
 		return gameController;
 	}
-	
+
 	public static InputManager GetInputManager() {
 		return inputManager;
 	}
@@ -136,7 +138,7 @@ public class GameSettings implements Serializable{
 	public static MainWindow GetMainWindow() {
 		return mainWindow;
 	}
-	
+
 	public static MainMenu GetMainMenu() {
 		return mainMenu;
 	}
@@ -152,14 +154,14 @@ public class GameSettings implements Serializable{
 	public static InstructionsMenu GetInstructionsMenu() {
 		return instructionsMenu;
 	}
-	
+
 	public static QuitMenu GetQuitMenu() {
 		return quitMenu;
 	}
-	
-	public static InGameMessagePanel GetMessagePanel() {
-		return messagePanel;
-	}
+
+	// public static InGameMessagePanel GetMessagePanel() {
+	// return messagePanel;
+	// }
 
 	public static int GetRows() {
 		return rows;
@@ -180,8 +182,8 @@ public class GameSettings implements Serializable{
 	public static GameTile[][] getGameTiles() {
 		return gameTiles;
 	}
-	
-	//get computer-generated name
+
+	// get computer-generated name
 	public static String GetRandomName() {
 		int rnd = new Random().nextInt(computerNames.length);
 		return computerNames[rnd];
@@ -215,22 +217,21 @@ public class GameSettings implements Serializable{
 	public static Color[] getPlayerColors(int playersIndex) {
 		return playerColors[playersIndex];
 	}
-	
+
 	public static ArrayList<Player> getPlayers() {
 		return players;
 	}
-	
+
 	public static Boolean GetGameIsPaused() {
 		return gameIsPaused;
 	}
-	
 
 	// SETTERS
-	
+
 	public static void SetMainWindow(MainWindow mainWin) {
 		GameSettings.mainWindow = mainWin;
 	}
-	
+
 	public static void SetMainMenu(MainMenu mainMenu) {
 		GameSettings.mainMenu = mainMenu;
 	}
@@ -250,10 +251,10 @@ public class GameSettings implements Serializable{
 	public static void SetQuitMenu(QuitMenu quitMenu) {
 		GameSettings.quitMenu = quitMenu;
 	}
-	
-	public static void SetMessagePanel(InGameMessagePanel msgPanel) {
-		GameSettings.messagePanel = msgPanel;
-	}
+
+	// public static void SetMessagePanel(InGameMessagePanel msgPanel) {
+	// GameSettings.messagePanel = msgPanel;
+	// }
 
 	public static void setGameTiles(GameTile[][] allTiles) {
 		// this is only set by two methods:
@@ -261,27 +262,25 @@ public class GameSettings implements Serializable{
 		// LoadGame, in LoadFromFile(), when loading previously saved files.
 		gameTiles = allTiles;
 	}
-	
+
 	public static void setPlayers(ArrayList<Player> playerArray) {
 		for (Player plr : playerArray) {
 			players.add(plr);
 		}
 	}
-	
+
 	public static void SetGameIsPaused(Boolean isPaused) {
 		GameSettings.gameIsPaused = isPaused;
 	}
-	
+
 	public static void SetGameController(GameController controller) {
-		GameSettings.gameController= controller;
+		GameSettings.gameController = controller;
 	}
-	
-	
-	
-	//helper methods
-	private List<Integer> buildPlayerIDList(){
-		//randomize the numbers 1-4 inside an array.  use collections->shuffle().
-		//ex:  [1, 3, 4, 2]   or   [2, 1, 4, 3]  etc...				
+
+	// helper methods
+	private List<Integer> buildPlayerIDList() {
+		// randomize the numbers 1-4 inside an array. use collections->shuffle().
+		// ex: [1, 3, 4, 2] or [2, 1, 4, 3] etc...
 
 		List<Integer> sourceList = Arrays.asList(1, 2, 3, 4);
 		Collections.shuffle(sourceList);

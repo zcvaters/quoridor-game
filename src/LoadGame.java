@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 
 public class LoadGame {
 
@@ -10,42 +9,52 @@ public class LoadGame {
 
 	public static void loadGameObjs(String filename) {// TODO: Implement filename lookup in LoadGame
 		// Create the data objects for us to restore.
-		ArrayList<Player> players = new ArrayList<>();
+		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];
+		int nextTurn = -1;
 
 		try {
 			// Open file to read Save.sav
-			FileInputStream saveFile = new FileInputStream("Save.sav");
+			FileInputStream saveFile = new FileInputStream("Save1.sav");
 
 			// Create an ObjectInputStream to get objects from save file.
 			ObjectInputStream save = new ObjectInputStream(saveFile);
 
-			players.addAll((Collection<? extends Player>) save.readObject()); // Restore Player Objects
-			gameTiles = (GameTile[][]) save.readObject();
+			players = (Player[]) save.readObject(); // Restore Player Objects
+			gameTiles = (GameTile[][]) save.readObject(); // Load Game tiles
+			nextTurn = (int) save.readObject(); // Restore next turn
 
-			// TODO: Load all assets needed to game state.
+			// Load game
+			loadGameBuild(players, gameTiles, nextTurn);
 
 			save.close(); // Close File.
+			saveFile.close();
 		} catch (Exception exc) {
 			exc.printStackTrace(); // If there was an error, print the info.
 		}
 
 		// Print the values, to see that they've been recovered.
 		System.out.println("\nRestored Object Values:");
-		System.out.println("Player 1 Names: " + players.get(0).GetName());
-		System.out.println("Player 2 Names: " + players.get(1).GetName());
-		System.out.println("Player 3 Names: " + players.get(2).GetName());
-		System.out.println("Player 4 Names: " + players.get(3).GetName());
-
+		System.out.println("Player 1 Names: " + players[0].GetName());
+		System.out.println("Player 2 Names: " + players[1].GetName());
+		System.out.println("Player 3 Names: " + players[2].GetName());
+		System.out.println("Player 4 Names: " + players[3].GetName());
+		System.out.println("Next Turn: " + nextTurn);
 		System.out.println("Game Tiles Test: " + Arrays.deepToString(gameTiles));
 
 	}
 
+	private static void loadGameBuild(Player[] players, GameTile[][] gameTiles, int nextTurn) {
+
+		BuildAssets loadBuild = new BuildAssets(players, gameTiles, nextTurn);
+	}
+
 	/*
-	 * Testing purposes, load file.
-	 * Run this class on its own to check Object reading.
+	 * Testing purposes, load file. Run this class on its own to check Object
+	 * reading.
 	 */
 	public static void main(String[] args) {
-		LoadGame.loadGameObjs("Save.sav");
+		LoadGame.loadGameObjs("Save1.sav");
 	}
+
 }
