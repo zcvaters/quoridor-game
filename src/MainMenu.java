@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,6 +32,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	JButton instructionsButton;
 	JButton quitButton;
 	JPanel menuButtonsPanel; // subpanel in this main menu panel, to organize buttons
+	private List<JButton> mainMenuButtons;
 
 	public MainMenu() {
 
@@ -44,32 +47,21 @@ public class MainMenu extends JPanel implements ActionListener {
 		gameLabel.setForeground(Color.black);
 		
 		// four buttons (newGame, loadGame, instructions, quit)
-
+		mainMenuButtons = new ArrayList<>();
 		// the buttons
 		newGameButton = new JButton("New Game");
-		newGameButton.setFocusPainted(false);
-		newGameButton.setOpaque(false);
-		newGameButton.setBorderPainted(false);
-		newGameButton.setContentAreaFilled(false);
-		newGameButton.setFont(MainWindow.orbitron);
-		defineButtonProperties(newGameButton);
-		newGameButton.addActionListener(this);
 	
 		loadGameButton = new JButton("Load Game");
-		loadGameButton.setOpaque(false);
-		loadGameButton.setFont(MainWindow.orbitron);
-		defineButtonProperties(loadGameButton);
-		loadGameButton.addActionListener(this);
 		
 		instructionsButton = new JButton("Instructions");
-		instructionsButton.setFont(MainWindow.orbitron);
-		defineButtonProperties(instructionsButton);
-		instructionsButton.addActionListener(this);
+		
 		quitButton = new JButton("Quit");
-		quitButton.setFont(MainWindow.orbitron);
-		defineButtonProperties(quitButton);
-		quitButton.addActionListener(this);
-
+		
+		mainMenuButtons.add(newGameButton);
+		mainMenuButtons.add(loadGameButton);
+		mainMenuButtons.add(instructionsButton);
+		mainMenuButtons.add(quitButton);
+		
 		// add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
 		menuButtonsPanel.setBounds(0, 0, 1000, 1000);
@@ -82,41 +74,47 @@ public class MainMenu extends JPanel implements ActionListener {
 		menuButtonsPanel.add(instructionsButton );
 		menuButtonsPanel.add(quitButton);
 		menuButtonsPanel.setVisible(true);
-
+		
+		// Set button properties
+		defineButtonProperties(mainMenuButtons);
+		
 		// add components to the panel
 		this.setBounds(0, 0, 1000, 1000);
 		this.setLayout(new BorderLayout());
-		// this.add(mainMenuHeaderLabel);
 		this.add(gameLabel, BorderLayout.NORTH);
 		this.add(menuButtonsPanel, BorderLayout.EAST);
-		// mainMenuPanel.add(bottomPlaceholder);
-		// show this panel
-
-		// this.setBackground(new Color(110, 245, 245));
 
 		this.setOpaque(false);
 		this.setVisible(true);
 
 	}
 	
-	public void defineButtonProperties(JButton button) {
-		button.setFocusPainted(false);
-		button.setForeground(Color.black);
-		button.setOpaque(false);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setFont(MainWindow.orbitron);
-		button.addMouseListener(new MouseAdapter() {
-			Color color  = newGameButton.getForeground();
-			public void mouseEntered(MouseEvent e) {
-				button.setForeground(new Color(140, 15, 15));
-			}
-			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.black);
-			}
+	/*
+	 * Defines the button properties for a set of buttons
+	 * 	@param: List<Jbutton> someButtons
+	 */
+	public void defineButtonProperties(List<JButton> someButtons) {
+		someButtons.forEach(button -> {
+			button.setFocusPainted(false);
+			button.setForeground(Color.black);
+			button.setOpaque(false);
+			button.setBorderPainted(false);
+			button.setContentAreaFilled(false);
+			button.setFont(MainWindow.orbitron);
+			button.addActionListener(this);
+			button.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					button.setForeground(new Color(140, 15, 15));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					button.setForeground(Color.black);
+				}
+			});
+			button.setHorizontalAlignment(SwingConstants.RIGHT);
+			button.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		});
-		button.setHorizontalAlignment(SwingConstants.RIGHT);
-		button.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 	}
 
 	@Override
@@ -127,7 +125,6 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		// get ref to the mainWindow
 		MainWindow mainWindow = GameSettings.GetMainWindow();
-
 		// was 'new game' requested on main menu panel?
 		if (selected.equals(newGameButton)) {
 			JPanel newGamePanel = (JPanel) GameSettings.GetNewGameMenu();
@@ -148,6 +145,8 @@ public class MainMenu extends JPanel implements ActionListener {
 			JPanel quitPanel = (JPanel) GameSettings.GetQuitMenu();
 			mainWindow.ShowPanel(quitPanel);
 		}
+		mainMenuButtons.forEach(e -> e.setForeground(Color.black)); // Fixes persistent hover color on back bttn.
+		
 
 	}
 
