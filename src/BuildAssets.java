@@ -144,8 +144,6 @@ public class BuildAssets {
 	 */
 	public BuildAssets(Player[] players, GameTile[][] gameTiles, int nextTurn) {
 
-		// ArrayList<Player> playersAttributes = new ArrayList<>();
-
 		// Re create the game board from the save.
 		this.rows = GameSettings.GetRows();
 		this.cols = GameSettings.GetCols();

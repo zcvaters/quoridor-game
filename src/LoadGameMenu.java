@@ -25,7 +25,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	private JButton loadGameSave3;
 	private JButton loadGamePlayButton;
 	private JLabel selectionLabel;
-
+	private String filename;
 	public LoadGameMenu() {
 
 		// build a panel
@@ -114,7 +114,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		// get the object that performed the action, respond accordingly
 		Object selected = event.getSource();
 
-		String filename = "";
+		
 		if (selected.equals(loadGameSave1)) {
 			selectionLabel.setText("Current Selection: Save 1.");
 			filename = "Save1.sav";
@@ -136,7 +136,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		if (selected.equals(loadGameBackButton)) {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
-
+		GameSettings.playButtonSound();
 	}
 
 }

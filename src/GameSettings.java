@@ -63,6 +63,8 @@ public class GameSettings implements Serializable {
 	public static final Color player2Color3 = new Color(210, 105, 30);
 	public static final Color player3Color3 = new Color(135, 206, 235);
 	public static final Color player4Color3 = new Color(255, 250, 205);
+	
+	public static final File buttonHoverSound = new File("/Assets/Sounds/button_sound.wav");
 
 	// tile color options
 	static Color[] tileColors = { tileColor1, tileColor2, tileColor3 };
@@ -133,12 +135,12 @@ public class GameSettings implements Serializable {
 	/*
 	 * Playsounds on hover
 	 */
-	public static void play()
+	public static void playButtonSound()
 	{
 	    try
 	    {
 	        Clip clip = AudioSystem.getClip();
-	        clip.open(AudioSystem.getAudioInputStream(new File("Assets/Sounds/button_sound.wav")));
+	        clip.open(AudioSystem.getAudioInputStream(GameSettings.class.getResource("/Assets/Sounds/button_sound.wav")));
 	        clip.start();
 	    }
 	    catch (Exception exc)

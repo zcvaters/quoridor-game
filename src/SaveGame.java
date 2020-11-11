@@ -1,6 +1,9 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+/*
+ * Save game, streams objects for serializing to a save file.
+ */
 public class SaveGame {
 
 	// fields here
@@ -11,12 +14,16 @@ public class SaveGame {
 	// constructor
 	private SaveGame() {
 	}
-
+	
+	/*
+	 * SaveGameObjs saves the current objs in the game for to rebuild game.
+	 * 	@param: String filename, the save file.
+	 */
 	public static void saveGameObjs(String filename) {
-		Player[] playersInOrder = new Player[4];
+		
+		// Instantiate the necessary collections.
 		playersInOrder = GameSettings.getPlayers();
-
-		GameTile[][] gameTiles = GameSettings.getGameTiles();
+		gameTiles = GameSettings.getGameTiles();
 		nextTurn = GameSettings.GetGameController().getNextPlayer();
 
 		try { // Catch errors in I/O if necessary.
@@ -30,11 +37,9 @@ public class SaveGame {
 			save.writeObject(playersInOrder); // Saves Players order
 			save.writeObject(gameTiles); // Saves GameTile objects.
 			save.writeObject(nextTurn); // Turn position object
-			//save.writeObject(players); // Player Objects.
 
-			System.out.println("Saved to " + filename);
-			save.close(); // Close file.
-			save.flush();
+			save.close(); // Close/flush streams
+			save.flush(); 
 			saveFile.close();
 			saveFile.flush();
 		} catch (Exception exc) {

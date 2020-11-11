@@ -77,12 +77,14 @@ public class QuitMenu extends JPanel implements ActionListener {
 
 		// was 'Yes' requested on quit panel?
 		if (selected.equals(quitYesButton)) {
+			GameSettings.playButtonSound();
 			System.exit(0);
 		}
 		// was 'No' requested on quit panel?
 		if (selected.equals(quitNoButton)) {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
+		GameSettings.playButtonSound();
 
 	}
 

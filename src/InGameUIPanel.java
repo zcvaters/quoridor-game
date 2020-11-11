@@ -394,6 +394,8 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 			this.setSaveGamePanel();
 		}
 		/**************************************************************************************/
+		
+		GameSettings.playButtonSound();
 
 	}
 

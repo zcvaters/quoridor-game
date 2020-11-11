@@ -333,6 +333,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 			BuildAssets thisBuild = new BuildAssets(tileColorSelected, // <----NEW GAME STARTS HERE
 					wallColorSelected, bkgColorSelected, playerNames, playerTypes, playerColorsSelected, turnOrder);
 		}
+		GameSettings.playButtonSound();
 	}
 
 	private void DisplayPlayerColors() {

@@ -1,23 +1,39 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.util.Arrays;
 
-
+/*
+ * 	LoadGame reads a stream of objects to re-build a Saved game.
+ */
 public class LoadGame {
+
+	private static FileInputStream saveFile;
 
 	private LoadGame() {
 	}
 
-	public static void loadGameObjs(String filename){
+	/*
+	 * Loads back previously saved objects for resuming a Saved Game
+	 * 
+	 * @param: String filename, the save file requested.
+	 */
+	public static void loadGameObjs(String filename) {
 		// Create the data objects for us to restore.
 		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];
-
-
+		
 		try {
 			// Open file to read Save.sav
-			FileInputStream saveFile = new FileInputStream("Save1.sav");
-
+			if(filename.equals("Save1.sav")) {
+				saveFile = new FileInputStream("Save1.sav");
+			}
+			if(filename.equals("Save2.sav")) {
+				saveFile = new FileInputStream("Save2.sav");
+			}
+			if(filename.equals("Save3.sav")) {
+				saveFile = new FileInputStream("Save3.sav");
+			}
+					
 			// Create an ObjectInputStream to get objects from save file.
 			ObjectInputStream save = new ObjectInputStream(saveFile);
 
@@ -25,31 +41,26 @@ public class LoadGame {
 			gameTiles = (GameTile[][]) save.readObject(); // Load Game tiles
 			int nextTurn = (int) save.readObject(); // Restore next turn
 
-			// Load game
+			// Create BuildAssets Load Game constructor.
 			loadGameBuild(players, gameTiles, nextTurn);
 
-			// Print the values, to see that they've been recovered.
-			System.out.println("\nRestored Object Values:");
-			System.out.println("Player 1 Names: " + players[0].GetName());
-			System.out.println("Player 2 Names: " + players[1].GetName());
-			System.out.println("Player 3 Names: " + players[2].GetName());
-			System.out.println("Player 4 Names: " + players[3].GetName());
-			System.out.println("Next Turn: " + nextTurn);
-			System.out.println("Game Tiles Test: " + Arrays.deepToString(gameTiles));
-			
-			save.close(); // Close File.
-			saveFile.close();
+			save.close(); // Close Object Input.
+			saveFile.close(); // Close File input.
 		} catch (Exception FileNotFoundException) {
 			GameSettings.GetLoadGameMenu().setSelectionLabel("No Save File.");
 		}
 
-
-
 	}
 
+	/*
+	 * Build new LoadGame Constructor.
+	 * 
+	 * @params: Player[] players (the saved player objs), GameTile[][] gameTiles
+	 * (saved game obj), int nextTurn (who was next move)
+	 */
 	private static void loadGameBuild(Player[] players, GameTile[][] gameTiles, int nextTurn) {
 
-		BuildAssets loadBuild = new BuildAssets(players, gameTiles, nextTurn);
+		BuildAssets loadBuild = new BuildAssets(players, gameTiles, nextTurn); // Load Game BuildAssets constructor
 	}
 
 	/*
@@ -57,7 +68,7 @@ public class LoadGame {
 	 * reading.
 	 */
 	public static void main(String[] args) {
-		//LoadGame.loadGameObjs("Save1.sav");
+		// LoadGame.loadGameObjs("Save1.sav");
 	}
 
 }

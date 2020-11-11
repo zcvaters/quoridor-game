@@ -112,7 +112,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		if (selected.equals(instructionsBackButton)) {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
-
+		GameSettings.playButtonSound();
 	}
 
 }

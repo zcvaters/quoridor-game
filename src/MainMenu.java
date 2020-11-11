@@ -107,7 +107,7 @@ public class MainMenu extends JPanel implements ActionListener {
 				@Override
 				public void mouseEntered(MouseEvent e) {
 					button.setForeground(new Color(140, 15, 15));
-					GameSettings.play();
+					GameSettings.playButtonSound();
 				}
 
 				@Override
@@ -148,6 +148,7 @@ public class MainMenu extends JPanel implements ActionListener {
 			JPanel quitPanel = (JPanel) GameSettings.GetQuitMenu();
 			mainWindow.ShowPanel(quitPanel);
 		}
+		GameSettings.playButtonSound();
 		mainMenuButtons.forEach(e -> e.setForeground(Color.black)); // Fixes persistent hover color on back bttn.
 
 	}
