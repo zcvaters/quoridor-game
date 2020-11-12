@@ -63,12 +63,4 @@ public class LoadGame {
 		BuildAssets loadBuild = new BuildAssets(players, gameTiles, nextTurn); // Load Game BuildAssets constructor
 	}
 
-	/*
-	 * Testing purposes, load file. Run this class on its own to check Object
-	 * reading.
-	 */
-	public static void main(String[] args) {
-		// LoadGame.loadGameObjs("Save1.sav");
-	}
-
 }
