@@ -74,19 +74,21 @@ public class InGameUIPanel implements ActionListener {
 	// constructor
 	public InGameUIPanel() {
 		
-		
+		// Create layered Pane
 		inGameOverlay = new JLayeredPane();
 		inGameOverlay.setBounds(0, 0, 1000, 1000);
 		inGameOverlay.setLayout(null);
 		inGameOverlay.setVisible(true);
-
+		
+		// Create Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setBounds(0, 0, 1000, 1000);
 		mainPanel.setOpaque(false);
 		mainPanel.setVisible(true);
 		mainPanel.add(inGameOverlay);
-
+		
+		// UI Panel to be exist on mainPanel
 		uiPanel = new JPanel();
 		uiPanel.setBounds(0, 0, 1000, 1000);
 		uiPanel.setLayout(null);
@@ -102,7 +104,6 @@ public class InGameUIPanel implements ActionListener {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/settings_button_selected.png")));
-				GameSettings.playButtonSound();
 			}
 
 			@Override
@@ -113,7 +114,8 @@ public class InGameUIPanel implements ActionListener {
 		settingsButton.addActionListener(this);
 		uiPanel.add(settingsButton, JLayeredPane.PALETTE_LAYER);
 		mainPanel.add(uiPanel, JLayeredPane.PALETTE_LAYER);
-
+		
+		// Settings Panel for in Game Settings
 		settingsPanel = new JPanel();
 		settingsPanel.setLayout(new GridBagLayout());
 		settingsPanel.setBounds(0, 0, 1000, 1000);
