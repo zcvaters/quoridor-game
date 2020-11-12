@@ -4,8 +4,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -91,7 +94,22 @@ public class InGameUIPanel implements ActionListener {
 		uiPanel.setVisible(true);
 		settingsButton = new JButton();
 		settingsButton.setOpaque(false);
+		settingsButton.setContentAreaFilled(false);
+		settingsButton.setBorderPainted(false);
 		settingsButton.setBounds(900, 40, 50, 50);
+		settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/settings_button.png")));
+		settingsButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/settings_button_selected.png")));
+				GameSettings.playButtonSound();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/settings_button.png")));
+			}
+		});
 		settingsButton.addActionListener(this);
 		uiPanel.add(settingsButton, JLayeredPane.PALETTE_LAYER);
 		mainPanel.add(uiPanel, JLayeredPane.PALETTE_LAYER);
@@ -145,12 +163,13 @@ public class InGameUIPanel implements ActionListener {
 	
 	public void setSaveGamePanel() {
 		saveGamePanel = new JPanel(new GridBagLayout());
-		saveGamePanel.setBounds(345, 345, 300, 300);
-		saveGamePanel.setBackground(Color.white);
-		//saveGamePanel.setOpaque(false);
+		saveGamePanel.setBounds(380, 420, 250, 125);
+		saveGamePanel.setOpaque(false);
 		
-		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save file below:", SwingConstants.CENTER);
-		instructSaveLabel.setForeground(Color.DARK_GRAY);
+		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
+		instructSaveLabel.setOpaque(true);
+		instructSaveLabel.setForeground(Color.BLACK);
+		instructSaveLabel.setBackground(Color.white);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		saveGamePanel.add(instructSaveLabel, gbc);
