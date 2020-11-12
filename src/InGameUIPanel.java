@@ -1,325 +1,349 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class InGameUIPanel extends JPanel implements ActionListener {
-
-	// the outer (border) panels surrounding the gameboard
-	private JPanel nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel;
-	private JPanel southGameBoardBorder, westGameBoardBorder, northGameBoardBorder, eastGameBoardBorder;
+public class InGameUIPanel implements ActionListener {
 
 	// IngameUIPanel settings button
 	private JButton settingsButton;
 
-	// the center panel, holds the gameboard
-	private JPanel middlePanel;
+	private JLayeredPane inGameOverlay;
+
+	private JPanel mainPanel;
 
 	// constraints for this layout
 	GridBagConstraints gbc = new GridBagConstraints();
+
+	private JPanel uiPanel;
+
 	private JPanel settingsPanel;
+
+	private JButton resumeGameButton;
+
 	private JButton saveGameButton;
+
 	private JButton backToMenuButton;
-	private JButton quitButton;
+
+	private JButton quitGameButton;
+
 	private JPanel saveGamePanel;
+
 	private JButton saveGame1;
+
 	private JButton saveGame2;
+
 	private JButton saveGame3;
+
+	private JLabel savedLabel;
+
 	private JButton backToSettingsButton;
-	JLabel savedLabel;
+
+	private JPanel southPlayerSide;
+
+	private JPanel westPlayerSide;
+
+	private JPanel northPlayerSide;
+
+	private JPanel eastPlayerSide;
+
+	private JPanel playerPanels;
+
+	private JPanel playerInfo;
+
+	private JLabel southPlayerDetails;
+
+	private JLabel westPlayerDetails;
+
+	private JLabel northPlayerDetails;
+
+	private JLabel eastPlayerDetails;
 
 	// constructor
 	public InGameUIPanel() {
-		super(); // Creates a panel
-		this.setBounds(0, 0, 1000, 1000);
-		this.setMinimumSize(new Dimension(1000, 1000));
-		this.setPreferredSize(new Dimension(1000, 1000));
-		setLayout(new GridBagLayout());
-		alignedPerimeterBorders();
+		
+		
+		inGameOverlay = new JLayeredPane();
+		inGameOverlay.setBounds(0, 0, 1000, 1000);
+		inGameOverlay.setLayout(null);
+		inGameOverlay.setVisible(true);
 
-	}
+		mainPanel = new JPanel();
+		mainPanel.setLayout(null);
+		mainPanel.setBounds(0, 0, 1000, 1000);
+		mainPanel.setOpaque(false);
+		mainPanel.setVisible(true);
+		mainPanel.add(inGameOverlay);
 
-	/**
-	 * This method is used to align all borders on the GridPanel perimeter. Using
-	 * GridBagLayout and GridBagConstraints. These panels are indicators for the
-	 * players of the game.
-	 * 
-	 */
-	public void alignedPerimeterBorders() {
-		// Outer Border Dimension
-		Dimension outerBorderX = new Dimension(800, 100);
-		Dimension outerBorderY = new Dimension(100, 800);
-
-		// North Border above Game Board.
-		northGameBoardBorder = new JPanel();
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		northGameBoardBorder.setMinimumSize(outerBorderX);
-		northGameBoardBorder.setPreferredSize(outerBorderX);
-		this.add(northGameBoardBorder, gbc);
-
-		// North West border square.
-		nwCornerPanel = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.BOTH;
-		this.add(nwCornerPanel, gbc);
-
-		// West Border Of Game Board
-		westGameBoardBorder = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		westGameBoardBorder.setMinimumSize(outerBorderY);
-		westGameBoardBorder.setPreferredSize(outerBorderY);
-		this.add(westGameBoardBorder, gbc);
-
-		// Center Panel to house game board.
-		middlePanel = new JPanel();
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		// stretch gridbag layout as necessary to accomodate height/width
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.fill = GridBagConstraints.BOTH;
-		// align to center
-		gbc.anchor = GridBagConstraints.SOUTH;
-		// add the middle panel
-		this.add(middlePanel, gbc);
-
-		// North East border Panel.
-		neCornerPanel = new JPanel();
-		neCornerPanel.setLayout(new GridBagLayout());
-		neCornerPanel.setPreferredSize(new Dimension(99, 99));
-		neCornerPanel.setMaximumSize(new Dimension(99, 99));
-		// Create settings button.
+		uiPanel = new JPanel();
+		uiPanel.setBounds(0, 0, 1000, 1000);
+		uiPanel.setLayout(null);
+		uiPanel.setOpaque(false);
+		uiPanel.setVisible(true);
 		settingsButton = new JButton();
-		// Set icon to a cog icon
+		settingsButton.setOpaque(false);
+		settingsButton.setBounds(900, 40, 50, 50);
 		settingsButton.addActionListener(this);
-		settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/inGameUiPanel_settingButton.png"))); // Insert
-																													// icon
-																													// for
-																													// settings
-																													// button
-		settingsButton.setContentAreaFilled(false);
-		settingsButton.setFocusPainted(false);
-		gbc.gridx = 0;
-		gbc.gridx = 0;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		// add button to the North East panel
-		neCornerPanel.add(settingsButton, gbc);
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.BOTH;
-		this.add(neCornerPanel, gbc);
+		uiPanel.add(settingsButton, JLayeredPane.PALETTE_LAYER);
+		mainPanel.add(uiPanel, JLayeredPane.PALETTE_LAYER);
 
-		// East Border of Game Board
-		eastGameBoardBorder = new JPanel();
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		eastGameBoardBorder.setMinimumSize(outerBorderY);
-		eastGameBoardBorder.setPreferredSize(outerBorderY);
-		this.add(eastGameBoardBorder, gbc);
+		settingsPanel = new JPanel();
+		settingsPanel.setLayout(new GridBagLayout());
+		settingsPanel.setBounds(0, 0, 1000, 1000);
+		settingsPanel.setOpaque(false);
+		
 
-		// South West Border of the Grid Panel.
-		swCornerPanel = new JPanel();
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		this.add(swCornerPanel, gbc);
-
-		// South Border of the game board.
-		southGameBoardBorder = new JPanel();
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		southGameBoardBorder.setMinimumSize(outerBorderX);
-		southGameBoardBorder.setPreferredSize(outerBorderX);
-		this.add(southGameBoardBorder, gbc);
-
-		// South East border panel.
-		seCornerPanel = new JPanel();
-		gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		this.add(seCornerPanel, gbc);
-
-		setSettingsPanel();
-	}
-
-	// Panel Methods
-	public void setSettingsPanel() {
-		settingsPanel = new JPanel(new GridBagLayout());
-		Insets buttonInsets = new Insets(50, 50, 50, 50);
 		settingsPanel.setVisible(false);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.SOUTH;
-		this.add(settingsPanel, gbc);
-		saveGameButton = new JButton("Save Game");
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = buttonInsets;
-		saveGameButton.addActionListener(this);
-		settingsPanel.add(saveGameButton, gbc);
-		backToMenuButton = new JButton("Back To Main Menu");
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = buttonInsets;
-		backToMenuButton.addActionListener(this);
-		settingsPanel.add(backToMenuButton, gbc);
-		quitButton = new JButton("Quit Game");
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.insets = buttonInsets;
-		quitButton.addActionListener(this);
-		settingsPanel.add(quitButton, gbc);
-		settingsButton.setVisible(true);
-
+		initializeSettingsOverlay();
 		setSaveGamePanel();
+		playerSidePanels();
+		playerInfo();
 	}
 
+	public void initializeSettingsOverlay() {
+		resumeGameButton = new JButton("Resume");
+		resumeGameButton.addActionListener(this);
+		resumeGameButton.setVisible(true);
+		resumeGameButton.setBounds(0, 0, 60, 60);
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		settingsPanel.add(resumeGameButton, gbc);
+
+		saveGameButton = new JButton("Save Game");
+		saveGameButton.addActionListener(this);
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		settingsPanel.add(saveGameButton, gbc);
+
+		backToMenuButton = new JButton("Back To Main Menu");
+		backToMenuButton.addActionListener(this);
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		settingsPanel.add(backToMenuButton, gbc);
+
+		quitGameButton = new JButton("Quit Game");
+		quitGameButton.addActionListener(this);
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.fill = GridBagConstraints.BOTH;
+		settingsPanel.add(quitGameButton, gbc);
+		inGameOverlay.add(settingsPanel, JLayeredPane.PALETTE_LAYER);
+
+	}
+	
 	public void setSaveGamePanel() {
 		saveGamePanel = new JPanel(new GridBagLayout());
-		Insets buttonInsets = new Insets(20, 50, 20, 50);
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.anchor = GridBagConstraints.SOUTH;
-		this.add(saveGamePanel, gbc);
-
+		saveGamePanel.setBounds(345, 345, 300, 300);
+		saveGamePanel.setBackground(Color.white);
+		//saveGamePanel.setOpaque(false);
+		
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save file below:", SwingConstants.CENTER);
+		instructSaveLabel.setForeground(Color.DARK_GRAY);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.anchor = GridBagConstraints.CENTER;
-		this.saveGamePanel.add(instructSaveLabel, gbc);
+		saveGamePanel.add(instructSaveLabel, gbc);
 
 		saveGame1 = new JButton("Save 1");
+		saveGame1.setBounds(0, 0, 60, 60);
 		gbc.gridx = 2;
 		gbc.gridy = 1;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = buttonInsets;
 		saveGame1.addActionListener(this);
-		this.saveGamePanel.add(saveGame1, gbc);
+		saveGamePanel.add(saveGame1, gbc);
 
 		saveGame2 = new JButton("Save 2");
 		gbc.gridx = 2;
 		gbc.gridy = 2;
-		gbc.weightx = 0.75;
-		gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = buttonInsets;
 		saveGame2.addActionListener(this);
-		this.saveGamePanel.add(saveGame2, gbc);
+		saveGamePanel.add(saveGame2, gbc);
 
 		saveGame3 = new JButton("Save 3");
 		gbc.gridx = 2;
 		gbc.gridy = 3;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = buttonInsets;
 		saveGame3.addActionListener(this);
-		this.saveGamePanel.add(saveGame3, gbc);
+		saveGamePanel.add(saveGame3, gbc);
 
 		savedLabel = new JLabel();
 		gbc.gridx = 2;
 		gbc.gridy = 4;
 		savedLabel.setVisible(true);
-		this.saveGamePanel.add(savedLabel, gbc);
+		saveGamePanel.add(savedLabel, gbc);
 
 		backToSettingsButton = new JButton("Back");
 		gbc.gridx = 2;
 		gbc.gridy = 5;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.anchor = GridBagConstraints.CENTER;
 		backToSettingsButton.addActionListener(this);
-		this.saveGamePanel.add(backToSettingsButton, gbc);
+		saveGamePanel.add(backToSettingsButton, gbc);
+		
+		inGameOverlay.add(saveGamePanel, JLayeredPane.POPUP_LAYER);
 		saveGamePanel.setVisible(false);
 	}
 
-	// Getters
-	public JPanel getMiddlePanel() {
-		return middlePanel;
+	public JPanel getSaveGamePanel() {
+		return saveGamePanel;
 	}
 
-	public JPanel[] getCornerPanels() {
-		JPanel[] cornerPanels = { nwCornerPanel, neCornerPanel, seCornerPanel, swCornerPanel };
-		return cornerPanels;
+	public void setSaveGamePanel(JPanel saveGamePanel) {
+		this.saveGamePanel = saveGamePanel;
 	}
 
-	// Helpers
-
-	/*
-	 * Sets South border panel background color.
-	 * 
-	 * @param: Color c
-	 * 
-	 * @returns: void
-	 */
-	public void setSouthBorderBG(Color c) {
-		this.southGameBoardBorder.setBackground(c);
+	public void playerSidePanels() {
+		playerPanels = new JPanel();
+		playerPanels.setLayout(new BorderLayout());
+		playerPanels.setOpaque(false);
+		playerPanels.setBounds(125, 125, 725, 730);
+		southPlayerSide = new JPanel();
+		//southPlayerSide.setBounds(138, 820, 702, 15);
+		southPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
+		southPlayerSide.setBackground(Color.red);
+		southPlayerSide.setVisible(true);
+		playerPanels.add(southPlayerSide, BorderLayout.SOUTH);
+		
+		westPlayerSide = new JPanel();
+		//westPlayerSide.setBounds(125, 140, 15, 700);
+		westPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
+		westPlayerSide.setBackground(Color.blue);
+		westPlayerSide.setVisible(true);
+		playerPanels.add(westPlayerSide, BorderLayout.WEST);
+		
+		northPlayerSide = new JPanel();
+		northPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
+		//northPlayerSide.setBounds(125, 105, 725, 15);
+		northPlayerSide.setBackground(Color.red);
+		northPlayerSide.setVisible(true);
+		playerPanels.add(northPlayerSide, BorderLayout.NORTH);
+		
+		eastPlayerSide = new JPanel();
+		eastPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
+		//eastPlayerSide.setBounds(850, 125, 15, 725);
+		eastPlayerSide.setBackground(Color.red);
+		eastPlayerSide.setVisible(true);
+		playerPanels.add(eastPlayerSide, BorderLayout.EAST);
+		
+		inGameOverlay.add(playerPanels, JLayeredPane.PALETTE_LAYER);
+		
+	}
+	
+	public void playerInfo() {
+		playerInfo = new JPanel(new BorderLayout());
+		playerInfo.setBounds(10, 40, 960, 900);
+		playerInfo.setOpaque(false);
+		playerInfo.setVisible(true);
+		
+		southPlayerDetails = new JLabel("", SwingConstants.CENTER);
+		playerInfo.add(southPlayerDetails, BorderLayout.SOUTH);
+		
+		westPlayerDetails = new JLabel("", SwingConstants.CENTER);
+		playerInfo.add(westPlayerDetails, BorderLayout.WEST);
+		
+		northPlayerDetails = new JLabel("", SwingConstants.CENTER);
+		playerInfo.add(northPlayerDetails, BorderLayout.NORTH);
+		
+		eastPlayerDetails = new JLabel("", SwingConstants.CENTER);
+		playerInfo.add(eastPlayerDetails, BorderLayout.EAST);
+		
+		inGameOverlay.add(playerInfo, JLayeredPane.PALETTE_LAYER);
+	}
+	public JLabel getSouthPlayerDetails() {
+		return southPlayerDetails;
 	}
 
-	/*
-	 * Sets West border panel background color.
-	 * 
-	 * @param: Color c
-	 * 
-	 * @returns: void
-	 */
-	public void setWestBorderBG(Color c) {
-		this.westGameBoardBorder.setBackground(c);
+	public void setSouthPlayerDetails(JLabel southPlayerDetails) {
+		this.southPlayerDetails = southPlayerDetails;
 	}
 
-	/*
-	 * Sets the North border panel background color.
-	 * 
-	 * @param: Color c
-	 * 
-	 * @returns: void
-	 */
-	public void setNorthBorderBG(Color c) {
-		this.northGameBoardBorder.setBackground(c);
+	public JLabel getWestPlayerDetails() {
+		return westPlayerDetails;
 	}
 
-	/*
-	 * Sets the East border panel background color.
-	 * 
-	 * @param: Color c
-	 * 
-	 * @returns: void
-	 */
-	public void setEastBorderBG(Color c) {
-		this.eastGameBoardBorder.setBackground(c);
+	public void setWestPlayerDetails(JLabel westPlayerDetails) {
+		this.westPlayerDetails = westPlayerDetails;
 	}
 
-	public void setSettingsPanelBG(Color bkgColor) {
-		settingsPanel.setBackground(bkgColor);
+	public JLabel getNorthPlayerDetails() {
+		return northPlayerDetails;
+	}
+
+	public void setNorthPlayerDetails(JLabel northPlayerDetails) {
+		this.northPlayerDetails = northPlayerDetails;
+	}
+
+	public JLabel getEastPlayerDetails() {
+		return eastPlayerDetails;
+	}
+
+	public void setEastPlayerDetails(JLabel eastPlayerDetails) {
+		this.eastPlayerDetails = eastPlayerDetails;
+	}
+
+	public JPanel getWestPlayerSide() {
+		return westPlayerSide;
+	}
+
+	public void setWestPlayerSide(JPanel westPlayerSide) {
+		this.westPlayerSide = westPlayerSide;
+	}
+
+	public JPanel getEastPlayerSide() {
+		return eastPlayerSide;
+	}
+
+	public void setEastPlayerSide(JPanel eastPlayerSide) {
+		this.eastPlayerSide = eastPlayerSide;
+	}
+
+	public JPanel getNorthPlayerSide() {
+		return northPlayerSide;
+	}
+
+	public void setNorthPlayerSide(JPanel northPlayerSide) {
+		this.northPlayerSide = northPlayerSide;
+	}
+
+	public JPanel getSouthPlayerSide() {
+		return southPlayerSide;
+	}
+
+	public void setSouthPlayerSide(JPanel southPlayerSide) {
+		this.southPlayerSide = southPlayerSide;
+	}
+
+	public void settingsOverlay() {
+		settingsPanel.setVisible(true);
+	}
+
+	public void setGameBoard(JPanel gameBoard) {
+		gameBoard.setBounds(125, 125, 725, 725);
+		inGameOverlay.add(gameBoard, JLayeredPane.DEFAULT_LAYER);
+	}
+
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+	public JLayeredPane getInGameOverlay() {
+		return inGameOverlay;
+	}
+
+	public void setInGameOverlay(JLayeredPane inGameOverlay) {
+		this.inGameOverlay = inGameOverlay;
 	}
 
 	/*
@@ -330,37 +354,38 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 		// Get the object that the event happened
 		Object selected = event.getSource();
 
-		/* Settings Panel Action Listeners Control Flow */
+		// Settings Panel Action Listeners Control Flow
 		if (selected.equals(settingsButton)) {
 			// Selected button was settings button
 
-			if (this.settingsPanel.isVisible()) {
+			if (settingsPanel.isVisible()) {
 				// If the settings panel is visible, toggle it off and game board on
-				saveGamePanel.setVisible(false);
+				// saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
-				middlePanel.setVisible(true);
 			} else {
 				// The settings panel is not visible set visible
-				settingsPanel.setVisible(false);
-				this.settingsPanel.setVisible(true);
-				this.middlePanel.setVisible(false);
+				settingsPanel.setVisible(true);
+				//gameBoard.setEnabled(false);
 			}
 
-			if (this.saveGamePanel.isVisible()) {
-				saveGamePanel.setVisible(false);
-				settingsPanel.setVisible(false);
-			}
+			// if (this.saveGamePanel.isVisible()) {
+			// saveGamePanel.setVisible(false);
+			// settingsPanel.setVisible(false);
+			// }
 
 		}
-
+		if (selected.equals(resumeGameButton)) {
+			settingsPanel.setVisible(false);
+		}
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
-			this.setVisible(false);
-
+			inGameOverlay.setVisible(false);
+			settingsPanel.setVisible(false);
+			mainPanel.setVisible(false);
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
-		if (selected.equals(quitButton)) {
-			System.exit(0);
+		if (selected.equals(quitGameButton)) {
+		 System.exit(0);
 		}
 
 		/************************************************************************************/
@@ -368,8 +393,8 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 		/* Save Game Panel Action Listeners Control Flow */
 		if (selected.equals(saveGameButton)) {
 			this.settingsPanel.setVisible(false);
-			this.saveGamePanel.setVisible(true);
-		}
+		 	this.saveGamePanel.setVisible(true);
+		 }
 		if (selected.equals(saveGame1)) {
 			SaveGame.saveGameObjs("Save1.sav");
 			saveGame1.setText("Saved To Save 1 Slot");
@@ -394,7 +419,7 @@ public class InGameUIPanel extends JPanel implements ActionListener {
 			this.setSaveGamePanel();
 		}
 		/**************************************************************************************/
-		
+
 		GameSettings.playButtonSound();
 
 	}

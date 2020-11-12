@@ -111,8 +111,16 @@ public class MainWindow extends JFrame {
 
 		// display the requested newPanel in frame
 		newPanel.setVisible(true);
-		mainWindow.add(newPanel, JLayeredPane.MODAL_LAYER);
+		mainWindow.add(newPanel, JLayeredPane.PALETTE_LAYER);
 
+	}
+
+	public JLayeredPane getMainWindow() {
+		return mainWindow;
+	}
+
+	public void setMainWindow(JLayeredPane mainWindow) {
+		this.mainWindow = mainWindow;
 	}
 
 }

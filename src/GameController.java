@@ -38,7 +38,8 @@ public class GameController {
 		}
 
 		// show the gameboard!
-		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
+		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel.getMainPanel());
+		
 		// advance to next turn, pass player list index as ref.
 		AdvanceToNextTurn();
 		
