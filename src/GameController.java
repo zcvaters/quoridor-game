@@ -101,15 +101,10 @@ public class GameController {
 		
 		//Handle AI here
 		if(currentPlayer.GetType() == "c") {
-			//player is a computer.  hard or easy?
-			if(currentPlayer.IsDifficult()) {
-				//this is a hard computer player
-				legalTiles = FindLegalTiles(currentPlayer);
-				
-			}else {
-				//this is an easy computer player
-				//do easy AI
-			}			
+			//this is a computer player
+			legalTiles = FindLegalTiles(currentPlayer);
+			ActivateLegalTiles(legalTiles);
+			AIManager.PerformAITurn(currentPlayer, legalTiles);				
 		}else {
 			//this player is a human
 			//allow tracking of input

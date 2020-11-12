@@ -39,10 +39,25 @@ public class InputManager implements Serializable {
 		allLockedWalls = new ArrayList<JPanel>();
 
 	}
+	
+	//Getter
+	public ArrayList<JPanel> getAllLockedWalls() {
+		return allLockedWalls;
+	}
 
 	// Setter
 	public void SetGridTiles(GameTile[][] tiles) {
 		gridTiles = tiles;
+	}
+	
+	public void AddLockedWalls(ArrayList<JPanel> wallsToAdd) {
+		//if the panel is not already on the list, lock it.
+		for(JPanel panel : wallsToAdd) {
+			if(!allLockedWalls.contains(panel)) {
+				allLockedWalls.add(panel);
+				//System.out.println("AI is Adding " +wallToAdd.getName());
+			}
+		}
 	}
 
 	private void DisplayTemporaryWalls() {
@@ -56,7 +71,7 @@ public class InputManager implements Serializable {
 				// find the parent (the GameTile obj) that is responsible for this panel
 				GameTile parent = (GameTile) thisPanel.getParent();
 				// parent activates the wall (changes it's color to wall)
-				parent.ActivateWallPanel(thisPanel);
+				parent.ActivateWallPanel(thisPanel);							
 				// repeat until 8 walls have been activated.
 			}
 		}
