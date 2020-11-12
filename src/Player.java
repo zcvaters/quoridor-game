@@ -1,5 +1,9 @@
 import java.awt.Color;
+import java.awt.GridBagLayout;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /* 
  * Player class.  
@@ -46,6 +50,33 @@ public class Player extends JPanel{
 	 */
 	public Player(int turnPosition, GameTile playerLocation, String type, String name, Color color, boolean isDifficult) {
 		
+		//get a JPanel
+		super();
+		
+		//size of player icon.  configure as necessary. keep smaller than game tile.
+		int playerX = 20;
+		int playerY = 20;
+		
+		//need to know size of the tile (player is displayed on top of tile).
+		int tileWidth = GameSettings.getTileWidth();
+		int tileHeight = GameSettings.getTileHeight();
+		
+		//set bounds for panel. configured to center the player on the tile.
+		//params:  startX, startY, panelWidth, panelHeight.  
+		this.setBounds((tileWidth-playerX)/2,(tileHeight-playerY)/2,playerX, playerY);
+		
+		//set panel background to player color
+		this.setBackground(color);
+		
+		//create a label to display player's first initial
+		//if no name provided, use "X"
+		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);		 
+		JLabel nameLabel = new JLabel(Character.toString(playerInitial));		
+	    
+	    //set GridBagLayout with no constraints to have label in center.
+	    this.setLayout(new GridBagLayout());
+		this.add(nameLabel);
+		
 		//set player attributes
 		this.turnPosition = turnPosition;
 		this.playerLocation = playerLocation;
@@ -76,7 +107,7 @@ public class Player extends JPanel{
 		return playerColor;
 	}
 
-	public boolean GetIsDifficult() {
+	public boolean IsDifficult() {
 		return playerIsDifficult;
 	}
 
@@ -91,6 +122,48 @@ public class Player extends JPanel{
 	public String GetPlayerGoal() {
 		//returns north, east, south, or west
 		return playerGoal;
+	}
+	
+	public Boolean PlayerHasWon() {
+		//check victory condition
+		//initially false.  If player reached goal, set to true.
+		Boolean playerHasWon = false;
+		switch (playerGoal) {
+
+		case "north":
+			//has player reached top row?
+			if(playerLocation.GetXCoord() == 0) {
+				playerHasWon = true;
+			}
+			break;
+					
+		case "east":
+			//has player reached east col?
+			if(playerLocation.GetYCoord() == GameSettings.GetCols() - 1) {
+				playerHasWon = true;
+			}
+			break;
+
+		case "west":
+			//has player reached west col?
+			if(playerLocation.GetYCoord() == 0) {
+				playerHasWon = true;
+			}
+			break;
+		
+		case "south":
+			//has player reached bottom row?
+			if(playerLocation.GetYCoord() == GameSettings.GetRows() - 1) {
+				playerHasWon = true;
+			}			
+			break;
+			
+		default:
+			System.out.println("Player goal is not assigned!!  Cannot check victory conditions on Player Class.");			
+		}
+		
+		//return the result
+		return playerHasWon;
 	}
 	
 	//Setters

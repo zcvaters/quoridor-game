@@ -20,7 +20,7 @@ public class InGameMessagePanel extends JPanel implements ActionListener {
 		//set size
 		Dimension panelSize = new Dimension(200, 100);
         this.setPreferredSize(panelSize);
-        this.setBounds(400,400,200,100);
+        this.setBounds(350,350,300,100);
         
         //get text
         String messageText = "Default message text.";
@@ -45,10 +45,6 @@ public class InGameMessagePanel extends JPanel implements ActionListener {
 	public void SetMessageText(String message) {
 		messageLabel.setText(message);
 	}
-	
-	
-	
-	
 
 	@Override
 	public void actionPerformed(ActionEvent event) {

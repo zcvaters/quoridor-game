@@ -468,10 +468,7 @@ public class InputManager implements Serializable {
 				//add them to the tile that was clicked on (in param)
 				tile.AddPlayer(thisPlayer);
 				//update the player's location attribute to store new location.
-				thisPlayer.setTile(tile);
-				
-				//CHECK FOR VICTORY CONDITIONS HERE!!
-				
+				thisPlayer.setTile(tile);				
 				//end the turn and advance to the next turn.
 				gameController.AdvanceToNextTurn();				
 			}			

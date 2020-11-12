@@ -188,9 +188,9 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//it uses JLayeredPane to display the player panel (if player is here)
 		tile = new JLayeredPane();		
 		tile.setPreferredSize(new Dimension(width,height));
-		tile.setBounds(0,0,width,height); //for layers
+		tile.setBounds(0,0,width,height); //for layered pane
 		centerPanel = new JPanel();
-		centerPanel.setBounds(0,0,width,height); //for layers
+		centerPanel.setBounds(0,0,width,height); //for layered pane
 		centerPanel.setOpaque(false);
 		centerPanel.setName("centerPanel");
 		centerPanel.addMouseListener(this);
@@ -428,18 +428,13 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	//setters
 	public void AddPlayer(Player player) {
 		
-		//SEE ALSO RemovePlayer BELOW!
-		
-		//size of player icon.  move this somewhere else.
-		int playerX = 20;
-		int playerY = 20;
+		//SEE ALSO RemovePlayer (below)
 		
 		//note:  playerPanel is defined as a JPanel, it's ok because Player extends JPanel.
 		playerPanel = player;
-		playerPanel.setBackground(player.GetColor());
+		//turn on panel
 		playerPanel.setOpaque(true);
-		//params:  startX, startY, panelWidth, panelHeight.  configured to center the player on the tile.
-		playerPanel.setBounds((width-playerX)/2,(height-playerY)/2,playerX, playerY);
+		//add player on top of the tile (player is now visible on the tile)
 		tile.add(playerPanel, JLayeredPane.PALETTE_LAYER);
 		//flag bool to show player is here
 		playerIsHere = true;
