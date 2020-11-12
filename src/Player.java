@@ -153,7 +153,7 @@ public class Player extends JPanel{
 		
 		case "south":
 			//has player reached bottom row?
-			if(playerLocation.GetYCoord() == GameSettings.GetRows() - 1) {
+			if(playerLocation.GetXCoord() == GameSettings.GetRows() - 1) {
 				playerHasWon = true;
 			}			
 			break;
