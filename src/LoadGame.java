@@ -22,6 +22,7 @@ public class LoadGame {
 		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];
 		
+		
 		try {
 			// Open file to read Save.sav
 			if(filename.equals("Save1.sav")) {

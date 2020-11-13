@@ -20,6 +20,7 @@ public class GameSettings implements Serializable {
 	static LoadGameMenu loadGameMenu;
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
+	static GameBoard gameBoard;
 
 	// the in game message panel. has it's own methods for setting in-game text to
 	// display
@@ -30,6 +31,7 @@ public class GameSettings implements Serializable {
 
 	// store ref to the object which will run the gameplay
 	static GameController gameController;
+
 
 	// the number of rows for game board
 	static int rows;
@@ -48,15 +50,15 @@ public class GameSettings implements Serializable {
 	public static final Color player3Color1 = new Color(238, 180, 89);
 	public static final Color player4Color1 = new Color(205, 197, 180);
 
-	public static final Color tileColor2 = new Color(201, 232, 215);
-	public static final Color wallColor2 = new Color(235, 110, 0);
-	public static final Color bkgColor2 = new Color(63, 83, 230);
+	public static final Color tileColor2 = new Color(97, 60, 31);
+	public static final Color wallColor2 = new Color(237, 213, 183);
+	public static final Color bkgColor2 = new Color(47, 47, 47);
 	public static final Color player1Color2 = new Color(230, 223, 125);
 	public static final Color player2Color2 = new Color(130, 225, 230);
 	public static final Color player3Color2 = new Color(230, 172, 129);
 	public static final Color player4Color2 = new Color(209, 151, 230);
 
-	public static final Color tileColor3 = new Color(255, 255, 255);
+	public static final Color tileColor3 = new Color(128, 58, 17);
 	public static final Color wallColor3 = new Color(7, 26, 200);
 	public static final Color bkgColor3 = new Color(0, 0, 0);
 	public static final Color player1Color3 = new Color(216, 191, 216);
@@ -177,6 +179,10 @@ public class GameSettings implements Serializable {
 	public static InstructionsMenu GetInstructionsMenu() {
 		return instructionsMenu;
 	}
+	
+	public static GameBoard getGameBoard() {
+		return gameBoard;
+	}
 
 	public static QuitMenu GetQuitMenu() {
 		return quitMenu;
@@ -278,6 +284,10 @@ public class GameSettings implements Serializable {
 	// public static void SetMessagePanel(InGameMessagePanel msgPanel) {
 	// GameSettings.messagePanel = msgPanel;
 	// }
+	
+	public static void setGameBoard(GameBoard gameBoard) {
+		GameSettings.gameBoard = gameBoard;
+	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {
 		// this is only set by two methods:

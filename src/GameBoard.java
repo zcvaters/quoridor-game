@@ -85,6 +85,14 @@ public class GameBoard extends JPanel implements ActionListener {
 	public void HideGameBoard() {
 		setVisible(false);
 	}
+	
+	public void disableGameBoard() {
+		setEnabled(false);
+	}
+	
+	public void enableGameBoard() {
+		setEnabled(true);
+	}
 
 	public GameTile[][] GetGrid() {
 		return grid;

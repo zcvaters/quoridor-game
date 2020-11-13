@@ -1,9 +1,11 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /*
  * BuildGame class.  This game is the factory for building the necessary game assets for a GameState.  
@@ -57,6 +59,8 @@ public class BuildAssets {
 		// access these from anywhere with GameSettings.GetGameTiles(); returns a
 		// GameTile[][]
 		GameSettings.setGameTiles(gameBoard.GetGrid());
+		
+		GameSettings.setGameBoard(gameBoard);
 
 		// give the game tiles to the InputManager for handling user input
 		GameSettings.inputManager.SetGridTiles(gameBoard.GetGrid());
@@ -65,6 +69,7 @@ public class BuildAssets {
 		// get an empty array that will hold 4 configured players, in proper turn order
 		// (1, 2, 3, 4).
 		players = new Player[4];
+		
 
 		// loop players. turn order is currently randomized (from GameSettings)
 		// unrandomize it, store new players in proper order (starting with whomever was
@@ -110,26 +115,24 @@ public class BuildAssets {
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 
 		// get ref to the middle panel, which will hold the game board.
-		JPanel middlePanel = inGameUIPanel.getMiddlePanel();
+		inGameUIPanel.setGameBoard(gameBoard);
 
 		// Set Border colors to corresponding player. Set center background to match
 		// tile background
-		inGameUIPanel.setSouthBorderBG(players[0].GetColor());
-		inGameUIPanel.setWestBorderBG(players[1].GetColor());
-		inGameUIPanel.setNorthBorderBG(players[2].GetColor());
-		inGameUIPanel.setEastBorderBG(players[3].GetColor());
-		// set backgrounds of the middle panel and the corners to the appropriate bkg
-		// color
-		middlePanel.setBackground(bkgColor);
-		for (JPanel thisPanel : inGameUIPanel.getCornerPanels()) {
-			thisPanel.setBackground(bkgColor);
-		}
+		inGameUIPanel.getSouthPlayerSide().setBackground(players[0].GetColor());
+		inGameUIPanel.getWestPlayerSide().setBackground(players[1].GetColor());
+		inGameUIPanel.getNorthPlayerSide().setBackground(players[2].GetColor());
+		inGameUIPanel.getEastPlayerSide().setBackground(players[3].GetColor());
+		inGameUIPanel.getSouthPlayerDetails().setText(players[0].GetName());
+		inGameUIPanel.getWestPlayerDetails().setText(players[1].GetName());
+		inGameUIPanel.getNorthPlayerDetails().setText(players[2].GetName());
+		inGameUIPanel.getEastPlayerDetails().setText(players[3].GetName());
+		
 		// set background of the settings panel to the appropiate bkg color
-		inGameUIPanel.setSettingsPanelBG(bkgColor);
+		inGameUIPanel.getSaveGamePanel().setBackground(bkgColor);
 
 		// add the gameboard to the middle panel of in-game UI.
-		middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
-		middlePanel.add(gameBoard);
+		//middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
 
 		// Store Player Objects in Game Settings
 		// playersAttributes.addAll(Arrays.asList(players));
@@ -159,34 +162,23 @@ public class BuildAssets {
 
 		// In game UI panel
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
+		inGameUIPanel.setGameBoard(reloadedGameBoard);
 
-		// get ref to the middle panel, which will hold the game board.
-		JPanel middlePanel = inGameUIPanel.getMiddlePanel();
-
-		// Set Border colors to corresponding player. Set center background to match
-		// tile background
-		inGameUIPanel.setSouthBorderBG(players[0].GetColor());
-		inGameUIPanel.setWestBorderBG(players[1].GetColor());
-		inGameUIPanel.setNorthBorderBG(players[2].GetColor());
-		inGameUIPanel.setEastBorderBG(players[3].GetColor());
-		// set backgrounds of the middle panel and the corners to the appropriate bkg
-		// color
-		middlePanel.setBackground(gameTiles[0][0].getBkgColor());
-		for (JPanel thisPanel : inGameUIPanel.getCornerPanels()) {
-			thisPanel.setBackground(gameTiles[0][0].getBkgColor());
-		}
+		inGameUIPanel.getSouthPlayerSide().setBackground(players[0].GetColor());
+		inGameUIPanel.getWestPlayerSide().setBackground(players[1].GetColor());
+		inGameUIPanel.getNorthPlayerSide().setBackground(players[2].GetColor());
+		inGameUIPanel.getEastPlayerSide().setBackground(players[3].GetColor());
+		inGameUIPanel.getSouthPlayerDetails().setText(players[0].GetName());
+		inGameUIPanel.getWestPlayerDetails().setText(players[1].GetName());
+		inGameUIPanel.getNorthPlayerDetails().setText(players[2].GetName());
+		inGameUIPanel.getEastPlayerDetails().setText(players[3].GetName());
 
 		// set background of the settings panel to the appropiate bkg color
-		inGameUIPanel.setSettingsPanelBG(gameTiles[0][0].getBkgColor());
+		inGameUIPanel.getSaveGamePanel().setBackground(gameTiles[0][0].getBkgColor());
 
-		// add the gameboard to the middle panel of in-game UI.
-		middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
-		middlePanel.add(reloadedGameBoard);
 
 		// Store Player Objects in Game Settings
 		GameSettings.setPlayers(players);
-
-		reloadedGameBoard.setBackground(gameTiles[0][0].getBkgColor());
 
 		// Start the game controller
 		GameController game = new GameController(inGameUIPanel, reloadedGameBoard, players, nextTurn, false);
