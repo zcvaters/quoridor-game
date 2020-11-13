@@ -1,0 +1,3 @@
+Hi the Seq Diagram for Load Game is really detailed, it's best to download 
+and view rather than using github.
+Thanks!
