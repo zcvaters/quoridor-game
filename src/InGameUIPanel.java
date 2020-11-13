@@ -71,6 +71,8 @@ public class InGameUIPanel implements ActionListener {
 
 	private JLabel eastPlayerDetails;
 
+	private JLabel settingsOverlay;
+
 	// constructor
 	public InGameUIPanel() {
 
