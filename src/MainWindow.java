@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
 		this.setSize(frameSize);
 		this.setResizable(false);
 		this.setLayout(null); // ?need this?
-
+		this.setLocationRelativeTo(null);
 		mainWindow = new JLayeredPane();
 		mainWindow.setBounds(0, 0, 1000, 1000);
 		mainWindow.setVisible(true);
