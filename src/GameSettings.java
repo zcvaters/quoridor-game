@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class GameSettings implements Serializable {
 
@@ -143,6 +144,8 @@ public class GameSettings implements Serializable {
 	    {
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(AudioSystem.getAudioInputStream(GameSettings.class.getResource("/Assets/Sounds/button_sound.wav")));
+	        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	        gainControl.setValue(-30.0f);
 	        clip.start();
 	    }
 	    catch (Exception exc)

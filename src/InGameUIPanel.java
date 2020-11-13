@@ -71,6 +71,8 @@ public class InGameUIPanel implements ActionListener {
 
 	private JLabel eastPlayerDetails;
 
+	private JPanel glassPanel;
+
 	// constructor
 	public InGameUIPanel() {
 		
@@ -131,6 +133,8 @@ public class InGameUIPanel implements ActionListener {
 
 	public void initializeSettingsOverlay() {
 		resumeGameButton = new JButton("Resume");
+		resumeGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
+		resumeGameButton.setForeground(Color.black);
 		resumeGameButton.addActionListener(this);
 		resumeGameButton.setVisible(true);
 		resumeGameButton.setBounds(0, 0, 60, 60);
@@ -140,6 +144,8 @@ public class InGameUIPanel implements ActionListener {
 		settingsPanel.add(resumeGameButton, gbc);
 
 		saveGameButton = new JButton("Save Game");
+		saveGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
+		saveGameButton.setForeground(Color.black);
 		saveGameButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 1;
@@ -147,6 +153,8 @@ public class InGameUIPanel implements ActionListener {
 		settingsPanel.add(saveGameButton, gbc);
 
 		backToMenuButton = new JButton("Back To Main Menu");
+		backToMenuButton.setFont(MainWindow.orbitron.deriveFont(15f));
+		backToMenuButton.setForeground(Color.black);
 		backToMenuButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 2;
@@ -154,6 +162,8 @@ public class InGameUIPanel implements ActionListener {
 		settingsPanel.add(backToMenuButton, gbc);
 
 		quitGameButton = new JButton("Quit Game");
+		quitGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
+		quitGameButton.setForeground(Color.black);
 		quitGameButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -169,6 +179,7 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.setOpaque(false);
 		
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
+		instructSaveLabel.setFont(MainWindow.orbitron.deriveFont(11f));
 		instructSaveLabel.setOpaque(true);
 		instructSaveLabel.setForeground(Color.BLACK);
 		instructSaveLabel.setBackground(Color.white);
@@ -177,6 +188,8 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.add(instructSaveLabel, gbc);
 
 		saveGame1 = new JButton("Save 1");
+		saveGame1.setFont(MainWindow.orbitron.deriveFont(15f));
+		saveGame1.setForeground(Color.black);
 		saveGame1.setBounds(0, 0, 60, 60);
 		gbc.gridx = 2;
 		gbc.gridy = 1;
@@ -184,6 +197,8 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.add(saveGame1, gbc);
 
 		saveGame2 = new JButton("Save 2");
+		saveGame2.setFont(MainWindow.orbitron.deriveFont(15f));
+		saveGame2.setForeground(Color.black);
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -191,6 +206,8 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.add(saveGame2, gbc);
 
 		saveGame3 = new JButton("Save 3");
+		saveGame3.setFont(MainWindow.orbitron.deriveFont(15f));
+		saveGame3.setForeground(Color.black);
 		gbc.gridx = 2;
 		gbc.gridy = 3;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -204,6 +221,8 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.add(savedLabel, gbc);
 
 		backToSettingsButton = new JButton("Back");
+		backToSettingsButton.setFont(MainWindow.orbitron.deriveFont(15f));
+		backToSettingsButton.setForeground(Color.black);
 		gbc.gridx = 2;
 		gbc.gridy = 5;
 		backToSettingsButton.addActionListener(this);
@@ -389,10 +408,10 @@ public class InGameUIPanel implements ActionListener {
 				//gameBoard.setEnabled(false);
 			}
 
-			// if (this.saveGamePanel.isVisible()) {
-			// saveGamePanel.setVisible(false);
-			// settingsPanel.setVisible(false);
-			// }
+			if (this.saveGamePanel.isVisible()) {
+				saveGamePanel.setVisible(false);
+				settingsPanel.setVisible(false);
+			}
 
 		}
 		if (selected.equals(resumeGameButton)) {

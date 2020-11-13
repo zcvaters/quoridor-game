@@ -1,8 +1,11 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -38,7 +41,8 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		EmptyBorder border1 = new EmptyBorder(190, 0, 0, 0);
 		instructionsHeaderLabel.setBorder(border1);
 		instructionsHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
-		instructionsHeaderLabel.setFont(new Font("Dialog", Font.BOLD, 35));
+		instructionsHeaderLabel.setFont(MainWindow.orbitron.deriveFont(30f));
+		instructionsHeaderLabel.setForeground(Color.black);
 		instructionsHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		instructionsHeaderLabel.setVerticalAlignment(JLabel.CENTER);
 
@@ -60,16 +64,14 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
 		instructionsBackButton = new JButton("Back");
+		instructionsBackButton.setForeground(Color.black);
+		instructionsBackButton.setContentAreaFilled(false);
+		instructionsBackButton.setBorderPainted(false);
+		instructionsBackButton.setAlignmentX(CENTER_ALIGNMENT);
+		instructionsBackButton.setFont(MainWindow.orbitron.deriveFont(30f));
+		buttonHoverAction(instructionsBackButton);
 		buttonPanel.add(instructionsBackButton);
-		// instructionsBackButton.setBorderPainted(false);
-		// instructionsBackButton.setIcon(new
-		// ImageIcon(getClass().getResource("/Assets/back_button.png")));
 		instructionsBackButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		// instructionsBackButton.setRolloverEnabled(true);
-		// instructionsBackButton.setRolloverIcon(new
-		// ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
-		// instructionsBackButton.setSelectedIcon(new
-		// ImageIcon(getClass().getResource("/Assets/selected_back_button.png")));
 		instructionsBackButton.addActionListener(this);
 
 		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
@@ -103,6 +105,23 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		return text;
 	}
 
+	
+	public void buttonHoverAction(JButton button) {
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setForeground(new Color(140, 15, 15));
+				GameSettings.playButtonSound();
+			}
+	
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setForeground(Color.black);
+			}
+
+		});
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly

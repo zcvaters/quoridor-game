@@ -148,8 +148,8 @@ public class BuildAssets {
 	public BuildAssets(Player[] players, GameTile[][] gameTiles, int nextTurn) {
 
 		// Re create the game board from the save.
-		this.rows = GameSettings.GetRows();
-		this.cols = GameSettings.GetCols();
+		this.rows = gameTiles[0].length;
+		this.cols = gameTiles[1].length;
 
 		GameBoard reloadedGameBoard = new GameBoard(gameTiles, rows, cols); // Initiate load game constructor
 

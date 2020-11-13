@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -48,7 +49,7 @@ public class LoadGame {
 			save.close(); // Close Object Input.
 			saveFile.close(); // Close File input.
 		} catch (Exception FileNotFoundException) {
-			GameSettings.GetLoadGameMenu().setSelectionLabel("No Save File.");
+			GameSettings.GetLoadGameMenu().setSelectionLabel("No Save File Found: " + filename, Color.red);
 		}
 
 	}

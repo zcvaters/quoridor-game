@@ -6,6 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,6 +30,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	private JButton loadGamePlayButton;
 	private JLabel selectionLabel;
 	private String filename;
+	private ArrayList<JButton> buttons;
 	public LoadGameMenu() {
 
 		// build a panel
@@ -40,6 +45,8 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 
 		// the label for the header
 		loadGameHeaderLabel = new JLabel("Load Game");
+		loadGameHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
+		loadGameHeaderLabel.setForeground(Color.black);
 		EmptyBorder border1 = new EmptyBorder(190, 40, 0, 0);
 		loadGameHeaderLabel.setBorder(border1);
 		loadGameHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -54,6 +61,10 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		Insets buttonInsets = new Insets(10, 10, 0, 0);
 
 		loadGameSave1 = new JButton("Save 1");
+		loadGameSave1.setContentAreaFilled(false);
+		loadGameSave1.setBorderPainted(false);
+		loadGameSave1.setFont(MainWindow.orbitron.deriveFont(24f));
+		loadGameSave1.setForeground(Color.black);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.insets = buttonInsets;
@@ -61,30 +72,42 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		buttonPanel.add(loadGameSave1, gbc);
 
 		loadGameSave2 = new JButton("Save 2");
+		loadGameSave2.setContentAreaFilled(false);
+		loadGameSave2.setBorderPainted(false);
+		loadGameSave2.setFont(MainWindow.orbitron.deriveFont(24f));
+		loadGameSave2.setForeground(Color.black);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		loadGameSave2.addActionListener(this);
 		buttonPanel.add(loadGameSave2, gbc);
 
 		loadGameSave3 = new JButton("Save 3");
+		loadGameSave3.setContentAreaFilled(false);
+		loadGameSave3.setBorderPainted(false);
+		loadGameSave3.setFont(MainWindow.orbitron.deriveFont(24f));
+		loadGameSave3.setForeground(Color.black);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		loadGameSave3.addActionListener(this);
 		buttonPanel.add(loadGameSave3, gbc);
 
-		loadGamePlayButton = new JButton("Start Game");
+		loadGameBackButton = new JButton("Back");
+		loadGameBackButton.setContentAreaFilled(false);
+		loadGameBackButton.setBorderPainted(false);
+		loadGameBackButton.setFont(MainWindow.orbitron.deriveFont(24f));
+		loadGameBackButton.setForeground(Color.black);
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		loadGamePlayButton.addActionListener(this);
-		buttonPanel.add(loadGamePlayButton, gbc);
-
-		loadGameBackButton = new JButton("Back");
-		gbc.gridx = 0;
-		gbc.gridy = 4;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		buttonPanel.add(loadGameBackButton, gbc);
 		buttonPanel.setOpaque(false);
 		loadGameBackButton.addActionListener(this);
+		
+		buttonHoverAction(loadGameSave1);
+		buttonHoverAction(loadGameSave2);
+		buttonHoverAction(loadGameSave3);
+		buttonHoverAction(loadGameBackButton);
+		
 
 		selectionLabel = new JLabel("", SwingConstants.CENTER);
 		gbc.gridx = 0;
@@ -97,16 +120,37 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		this.add(buttonPanel, Component.CENTER_ALIGNMENT);
 		// hide this panel
 		this.setVisible(false);
-
+		
+		buttons = new ArrayList<>();
+		buttons.add(loadGameSave1);
+		buttons.add(loadGameSave2);
+		buttons.add(loadGameSave3);
+		buttons.add(loadGameBackButton);
 	}
 	
 	public JLabel getSelectionLabel() {
 		return selectionLabel;
 	}
 	
-	public void setSelectionLabel(String label) {
+	public void setSelectionLabel(String label, Color col) {
 		selectionLabel.setText(label);
-		selectionLabel.setForeground(Color.red);
+		selectionLabel.setForeground(col);
+	}
+	
+	public void buttonHoverAction(JButton button) {
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setForeground(new Color(140, 15, 15));
+				GameSettings.playButtonSound();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setForeground(Color.black);
+			}
+
+		});
 	}
 
 	@Override
@@ -116,20 +160,17 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 
 		
 		if (selected.equals(loadGameSave1)) {
-			selectionLabel.setText("Current Selection: Save 1.");
 			filename = "Save1.sav";
+			LoadGame.loadGameObjs(filename);
 		}
 		if (selected.equals(loadGameSave2)) {
 
-			selectionLabel.setText("Current Selection: Save 2.");
 			filename = "Save2.sav";
+			LoadGame.loadGameObjs(filename);
 		}
 		if (selected.equals(loadGameSave3)) {
-			selectionLabel.setText("Current Selection: Save 3.");
 			filename = "Save3.sav";
-		}
-		if (selected.equals(loadGamePlayButton)) {
-			LoadGame.loadGameObjs(filename);	
+			LoadGame.loadGameObjs(filename);
 		}
 
 		// was 'back' requested on load game panel?
@@ -137,6 +178,8 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
 		GameSettings.playButtonSound();
+		buttons.forEach(button -> button.setForeground(Color.black));
+		
 	}
 
 }
