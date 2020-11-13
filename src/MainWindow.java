@@ -1,7 +1,5 @@
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 

@@ -1,11 +1,6 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /*
  * BuildGame class.  This game is the factory for building the necessary game assets for a GameState.  

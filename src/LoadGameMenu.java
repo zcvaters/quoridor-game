@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,10 +26,10 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	private JButton loadGameSave1;
 	private JButton loadGameSave2;
 	private JButton loadGameSave3;
-	private JButton loadGamePlayButton;
 	private JLabel selectionLabel;
 	private String filename;
 	private ArrayList<JButton> buttons;
+
 	public LoadGameMenu() {
 
 		// build a panel
@@ -102,12 +101,11 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		buttonPanel.add(loadGameBackButton, gbc);
 		buttonPanel.setOpaque(false);
 		loadGameBackButton.addActionListener(this);
-		
+
 		buttonHoverAction(loadGameSave1);
 		buttonHoverAction(loadGameSave2);
 		buttonHoverAction(loadGameSave3);
 		buttonHoverAction(loadGameBackButton);
-		
 
 		selectionLabel = new JLabel("", SwingConstants.CENTER);
 		gbc.gridx = 0;
@@ -120,23 +118,23 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		this.add(buttonPanel, Component.CENTER_ALIGNMENT);
 		// hide this panel
 		this.setVisible(false);
-		
+
 		buttons = new ArrayList<>();
 		buttons.add(loadGameSave1);
 		buttons.add(loadGameSave2);
 		buttons.add(loadGameSave3);
 		buttons.add(loadGameBackButton);
 	}
-	
+
 	public JLabel getSelectionLabel() {
 		return selectionLabel;
 	}
-	
+
 	public void setSelectionLabel(String label, Color col) {
 		selectionLabel.setText(label);
 		selectionLabel.setForeground(col);
 	}
-	
+
 	public void buttonHoverAction(JButton button) {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
@@ -144,7 +142,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 				button.setForeground(new Color(140, 15, 15));
 				GameSettings.playButtonSound();
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				button.setForeground(Color.black);
@@ -158,7 +156,6 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		// get the object that performed the action, respond accordingly
 		Object selected = event.getSource();
 
-		
 		if (selected.equals(loadGameSave1)) {
 			filename = "Save1.sav";
 			LoadGame.loadGameObjs(filename);
@@ -179,7 +176,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		}
 		GameSettings.playButtonSound();
 		buttons.forEach(button -> button.setForeground(Color.black));
-		
+
 	}
 
 }

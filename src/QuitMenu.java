@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -94,7 +93,7 @@ public class QuitMenu extends JPanel implements ActionListener {
 				button.setForeground(new Color(140, 15, 15));
 				GameSettings.playButtonSound();
 			}
-	
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				button.setForeground(Color.black);
@@ -102,7 +101,7 @@ public class QuitMenu extends JPanel implements ActionListener {
 
 		});
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly

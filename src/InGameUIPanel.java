@@ -71,17 +71,15 @@ public class InGameUIPanel implements ActionListener {
 
 	private JLabel eastPlayerDetails;
 
-	private JPanel glassPanel;
-
 	// constructor
 	public InGameUIPanel() {
-		
+
 		// Create layered Pane
 		inGameOverlay = new JLayeredPane();
 		inGameOverlay.setBounds(0, 0, 1000, 1000);
 		inGameOverlay.setLayout(null);
 		inGameOverlay.setVisible(true);
-		
+
 		// Create Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
@@ -89,7 +87,7 @@ public class InGameUIPanel implements ActionListener {
 		mainPanel.setOpaque(false);
 		mainPanel.setVisible(true);
 		mainPanel.add(inGameOverlay);
-		
+
 		// UI Panel to be exist on mainPanel
 		uiPanel = new JPanel();
 		uiPanel.setBounds(0, 0, 1000, 1000);
@@ -116,13 +114,12 @@ public class InGameUIPanel implements ActionListener {
 		settingsButton.addActionListener(this);
 		uiPanel.add(settingsButton, JLayeredPane.PALETTE_LAYER);
 		mainPanel.add(uiPanel, JLayeredPane.PALETTE_LAYER);
-		
+
 		// Settings Panel for in Game Settings
 		settingsPanel = new JPanel();
 		settingsPanel.setLayout(new GridBagLayout());
 		settingsPanel.setBounds(0, 0, 1000, 1000);
 		settingsPanel.setOpaque(false);
-		
 
 		settingsPanel.setVisible(false);
 		initializeSettingsOverlay();
@@ -135,8 +132,8 @@ public class InGameUIPanel implements ActionListener {
 		resumeGameButton = new JButton("Resume");
 		resumeGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
 		resumeGameButton.setForeground(Color.black);
-		resumeGameButton.addActionListener(this);
 		resumeGameButton.setVisible(true);
+		resumeGameButton.addActionListener(this);
 		resumeGameButton.setBounds(0, 0, 60, 60);
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -172,12 +169,12 @@ public class InGameUIPanel implements ActionListener {
 		inGameOverlay.add(settingsPanel, JLayeredPane.PALETTE_LAYER);
 
 	}
-	
+
 	public void setSaveGamePanel() {
 		saveGamePanel = new JPanel(new GridBagLayout());
 		saveGamePanel.setBounds(380, 420, 250, 125);
 		saveGamePanel.setOpaque(false);
-		
+
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
 		instructSaveLabel.setFont(MainWindow.orbitron.deriveFont(11f));
 		instructSaveLabel.setOpaque(true);
@@ -227,7 +224,7 @@ public class InGameUIPanel implements ActionListener {
 		gbc.gridy = 5;
 		backToSettingsButton.addActionListener(this);
 		saveGamePanel.add(backToSettingsButton, gbc);
-		
+
 		inGameOverlay.add(saveGamePanel, JLayeredPane.POPUP_LAYER);
 		saveGamePanel.setVisible(false);
 	}
@@ -246,57 +243,58 @@ public class InGameUIPanel implements ActionListener {
 		playerPanels.setOpaque(false);
 		playerPanels.setBounds(125, 125, 725, 730);
 		southPlayerSide = new JPanel();
-		//southPlayerSide.setBounds(138, 820, 702, 15);
+		// southPlayerSide.setBounds(138, 820, 702, 15);
 		southPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
 		southPlayerSide.setBackground(Color.red);
 		southPlayerSide.setVisible(true);
 		playerPanels.add(southPlayerSide, BorderLayout.SOUTH);
-		
+
 		westPlayerSide = new JPanel();
-		//westPlayerSide.setBounds(125, 140, 15, 700);
+		// westPlayerSide.setBounds(125, 140, 15, 700);
 		westPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
 		westPlayerSide.setBackground(Color.blue);
 		westPlayerSide.setVisible(true);
 		playerPanels.add(westPlayerSide, BorderLayout.WEST);
-		
+
 		northPlayerSide = new JPanel();
 		northPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		//northPlayerSide.setBounds(125, 105, 725, 15);
+		// northPlayerSide.setBounds(125, 105, 725, 15);
 		northPlayerSide.setBackground(Color.red);
 		northPlayerSide.setVisible(true);
 		playerPanels.add(northPlayerSide, BorderLayout.NORTH);
-		
+
 		eastPlayerSide = new JPanel();
 		eastPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		//eastPlayerSide.setBounds(850, 125, 15, 725);
+		// eastPlayerSide.setBounds(850, 125, 15, 725);
 		eastPlayerSide.setBackground(Color.red);
 		eastPlayerSide.setVisible(true);
 		playerPanels.add(eastPlayerSide, BorderLayout.EAST);
-		
+
 		inGameOverlay.add(playerPanels, JLayeredPane.PALETTE_LAYER);
-		
+
 	}
-	
+
 	public void playerInfo() {
 		playerInfo = new JPanel(new BorderLayout());
 		playerInfo.setBounds(10, 40, 960, 900);
 		playerInfo.setOpaque(false);
 		playerInfo.setVisible(true);
-		
+
 		southPlayerDetails = new JLabel("", SwingConstants.CENTER);
 		playerInfo.add(southPlayerDetails, BorderLayout.SOUTH);
-		
+
 		westPlayerDetails = new JLabel("", SwingConstants.CENTER);
 		playerInfo.add(westPlayerDetails, BorderLayout.WEST);
-		
+
 		northPlayerDetails = new JLabel("", SwingConstants.CENTER);
 		playerInfo.add(northPlayerDetails, BorderLayout.NORTH);
-		
+
 		eastPlayerDetails = new JLabel("", SwingConstants.CENTER);
 		playerInfo.add(eastPlayerDetails, BorderLayout.EAST);
-		
+
 		inGameOverlay.add(playerInfo, JLayeredPane.PALETTE_LAYER);
 	}
+
 	public JLabel getSouthPlayerDetails() {
 		return southPlayerDetails;
 	}
@@ -405,7 +403,7 @@ public class InGameUIPanel implements ActionListener {
 			} else {
 				// The settings panel is not visible set visible
 				settingsPanel.setVisible(true);
-				//gameBoard.setEnabled(false);
+				// gameBoard.setEnabled(false);
 			}
 
 			if (this.saveGamePanel.isVisible()) {
@@ -425,7 +423,7 @@ public class InGameUIPanel implements ActionListener {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
 		if (selected.equals(quitGameButton)) {
-		 System.exit(0);
+			System.exit(0);
 		}
 
 		/************************************************************************************/
@@ -433,8 +431,8 @@ public class InGameUIPanel implements ActionListener {
 		/* Save Game Panel Action Listeners Control Flow */
 		if (selected.equals(saveGameButton)) {
 			this.settingsPanel.setVisible(false);
-		 	this.saveGamePanel.setVisible(true);
-		 }
+			this.saveGamePanel.setVisible(true);
+		}
 		if (selected.equals(saveGame1)) {
 			SaveGame.saveGameObjs("Save1.sav");
 			saveGame1.setText("Saved To Save 1 Slot");

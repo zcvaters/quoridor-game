@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class NewGameMenu extends JPanel implements ActionListener {
@@ -97,24 +95,24 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		color1Button = new JButton();
 		color1Button.setContentAreaFilled(false);
 		color1Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_1.png")));
-		//color1Button.setPreferredSize(new Dimension(300, 200));
+		// color1Button.setPreferredSize(new Dimension(300, 200));
 		color1Button.addActionListener(this);
 		color2Button = new JButton();
 		color2Button.setContentAreaFilled(false);
 		color2Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_2.png")));
-		//color2Button.setPreferredSize(new Dimension(300, 200));
+		// color2Button.setPreferredSize(new Dimension(300, 200));
 		color2Button.addActionListener(this);
 		color3Button = new JButton();
 		color3Button.setContentAreaFilled(false);
 		color3Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_3.png")));
-		//color3Button.setPreferredSize(new Dimension(300, 200));
+		// color3Button.setPreferredSize(new Dimension(300, 200));
 		color3Button.addActionListener(this);
 		// put the color buttons in a sub-panel
 		colorButtons = new JPanel();
 		FlowLayout colorButtonLayout = new FlowLayout();
 		colorButtons.setLayout(colorButtonLayout);
 		colorButtons.setOpaque(false);
-		
+
 		buttonHoverAction(color1Button);
 		buttonHoverAction(color2Button);
 		buttonHoverAction(color3Button);
@@ -198,7 +196,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		configPlayersPanel.add(secondPanel);
 		configPlayersPanel.add(thirdPanel);
 		configPlayersPanel.add(fourthPanel);
-	
+
 		// the "back" button and listener
 		newGameBackButton = new JButton("Back");
 		newGameBackButton.setFont(MainWindow.orbitron);
@@ -218,7 +216,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		newGamePlayButton.setAlignmentX(CENTER_ALIGNMENT);
 		newGamePlayButton.addActionListener(this);
 		buttonHoverAction(newGamePlayButton);
-		
+
 		// add the buttons to a panel
 		playBackButtonsPanel = new JPanel();
 		playBackButtonsPanel.setOpaque(false);
@@ -254,7 +252,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 				button.setForeground(new Color(140, 15, 15));
 				GameSettings.playButtonSound();
 			}
-	
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				button.setForeground(Color.black);
@@ -262,6 +260,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 
 		});
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly

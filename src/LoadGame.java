@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
@@ -22,20 +21,19 @@ public class LoadGame {
 		// Create the data objects for us to restore.
 		Player[] players = new Player[4];
 		GameTile[][] gameTiles = new GameTile[9][9];
-		
-		
+
 		try {
 			// Open file to read Save.sav
-			if(filename.equals("Save1.sav")) {
+			if (filename.equals("Save1.sav")) {
 				saveFile = new FileInputStream("Save1.sav");
 			}
-			if(filename.equals("Save2.sav")) {
+			if (filename.equals("Save2.sav")) {
 				saveFile = new FileInputStream("Save2.sav");
 			}
-			if(filename.equals("Save3.sav")) {
+			if (filename.equals("Save3.sav")) {
 				saveFile = new FileInputStream("Save3.sav");
 			}
-					
+
 			// Create an ObjectInputStream to get objects from save file.
 			ObjectInputStream save = new ObjectInputStream(saveFile);
 

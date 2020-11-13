@@ -105,7 +105,6 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		return text;
 	}
 
-	
 	public void buttonHoverAction(JButton button) {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
@@ -113,7 +112,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 				button.setForeground(new Color(140, 15, 15));
 				GameSettings.playButtonSound();
 			}
-	
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				button.setForeground(Color.black);
@@ -121,7 +120,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 
 		});
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly
