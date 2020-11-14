@@ -21,3 +21,17 @@
 /Save1.sav
 /Save2.sav
 /Save3.sav
+/MainMenu.class
+/NewGameMenu.class
+/LoadGameMenu.class
+/QuitMenu.class
+/InstructionsMenu.class
+/MainMenu$1.class
+/MainMenu$2.class
+/InGameUIPanel$1.class
+/NewGameMenu$1.class
+/LoadGameMenu$1.class
+/InstructionsMenu$1.class
+/QuitMenu$1.class
+/Buttons.class
+/Buttons.java

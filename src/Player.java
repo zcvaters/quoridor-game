@@ -197,8 +197,6 @@ public class Player extends JPanel{
 		if(startTile.GetYCoord() == 0) {
 			//player is on left, moving east
 			playerGoal = "east";
-		}
-		
+		}		
 	}
-
 }

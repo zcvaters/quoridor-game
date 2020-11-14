@@ -1,55 +1,65 @@
 import java.util.ArrayList;
 
 public class GameController {
-	
-	//cache ref to players and turn info
+
+	// cache ref to players and turn info
 	Player[] allPlayers;
-	//index for keeping track of turns for players (0-3)
+	// index for keeping track of turns for players (0-3)
 	int nextPlayerIndex;
 	Player currentPlayer;
-	
-	//store reference to collection of tiles
+
+	// store reference to collection of tiles
 	GameTile[][] tiles;
-	
-	//the GameState which will store a snapshot of a game in progress
+
+	// the GameState which will store a snapshot of a game in progress
 	GameState gameState;
-	
-	//constructor
-	public GameController(InGameUIPanel inGameUIPanel, GameBoard gameBoard, Player[] players, int nextToPlay) {
-		
-		//copy ref to GameSettings
+
+	// constructor
+	public GameController(InGameUIPanel inGameUIPanel, GameBoard gameBoard, Player[] players, int nextToPlay,
+			boolean isNewGame) {
+
+		// copy ref to GameSettings
 		GameSettings.SetGameController(this);
 		this.allPlayers = players;
-		//For a new game, nextPlayer = 0.  Then 1, 2, 3, 0, 1, 2, 3...
+		// For a new game, nextPlayer = 0. Then 1, 2, 3, 0, 1, 2, 3...
 		this.nextPlayerIndex = nextToPlay;
+    GameSettings.GetGameController().setNextPlayer(nextPlayerIndex);
 		this.currentPlayer = allPlayers[nextPlayerIndex];
-		
-		//cache the tiles
+
+		// cache the tiles
 		this.tiles = gameBoard.GetGrid();
+    //if this is a new game, place the players on the tiles.
+    //otherwise players are already located on a tile.
+		if (isNewGame) {
+			// put the players in position on the board
+			for (Player thisPlayer : players) {
+				// get the assigned starting tile
+				GameTile startTile = thisPlayer.GetTile();
+				// put player on board by adding it to the tile for display
+				startTile.AddPlayer(thisPlayer);
+			}
+		}
+
+		// show the gameboard!
+		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel.getMainPanel());
 		
-		
-						
-		//put the players in position on the board
-		for(Player thisPlayer : players) {
-			//get the assigned starting tile
-			GameTile startTile = thisPlayer.GetTile();
-			//put player on board by adding it to the tile for display
-			startTile.AddPlayer(thisPlayer);
-		}	
-		
-		
-		//show the gameboard!
-		GameSettings.GetMainWindow().ShowPanel(inGameUIPanel);
-		//advance to next turn, pass player list index as ref.
-		AdvanceToNextTurn();
+		// advance to next turn, pass player list index as ref.
+		AdvanceToNextTurn();	
 	}
-	
-	//GETTERS
+
+	// GETTERS and setters.  <---------------------------(MOVE THIS TO GAMESETTINGS!)
 	public Player GetCurrentPlayer() {
-		//return the player taking the current turn
+		// return the player taking the current turn
 		return currentPlayer;
 	}
+  
+  public int getNextPlayer() {
+		return this.nextPlayerIndex;
+	}
 	
+	public void setNextPlayer(int nextPlayer) {
+		this.nextPlayerIndex = nextPlayer;
+	}
 	
 	public void AdvanceToNextTurn() {
 		
@@ -91,7 +101,7 @@ public class GameController {
 			nextPlayerIndex = 0;
 		}
 	}
-	
+  
 	public void BeginTurn() {
 		//remove the popup notification
 		GameSettings.GetMainWindow().RemoveMessage();
@@ -329,5 +339,4 @@ public class GameController {
 			tile.ActivateTile();
 		}
 	}
-
 }
