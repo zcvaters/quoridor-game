@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * BuildGame class.  This game is the factory for building the necessary game assets for a GameState.  
+ * BuildAsset class.  This game is the factory for building the necessary game assets required to play.  
  * 
  * Responsible for taking input from either of TWO sources.
  * 
@@ -95,8 +95,8 @@ public class BuildAssets {
 
 			// build a player
 			Player newPlayer = new Player(playerTurn, playerLocation, playerType, playerName, playerColor, isDifficult);
-			// add it to array in proper ordered position. -1 for zero indexing.
 
+			//add it to array in proper ordered position.  -1 for zero indexing.
 			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
 			// repeat until 4 players.
 

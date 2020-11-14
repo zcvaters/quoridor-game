@@ -17,7 +17,10 @@ public class MainWindow extends JFrame {
 
 	private JLayeredPane mainWindow;
 
-	private Dimension frameSize;
+	//used to overlay in-game messages (player's turn, illegal move, etc)
+	private InGameMessagePanel messagePanel;
+
+  private Dimension frameSize;
 
 	static Font orbitron;
 
@@ -38,60 +41,67 @@ public class MainWindow extends JFrame {
 
 		// build master frame to hold all panels, fixed size, no resizing.
 		frameSize = new Dimension(1000, 1000);
-		this.setSize(frameSize);
-		this.setResizable(false);
-		this.setLayout(null); // ?need this?
-		this.setLocationRelativeTo(null);
-		mainWindow = new JLayeredPane();
-		mainWindow.setBounds(0, 0, 1000, 1000);
-		mainWindow.setVisible(true);
-		this.add(mainWindow);
 
-		// add the background image to this frame (wrapped in a JLabel).
-		// panels displayed on top (ie: instructions panel) will be transparent except
-		// for text/buttons
-		ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
-		JLabel frameBackground = new JLabel(backgroundImage);
-		frameBackground.setBounds(0, 0, 1000, 1000);
-		mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
+    this.setSize(frameSize);
+    this.setResizable(false);
+    this.setLayout(null);   // ?need this?
+    this.setLocationRelativeTo(null);
+    mainWindow = new JLayeredPane();
+    mainWindow.setBounds(0,0,1000,1000);
+    mainWindow.setVisible(true);
+    this.add(mainWindow);
 
-		// store a static ref to this window in GameSettings.
-		// can be accessed anywhere by GameSettings.GetMainWindow()
-		GameSettings.SetMainWindow(this);
+    //add the background image to this frame (wrapped in a JLabel).
+    //panels displayed on top (ie: instructions panel) will be transparent except for text/buttons
+    ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
+    JLabel frameBackground = new JLabel(backgroundImage);  		
+    frameBackground.setBounds(0,0,1000,1000);
+    //background image is on DEFAULT (bottom) layer.
+    mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
 
-		MainMenu mainMenu = new MainMenu();
-		NewGameMenu newGameMenu = new NewGameMenu();
-		LoadGameMenu loadGameMenu = new LoadGameMenu();
-		InstructionsMenu instructionsMenu = new InstructionsMenu();
-		QuitMenu quitMenu = new QuitMenu();
 
-		// define array to hold all menu panels
-		// this list holds all of the panels that have been created
-		// helps with switching between them as necessary (see "ShowPanel()")
-		allMenuPanels = new ArrayList<JPanel>();
-		// add created panels to the list (NOT TO THE FRAME! they are loaded into frame
-		// when needed)
-		allMenuPanels.add(mainMenu);
-		allMenuPanels.add(newGameMenu);
-		allMenuPanels.add(loadGameMenu);
-		allMenuPanels.add(instructionsMenu);
-		allMenuPanels.add(quitMenu);
+    //store a static ref to this window in GameSettings.  
+    //can be accessed anywhere by GameSettings.GetMainWindow()
+    GameSettings.SetMainWindow(this);
 
-		// build panels (like slides in a slideshow). these will be swapped
-		// (visible/hidden) as user makes selections
-		// new game, load game, instructions, quit
-		GameSettings.SetMainMenu(mainMenu);
-		GameSettings.SetNewGameMenu(newGameMenu);
-		GameSettings.SetLoadGameMenu(loadGameMenu);
-		GameSettings.SetInstructionsMenu(instructionsMenu);
-		GameSettings.SetQuitMenu(quitMenu);
+    //these are the main menu and associated panels (displayed on PALETTE layer, on top of DEFAULT)
+    MainMenu mainMenu = new MainMenu();
+    NewGameMenu newGameMenu = new NewGameMenu();
+    LoadGameMenu loadGameMenu = new LoadGameMenu();
+    InstructionsMenu instructionsMenu = new InstructionsMenu();
+    QuitMenu quitMenu = new QuitMenu();
+    //this panel is reserved for inGame Messages (displayed on MODAL layer, on top of PALETTE)
+    //it has it's own methods for setting text messages. accessible through GameSettings.
+    //NOT added to menuPanel array list below (it's not a menu).
+    messagePanel = new InGameMessagePanel();
 
-		// add the mainMenuPanel to the frame, providing user with starting options
-		ShowPanel(GameSettings.GetMainMenu());
+    //define array to hold all menu panels
+    //this list holds all of the panels that have been created
+    //helps with switching between them as necessary (see "ShowPanel()")
+    allMenuPanels = new ArrayList<JPanel>();        
+    //add created panels to the list (NOT TO THE FRAME!  they are loaded into frame when needed)
+    allMenuPanels.add(mainMenu);
+    allMenuPanels.add(newGameMenu);
+    allMenuPanels.add(loadGameMenu);
+    allMenuPanels.add(instructionsMenu);
+    allMenuPanels.add(quitMenu);
 
-		// housekeeping for frame
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+    //build panels (like slides in a slideshow).  these will be swapped (visible/hidden) as user makes selections
+    //new game, load game, instructions, quit
+    GameSettings.SetMainMenu(mainMenu);
+    GameSettings.SetNewGameMenu(newGameMenu);
+    GameSettings.SetLoadGameMenu(loadGameMenu);
+    GameSettings.SetInstructionsMenu(instructionsMenu);
+    GameSettings.SetQuitMenu(quitMenu);        
+    //add the message panel
+    GameSettings.SetMessagePanel(messagePanel);
+
+    //add the mainMenuPanel to the frame, providing user with starting options 
+    ShowPanel(GameSettings.GetMainMenu());        
+
+    //housekeeping for frame
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+    this.setVisible(true); 
 	}
 
 	// use this method to load panels into the main window as necessary.
@@ -109,8 +119,29 @@ public class MainWindow extends JFrame {
 
 		// display the requested newPanel in frame
 		newPanel.setVisible(true);
-		mainWindow.add(newPanel, JLayeredPane.PALETTE_LAYER);
-
+		mainWindow.add(newPanel, JLayeredPane.PALETTE_LAYER);		
+	}
+	
+	//used to display in-game messages to the players.
+	//ie: "Player 2 has next turn".  or "Illegal Move".
+	public void ShowMessage(String message) {
+		
+		//get the message panel
+		//update the message text
+		//display the panel
+		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
+		
+		messagePanel.SetMessageText(message);
+		messagePanel.setVisible(true);
+		mainWindow.add(messagePanel, JLayeredPane.MODAL_LAYER);		
+	}
+	
+	public void RemoveMessage() {
+		
+		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
+		mainWindow.remove(messagePanel);
+		//refresh display for whatever was underneath this message
+		this.repaint();
 	}
 
 	public JLayeredPane getMainWindow() {

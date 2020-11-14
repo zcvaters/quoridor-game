@@ -138,8 +138,9 @@ public class NewGameMenu extends JPanel implements ActionListener {
 
 		firstPanel = new JPanel();
 		firstPanel.setOpaque(false);
-		firstPanel.setLayout(new GridLayout(5, 1));
-		firstIconLabel = new JLabel("Color 1 Here");
+
+		firstPanel.setLayout(new GridLayout(5,1));
+		firstIconLabel = new JLabel("Player Info");		
 		firstIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		firstIconLabel.setVerticalAlignment(JLabel.CENTER);
 		firstTextField = new JTextField("<<Your Name Here>>", 1);
@@ -151,8 +152,8 @@ public class NewGameMenu extends JPanel implements ActionListener {
 
 		secondPanel = new JPanel();
 		secondPanel.setOpaque(false);
-		secondPanel.setLayout(new GridLayout(5, 1));
-		secondIconLabel = new JLabel("Color 2 Here");
+		secondPanel.setLayout(new GridLayout(5,1));		
+		secondIconLabel = new JLabel("Player Info");
 		secondIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		secondIconLabel.setVerticalAlignment(JLabel.CENTER);
 		secondTextField = new JTextField("<<Your Name Here>>", 1);
@@ -163,10 +164,9 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		secondPanel.add(secondTextField);
 		secondPanel.add(secondComboBox);
 
-		thirdPanel = new JPanel();
-		thirdPanel.setOpaque(false);
-		thirdPanel.setLayout(new GridLayout(5, 1));
-		thirdIconLabel = new JLabel("Color 3 Here");
+		thirdPanel = new JPanel();    
+		thirdPanel.setLayout(new GridLayout(5,1));		
+		thirdIconLabel = new JLabel("Player Info");
 		thirdIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		thirdIconLabel.setVerticalAlignment(JLabel.CENTER);
 		thirdTextField = new JTextField("<<Your Name Here>>", 1);
@@ -179,8 +179,8 @@ public class NewGameMenu extends JPanel implements ActionListener {
 
 		fourthPanel = new JPanel();
 		fourthPanel.setOpaque(false);
-		fourthPanel.setLayout(new GridLayout(5, 1));
-		fourthIconLabel = new JLabel("Color 4 Here");
+		fourthPanel.setLayout(new GridLayout(5,1));		
+		fourthIconLabel = new JLabel("Player Info");
 		fourthIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		fourthIconLabel.setVerticalAlignment(JLabel.CENTER);
 		fourthTextField = new JTextField("<<Your Name Here>>", 1);

@@ -39,10 +39,25 @@ public class InputManager implements Serializable {
 		allLockedWalls = new ArrayList<JPanel>();
 
 	}
+	
+	//Getter
+	public ArrayList<JPanel> getAllLockedWalls() {
+		return allLockedWalls;
+	}
 
 	// Setter
 	public void SetGridTiles(GameTile[][] tiles) {
 		gridTiles = tiles;
+	}
+	
+	public void AddLockedWalls(ArrayList<JPanel> wallsToAdd) {
+		//if the panel is not already on the list, lock it.
+		for(JPanel panel : wallsToAdd) {
+			if(!allLockedWalls.contains(panel)) {
+				allLockedWalls.add(panel);
+				//System.out.println("AI is Adding " +wallToAdd.getName());
+			}
+		}
 	}
 
 	private void DisplayTemporaryWalls() {
@@ -56,7 +71,7 @@ public class InputManager implements Serializable {
 				// find the parent (the GameTile obj) that is responsible for this panel
 				GameTile parent = (GameTile) thisPanel.getParent();
 				// parent activates the wall (changes it's color to wall)
-				parent.ActivateWallPanel(thisPanel);
+				parent.ActivateWallPanel(thisPanel);							
 				// repeat until 8 walls have been activated.
 			}
 		}
@@ -91,6 +106,11 @@ public class InputManager implements Serializable {
 		// this method receives the sub-panel that detected the mouse, and the x,y point
 		// of the mouse
 		// track mouse position within the tile.
+		
+		//if game is paused (ie: showing a message panel), no action here
+		if(GameSettings.GetGameIsPaused()) {
+			return;
+		}
 
 		// get the name of the sub panel passed as param.
 		String panelName = thisPanel.getName();
@@ -100,7 +120,12 @@ public class InputManager implements Serializable {
 		int panelHeight = (int) panelSize.getHeight();
 
 		// get the parent of this sub panel (the GameTile that holds all 9 sub panels)
-		GameTile parent = (GameTile) thisPanel.getParent();
+		GameTile parent;
+		if(panelName == "centerPanel") {
+			parent = (GameTile) thisPanel.getParent().getParent();
+		}else {
+			parent = (GameTile) thisPanel.getParent();
+		}
 
 		// is mouse on a corner panel?
 		// if so, ignore mouseover. do not display temporary wall placement when mouse
@@ -110,8 +135,8 @@ public class InputManager implements Serializable {
 			return;
 		}
 
-		// is mouse over the center tile? if so, highlight the center tile
-		if (panelName.equals("tile")) {
+		// is mouse over the center tile panel? if so, highlight the center panel		
+		if (panelName.equals("centerPanel")) {
 			HandleMouseOverInput(parent, "c");
 			return;
 		}
@@ -206,9 +231,10 @@ public class InputManager implements Serializable {
 		// activate temporary (mouseover) walls, based on switch and location code
 		switch (locationCode) {
 
-		case "c":
-			// highlight tile.
-			gridTiles[x][y].TurnOnCenterTile();
+		case "c":			
+			
+			//do anything else here?
+			
 			// clear any temporary walls
 			ClearTemporaryWalls();
 			return; // <-------Note: returning here. no execution of code after switch!
@@ -435,11 +461,32 @@ public class InputManager implements Serializable {
 	public void HandleMouseClick(JPanel thisPanel) {
 		// user clicked the mouse on thisPanel
 		// what do they want to do?
+		
+		//if game is paused (ie: showing a message panel), no action here
+		if(GameSettings.GetGameIsPaused()) {
+			return;
+		}
+		
+		GameController gameController = GameSettings.GetGameController();			
+		Player thisPlayer = gameController.GetCurrentPlayer();
 
-		// try to move the player?
-		if (thisPanel.getName().equals("tile")) {
-			// player clicked on a center tile and is attemping to move
-			System.out.println("Moving player");
+		// trying to move the player?
+		if (thisPanel.getName().equals("centerPanel")) {
+			
+			//is this tile available for move?			
+			GameTile tile = (GameTile)thisPanel.getParent().getParent();			
+			
+			if(tile.CanAcceptPlayer()) {
+				// player clicked on a valid center tile, and will move to it				
+				//remove them from the tile they are standing on
+				thisPlayer.GetTile().RemovePlayer();
+				//add them to the tile that was clicked on (in param)
+				tile.AddPlayer(thisPlayer);
+				//update the player's location attribute to store new location.
+				thisPlayer.setTile(tile);				
+				//end the turn and advance to the next turn.
+				gameController.AdvanceToNextTurn();				
+			}			
 			return;
 		}
 
@@ -451,6 +498,12 @@ public class InputManager implements Serializable {
 			if (tempPanel == null) {
 				return;
 			}
+		}
+		
+		//check player's inventory.  if they have used all their walls, no action
+		if(thisPlayer.GetWallsRemaining() <= 0) {
+			System.out.println("Sorry, " +thisPlayer.GetName()+ ", you have no walls remaining.");
+			return;
 		}
 
 		// else, not clicking on center, and we have temp walls from mouseover. place a
@@ -466,9 +519,14 @@ public class InputManager implements Serializable {
 			// add this panel to the list of all locked walls
 			allLockedWalls.add(tempPanel);
 		}
-
 		// we have placed this wall. clear the tempWalls array.
 		ClearTemporaryWalls();
+		
+		//subtract one from the player's wall inventory
+		thisPlayer.setWallsRemaining(thisPlayer.GetWallsRemaining() - 1);
+		System.out.println(thisPlayer.GetName() + " placed a wall.  They have " +thisPlayer.GetWallsRemaining()+ " walls remining.");
+		//end the turn and advance to the next turn.
+		gameController.AdvanceToNextTurn();	
 
 	}
 }
