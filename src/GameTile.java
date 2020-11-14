@@ -295,6 +295,22 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		return lockedWalls;
 	}
 	
+	//maybe move these to gamesettings.  ???    <--------------- //TO DO
+	public Color getWallColor() {
+		return this.wallColor;
+	}
+
+	public Color getTileColor() {
+		return this.tileColor;
+	}
+
+	public Color getBkgColor() {
+		return this.bkgColor;
+	}
+
+	
+	
+	
 	//this method returns the player (obj) that is standing on this tile, if any
 	public Player GetPlayer() {		
 		return (Player)playerPanel;		
