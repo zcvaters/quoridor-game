@@ -378,11 +378,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	//for handling inquiries if player can move here.
 	public Boolean CanAcceptPlayer() {
 		return canAcceptPlayer;
-	}
-	
-	
-	
-	
+	}	
 	
 	//CHANGE WALL BORDER COLORS  (called by Input Manager on mouse over)
 	public void ActivateWallPanel(JPanel panelToDisplay) {

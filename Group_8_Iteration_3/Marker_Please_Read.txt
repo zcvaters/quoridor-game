@@ -1,0 +1,26 @@
+Hi, thanks for reading.
+
+We hope you like the latest release.  
+
+Please try starting a new game, set up some colors and players, and begin.
+
+The JAR for this iteration does not have take-a-turn active yet, but you should be able to see
+your players at their randomized starting positions.  The mouseover for wall placement is operational,
+and you can click to place some walls.
+
+You could try saving at this point, and then quitting/re-loading.  It should work fine.
+
+A couple of other notes on the documentation:
+
+- We've been (sort of) reprimanded over the past few reviews for not having recognized AI as a separate entity. :)
+We just wanted to point out that our design uses a single Player class for both human and AI players.  
+The type of player is distinguished via an attribute within the Player class.
+When the game controller calls for the next Player, a check is made on the player's type.  If human, control is passed
+to the user. If AI, control will be passed to the AI manager.  The Player is moved, like a pawn, by the appropriate controller.
+
+- The Seq Diagram for Load Game is really detailed, it's best to download and view (or right-click and View Image) rather than using github.
+
+We look forward to your comments and suggestions.
+
+Thanks!
+Group8.

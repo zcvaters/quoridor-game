@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +7,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class GameSettings implements Serializable{
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
+public class GameSettings implements Serializable {
 
 	// store ref to the main UI window (a frame)
 	// this frame will display a variety of panels depending on user needs
@@ -16,15 +21,18 @@ public class GameSettings implements Serializable{
 	static LoadGameMenu loadGameMenu;
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
-	
-	//the in game message panel.  has it's own methods for setting in-game text to display
-	static InGameMessagePanel messagePanel;
+	static GameBoard gameBoard;
+
+	// the in game message panel. has it's own methods for setting in-game text to
+	// display
+	// static InGameMessagePanel messagePanel;
 
 	// store reference to object which manages all incoming user input
 	static InputManager inputManager;
-	
-	//store ref to the object which will run the gameplay
+
+	// store ref to the object which will run the gameplay
 	static GameController gameController;
+
 
 	// the number of rows for game board
 	static int rows;
@@ -43,21 +51,23 @@ public class GameSettings implements Serializable{
 	public static final Color player3Color1 = new Color(238, 180, 89);
 	public static final Color player4Color1 = new Color(205, 197, 180);
 
-	public static final Color tileColor2 = new Color(201, 232, 215);
-	public static final Color wallColor2 = new Color(235, 110, 0);
-	public static final Color bkgColor2 = new Color(63, 83, 230);
+	public static final Color tileColor2 = new Color(97, 60, 31);
+	public static final Color wallColor2 = new Color(237, 213, 183);
+	public static final Color bkgColor2 = new Color(47, 47, 47);
 	public static final Color player1Color2 = new Color(230, 223, 125);
 	public static final Color player2Color2 = new Color(130, 225, 230);
 	public static final Color player3Color2 = new Color(230, 172, 129);
 	public static final Color player4Color2 = new Color(209, 151, 230);
 
-	public static final Color tileColor3 = new Color(255, 255, 255);
+	public static final Color tileColor3 = new Color(128, 58, 17);
 	public static final Color wallColor3 = new Color(7, 26, 200);
 	public static final Color bkgColor3 = new Color(0, 0, 0);
 	public static final Color player1Color3 = new Color(216, 191, 216);
 	public static final Color player2Color3 = new Color(210, 105, 30);
 	public static final Color player3Color3 = new Color(135, 206, 235);
 	public static final Color player4Color3 = new Color(255, 250, 205);
+	
+	public static final File buttonHoverSound = new File("/Assets/Sounds/button_sound.wav");
 
 	// tile color options
 	static Color[] tileColors = { tileColor1, tileColor2, tileColor3 };
@@ -76,18 +86,19 @@ public class GameSettings implements Serializable{
 
 	// a collection of 1, 2, 3, 4 in a random order. used to assign ID's.
 	static List<Integer> playerIDList;
-  
+
 	// storage for the individual tiles needed to comprise a gameboard.
 	// passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
 
 	// Storage for the players Objects
-	static ArrayList<Player> players;
-	
-	//for locking controls/input when necessary (ie: between turn changes)
+	static Player[] players;
+
+	// for locking controls/input when necessary (ie: between turn changes)
 	static Boolean gameIsPaused;
 
-	/* Constructor - GameSettings
+	/*
+	 * Constructor - GameSettings
 	 * 
 	 * Intended as a top-level class to provide access for static variables. Any
 	 * class can access these attributes like this GameSettings.GetInputManager();
@@ -118,17 +129,36 @@ public class GameSettings implements Serializable{
 		mainWindow = new MainWindow();
 
 		// Player Object storing
-		players = new ArrayList<Player>();
-		
-		//game is not paused
+		players = new Player[4];
+
+		// game is not paused
 		gameIsPaused = false;
 	}
+	
+	/*
+	 * Playsounds on hover
+	 */
+	public static void playButtonSound()
+	{
+	    try
+	    {
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(AudioSystem.getAudioInputStream(GameSettings.class.getResource("/Assets/Sounds/button_sound.wav")));
+	        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	        gainControl.setValue(-30.0f);
+	        clip.start();
+	    }
+	    catch (Exception exc)
+	    {
+	        exc.printStackTrace(System.out);
+	    }
+	}
 
-	// getters	
+	// getters
 	public static GameController GetGameController() {
 		return gameController;
 	}
-	
+
 	public static InputManager GetInputManager() {
 		return inputManager;
 	}
@@ -136,7 +166,7 @@ public class GameSettings implements Serializable{
 	public static MainWindow GetMainWindow() {
 		return mainWindow;
 	}
-	
+
 	public static MainMenu GetMainMenu() {
 		return mainMenu;
 	}
@@ -153,13 +183,17 @@ public class GameSettings implements Serializable{
 		return instructionsMenu;
 	}
 	
+	public static GameBoard getGameBoard() {
+		return gameBoard;
+	}
+
 	public static QuitMenu GetQuitMenu() {
 		return quitMenu;
 	}
-	
-	public static InGameMessagePanel GetMessagePanel() {
-		return messagePanel;
-	}
+
+	// public static InGameMessagePanel GetMessagePanel() {
+	// return messagePanel;
+	// }
 
 	public static int GetRows() {
 		return rows;
@@ -180,8 +214,8 @@ public class GameSettings implements Serializable{
 	public static GameTile[][] getGameTiles() {
 		return gameTiles;
 	}
-	
-	//get computer-generated name
+
+	// get computer-generated name
 	public static String GetRandomName() {
 		int rnd = new Random().nextInt(computerNames.length);
 		return computerNames[rnd];
@@ -215,22 +249,21 @@ public class GameSettings implements Serializable{
 	public static Color[] getPlayerColors(int playersIndex) {
 		return playerColors[playersIndex];
 	}
-	
-	public static ArrayList<Player> getPlayers() {
+
+	public static Player[] getPlayers() {
 		return players;
 	}
-	
+
 	public static Boolean GetGameIsPaused() {
 		return gameIsPaused;
 	}
-	
 
 	// SETTERS
-	
+
 	public static void SetMainWindow(MainWindow mainWin) {
 		GameSettings.mainWindow = mainWin;
 	}
-	
+
 	public static void SetMainMenu(MainMenu mainMenu) {
 		GameSettings.mainMenu = mainMenu;
 	}
@@ -250,9 +283,13 @@ public class GameSettings implements Serializable{
 	public static void SetQuitMenu(QuitMenu quitMenu) {
 		GameSettings.quitMenu = quitMenu;
 	}
+
+	// public static void SetMessagePanel(InGameMessagePanel msgPanel) {
+	// GameSettings.messagePanel = msgPanel;
+	// }
 	
-	public static void SetMessagePanel(InGameMessagePanel msgPanel) {
-		GameSettings.messagePanel = msgPanel;
+	public static void setGameBoard(GameBoard gameBoard) {
+		GameSettings.gameBoard = gameBoard;
 	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {
@@ -261,27 +298,23 @@ public class GameSettings implements Serializable{
 		// LoadGame, in LoadFromFile(), when loading previously saved files.
 		gameTiles = allTiles;
 	}
-	
-	public static void setPlayers(ArrayList<Player> playerArray) {
-		for (Player plr : playerArray) {
-			players.add(plr);
-		}
+
+	public static void setPlayers(Player[] players2) {
+		players = players2;
 	}
-	
+
 	public static void SetGameIsPaused(Boolean isPaused) {
 		GameSettings.gameIsPaused = isPaused;
 	}
-	
+
 	public static void SetGameController(GameController controller) {
-		GameSettings.gameController= controller;
+		GameSettings.gameController = controller;
 	}
-	
-	
-	
-	//helper methods
-	private List<Integer> buildPlayerIDList(){
-		//randomize the numbers 1-4 inside an array.  use collections->shuffle().
-		//ex:  [1, 3, 4, 2]   or   [2, 1, 4, 3]  etc...				
+
+	// helper methods
+	private List<Integer> buildPlayerIDList() {
+		// randomize the numbers 1-4 inside an array. use collections->shuffle().
+		// ex: [1, 3, 4, 2] or [2, 1, 4, 3] etc...
 
 		List<Integer> sourceList = Arrays.asList(1, 2, 3, 4);
 		Collections.shuffle(sourceList);
