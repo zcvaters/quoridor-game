@@ -22,10 +22,9 @@ public class GameSettings implements Serializable {
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
 	static GameBoard gameBoard;
-
-	// the in game message panel. has it's own methods for setting in-game text to
-	// display
-	// static InGameMessagePanel messagePanel;
+	
+	// the in game message panel. has it's own methods for setting in-game text to display
+	static InGameMessagePanel messagePanel;	
 
 	// store reference to object which manages all incoming user input
 	static InputManager inputManager;
@@ -257,8 +256,16 @@ public class GameSettings implements Serializable {
 	public static Boolean GetGameIsPaused() {
 		return gameIsPaused;
 	}
-
+	
+	public static InGameMessagePanel GetMessagePanel() {
+		return messagePanel;
+	}
+	
 	// SETTERS
+
+	public static void SetMessagePanel(InGameMessagePanel messagePanel) {
+		GameSettings.messagePanel = messagePanel;
+	}	
 
 	public static void SetMainWindow(MainWindow mainWin) {
 		GameSettings.mainWindow = mainWin;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -314,7 +315,7 @@ public class AIManager {
 		//find the closest player to the goal.  Place a wall directly in front of that player if possible.
 		
 		//get ref to all players
-		ArrayList<Player> allPlayers = GameSettings.getPlayers();
+		Player[] allPlayers = GameSettings.getPlayers();
 		
 		//get ref to all the game tiles
 		GameTile[][] gridTiles = GameSettings.getGameTiles();
@@ -330,7 +331,7 @@ public class AIManager {
 		String opponentGoalDirection;
 		int rowGoal;
 		int colGoal;
-		Player closestPlayerToGoal = allPlayers.get(0);
+		Player closestPlayerToGoal = allPlayers[0];
 		
 		//find the player with the shortest distance to their goal
 		for(Player thisPlayer : allPlayers) {
