@@ -185,6 +185,9 @@ public class AIManager {
 		
 		while(!foundLocation) {
 			
+			//SHOULD PUT A COUNTER HERE.  
+			//let computer try for 50-100 iterations. if still no wall placement avail, move instead.
+			
 			//board ranges from (0,0) to (rows,cols). 
 			int max = GameSettings.GetRows() - 2;
 			int min = 2;
@@ -203,6 +206,10 @@ public class AIManager {
 			
 			if(tempWalls[0] == null) {
 				//this set is invalid.  repeat while loop.
+				foundLocation = false;
+			}
+			//check if this wall would block any player from reaching goal
+			else if(CheckPath.ThisWallBlocksGoal(tempWalls)) {
 				foundLocation = false;
 			}
 			else {
@@ -233,6 +240,7 @@ public class AIManager {
 		//decrement the player's wall inventory
 		//subtract one from the player's wall inventory
 		currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+		System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 		
 		//end the turn.
 		GameSettings.GetGameController().AdvanceToNextTurn();		
@@ -487,8 +495,15 @@ public class AIManager {
 			MakeHardMove(currentPlayer, legalTiles);
 			return;
 		}
+		//check to see if this wall would completely block a player
+		else if(CheckPath.ThisWallBlocksGoal(tempWalls)) {
+			//this wall would block at least one player. move instead.
+			MakeHardMove(currentPlayer, legalTiles);
+			return;
+		}		
 		else {
-			//the AI can block the closest player to the goal.  place wall and end turn
+			//the AI can place wall in front of the closest player to the goal.  
+			//place wall and end turn.
 			ArrayList<JPanel> panelList = new ArrayList<JPanel>();
 			for (JPanel thisPanel : tempWalls) {
 				if (thisPanel != null) {
@@ -507,8 +522,9 @@ public class AIManager {
 			GameSettings.GetInputManager().AddLockedWalls(panelList);
 			
 			//decrement the player's wall inventory
-			//subtract one from the player's wall inventory
+			//subtract one from the player's wall inventory			
 			currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+			System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 			
 			//end the turn.
 			GameSettings.GetGameController().AdvanceToNextTurn();

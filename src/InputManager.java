@@ -506,8 +506,14 @@ public class InputManager implements Serializable {
 			return;
 		}
 
-		// else, not clicking on center, and we have temp walls from mouseover. place a
-		// wall
+		// else, not clicking on center, and we have temp walls from mouseover. 
+		//check if this wall would block any players from reaching the goal
+		if(CheckPath.ThisWallBlocksGoal(tempWalls)) {
+			System.out.println("This wall would block at least one player!  Cannot place wall here.");
+			return;
+		}		
+		
+		//if all conditions passed, place a wall
 
 		// loop tempWalls and set each of it's panels to locked.
 		// copy to a master list of allLockedWalls here.

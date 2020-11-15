@@ -78,7 +78,7 @@ public class GameController {
 		
 		//get the next player to play
 		Player nextPlayer = allPlayers[nextPlayerIndex];				
-		System.out.println("Advancing to next turn. Next player is " +nextPlayer.GetName());
+		//System.out.println("Advancing to next turn. Next player is " +nextPlayer.GetName());
 		
 		//loop through the tiles, deactivate all highlights
 		for(int x = 0; x < GameSettings.GetRows(); x++) {
@@ -119,8 +119,8 @@ public class GameController {
 			//this player is a human
 			//allow tracking of input
 			GameSettings.SetGameIsPaused(false);		
-			System.out.println("game paused? " +GameSettings.GetGameIsPaused());
-			System.out.println("Starting turn for " +currentPlayer.GetName());
+			//System.out.println("game paused? " +GameSettings.GetGameIsPaused());
+			//System.out.println("Starting turn for " +currentPlayer.GetName());
 			//it is now "currentPlayer"'s turn
 			legalTiles = FindLegalTiles(currentPlayer);
 			ActivateLegalTiles(legalTiles);
@@ -148,7 +148,7 @@ public class GameController {
 		int rowAddress = location.GetXCoord();
 		int colAddress = location.GetYCoord();		
 		
-		System.out.println(currentPlayer.GetName() + " is on tile (" +rowAddress+ ", " +colAddress+ ")");
+		//System.out.println(currentPlayer.GetName() + " is on tile (" +rowAddress+ ", " +colAddress+ ")");
 		
 		//does player have north option?
 		if(location.HasNorthTile() && !location.HasNorthWall()) {
