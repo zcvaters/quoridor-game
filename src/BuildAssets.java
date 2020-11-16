@@ -54,7 +54,7 @@ public class BuildAssets {
 		// access these from anywhere with GameSettings.GetGameTiles(); returns a
 		// GameTile[][]
 		GameSettings.setGameTiles(gameBoard.GetGrid());
-		
+
 		GameSettings.setGameBoard(gameBoard);
 
 		// give the game tiles to the InputManager for handling user input
@@ -64,7 +64,6 @@ public class BuildAssets {
 		// get an empty array that will hold 4 configured players, in proper turn order
 		// (1, 2, 3, 4).
 		players = new Player[4];
-		
 
 		// loop players. turn order is currently randomized (from GameSettings)
 		// unrandomize it, store new players in proper order (starting with whomever was
@@ -96,7 +95,7 @@ public class BuildAssets {
 			// build a player
 			Player newPlayer = new Player(playerTurn, playerLocation, playerType, playerName, playerColor, isDifficult);
 
-			//add it to array in proper ordered position.  -1 for zero indexing.
+			// add it to array in proper ordered position. -1 for zero indexing.
 			players[newPlayer.GetTurnPosition() - 1] = newPlayer;
 			// repeat until 4 players.
 
@@ -112,22 +111,18 @@ public class BuildAssets {
 		// get ref to the middle panel, which will hold the game board.
 		inGameUIPanel.setGameBoard(gameBoard);
 
-		// Set Border colors to corresponding player. Set center background to match
-		// tile background
-		inGameUIPanel.getSouthPlayerSide().setBackground(players[0].GetColor());
-		inGameUIPanel.getWestPlayerSide().setBackground(players[1].GetColor());
-		inGameUIPanel.getNorthPlayerSide().setBackground(players[2].GetColor());
-		inGameUIPanel.getEastPlayerSide().setBackground(players[3].GetColor());
-		inGameUIPanel.getSouthPlayerDetails().setText(players[0].GetName());
-		inGameUIPanel.getWestPlayerDetails().setText(players[1].GetName());
-		inGameUIPanel.getNorthPlayerDetails().setText(players[2].GetName());
-		inGameUIPanel.getEastPlayerDetails().setText(players[3].GetName());
-		
+		// Set Border color for each player
+		inGameUIPanel.setBorderColors(players[0].GetColor(), players[1].GetColor(), players[2].GetColor(),
+				players[3].GetColor());
+		// Set name tags for each player side
+		inGameUIPanel.setPlayerDetails(players[0].GetName(), players[1].GetName(), players[2].GetName(),
+				players[3].GetName());
+
 		// set background of the settings panel to the appropiate bkg color
-		inGameUIPanel.getSaveGamePanel().setBackground(bkgColor);
+		inGameUIPanel.setSavePanelBG(bkgColor);
 
 		// add the gameboard to the middle panel of in-game UI.
-		//middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
+		// middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
 
 		// Store Player Objects in Game Settings
 		// playersAttributes.addAll(Arrays.asList(players));
@@ -159,18 +154,13 @@ public class BuildAssets {
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		inGameUIPanel.setGameBoard(reloadedGameBoard);
 
-		inGameUIPanel.getSouthPlayerSide().setBackground(players[0].GetColor());
-		inGameUIPanel.getWestPlayerSide().setBackground(players[1].GetColor());
-		inGameUIPanel.getNorthPlayerSide().setBackground(players[2].GetColor());
-		inGameUIPanel.getEastPlayerSide().setBackground(players[3].GetColor());
-		inGameUIPanel.getSouthPlayerDetails().setText(players[0].GetName());
-		inGameUIPanel.getWestPlayerDetails().setText(players[1].GetName());
-		inGameUIPanel.getNorthPlayerDetails().setText(players[2].GetName());
-		inGameUIPanel.getEastPlayerDetails().setText(players[3].GetName());
+		inGameUIPanel.setBorderColors(players[0].GetColor(), players[1].GetColor(), players[2].GetColor(),
+				players[3].GetColor());
+		inGameUIPanel.setPlayerDetails(players[0].GetName(), players[1].GetName(), players[2].GetName(),
+				players[3].GetName());
 
 		// set background of the settings panel to the appropiate bkg color
-		inGameUIPanel.getSaveGamePanel().setBackground(gameTiles[0][0].getBkgColor());
-
+		inGameUIPanel.setSavePanelBG(gameTiles[0][0].getBkgColor());
 
 		// Store Player Objects in Game Settings
 		GameSettings.setPlayers(players);

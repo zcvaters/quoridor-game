@@ -15,6 +15,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/* InGameUIPanel class. This class contains all the UI elements for the game in a overlay.
+ * 
+ * Responsible for showing UI elements for the user.
+ */
 public class InGameUIPanel implements ActionListener {
 
 	// IngameUIPanel settings button
@@ -28,47 +32,26 @@ public class InGameUIPanel implements ActionListener {
 	GridBagConstraints gbc = new GridBagConstraints();
 
 	private JPanel uiPanel;
-
 	private JPanel settingsPanel;
-
 	private JButton resumeGameButton;
-
 	private JButton saveGameButton;
-
 	private JButton backToMenuButton;
-
 	private JButton quitGameButton;
-
 	private JPanel saveGamePanel;
-
 	private JButton saveGame1;
-
 	private JButton saveGame2;
-
 	private JButton saveGame3;
-
 	private JLabel savedLabel;
-
 	private JButton backToSettingsButton;
-
 	private JPanel southPlayerSide;
-
 	private JPanel westPlayerSide;
-
 	private JPanel northPlayerSide;
-
 	private JPanel eastPlayerSide;
-
 	private JPanel playerPanels;
-
 	private JPanel playerInfo;
-
 	private JLabel southPlayerDetails;
-
 	private JLabel westPlayerDetails;
-
 	private JLabel northPlayerDetails;
-
 	private JLabel eastPlayerDetails;
 
 	// constructor
@@ -168,6 +151,30 @@ public class InGameUIPanel implements ActionListener {
 		settingsPanel.add(quitGameButton, gbc);
 		inGameOverlay.add(settingsPanel, JLayeredPane.PALETTE_LAYER);
 
+	}
+	
+	/*
+	 *  Sets Game Board borders for each player
+	 */
+	public void setBorderColors(Color player1, Color player2, Color player3, Color player4) {
+		this.getSouthPlayerSide().setBackground(player1);
+		this.getWestPlayerSide().setBackground(player2);
+		this.getNorthPlayerSide().setBackground(player3);
+		this.getEastPlayerSide().setBackground(player4);
+	}
+	
+	/*
+	 * Sets Name tags for each side of the border for each player.
+	 */
+	public void setPlayerDetails(String player1, String player2, String player3, String player4) {
+		this.getSouthPlayerDetails().setText(player1);
+		this.getWestPlayerDetails().setText(player2);
+		this.getNorthPlayerDetails().setText(player3);
+		this.getEastPlayerDetails().setText(player4);
+	}
+	
+	public void setSavePanelBG(Color bkgColor) {
+		this.getSaveGamePanel().setBackground(bkgColor);
 	}
 
 	public void setSaveGamePanel() {
