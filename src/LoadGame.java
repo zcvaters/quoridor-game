@@ -40,6 +40,7 @@ public class LoadGame {
 			players = (Player[]) save.readObject(); // Restore Player Objects
 			gameTiles = (GameTile[][]) save.readObject(); // Load Game tiles
 			int nextTurn = (int) save.readObject(); // Restore next turn
+			System.out.println("next player is " +nextTurn);
 
 			// Create BuildAssets Load Game constructor.
 			loadGameBuild(players, gameTiles, nextTurn);
@@ -53,7 +54,7 @@ public class LoadGame {
 	}
 
 	/*
-	 * Build new LoadGame Constructor.
+	 * Build new LoadGame.
 	 * 
 	 * @params: Player[] players (the saved player objs), GameTile[][] gameTiles
 	 * (saved game obj), int nextTurn (who was next move)

@@ -71,6 +71,7 @@ public class GameBoard extends JPanel implements ActionListener {
 		grid = new GameTile[GameSettings.GetRows()][GameSettings.GetCols()];
 		for (int x = 0; x < GameSettings.GetRows(); x++) {
 			for (int y = 0; y < GameSettings.GetCols(); y++) {
+				grid[x][y] = gameTiles[x][y];
 				gridPanel.add(gameTiles[x][y]);
 			}
 		}

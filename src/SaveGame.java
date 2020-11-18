@@ -9,7 +9,7 @@ public class SaveGame {
 	// fields here
 	static Player[] playersInOrder;
 	static GameTile[][] gameTiles;
-	static int nextTurn;
+	static int nextToPlay;
 
 	// constructor
 	private SaveGame() {
@@ -24,7 +24,7 @@ public class SaveGame {
 		// Instantiate the necessary collections.
 		playersInOrder = GameSettings.getPlayers();
 		gameTiles = GameSettings.getGameTiles();
-		nextTurn = GameSettings.GetGameController().getNextPlayer();
+		nextToPlay = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition() - 1;  //zero indexed.
 
 		try { // Catch errors in I/O if necessary.
 				// Open a file to write to Save.sav
@@ -36,7 +36,7 @@ public class SaveGame {
 			// Saving objects
 			save.writeObject(playersInOrder); // Saves Players order
 			save.writeObject(gameTiles); // Saves GameTile objects.
-			save.writeObject(nextTurn); // Turn position object
+			save.writeObject(nextToPlay); // Turn position object
 
 			save.close(); // Close/flush streams
 			save.flush(); 
