@@ -475,7 +475,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		
 		JPanel thisPanel = (JPanel) e.getComponent();
 				
-		inputManager.HandleMouseClick(thisPanel);				
+		inputManager.HandleMouseClick(thisPanel);		
 	}
 
 	
