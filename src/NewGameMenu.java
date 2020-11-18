@@ -70,7 +70,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		// build a panel
 		super();
 		// size to fit frame
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 1200, 800);
 		this.setOpaque(false);
 		
 
@@ -78,7 +78,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		newGameHeaderLabel = new JLabel("NEW GAME");
 		newGameHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		newGameHeaderLabel.setForeground(Color.black);
-		EmptyBorder border1 = new EmptyBorder(80, 0, 20, 20);
+		EmptyBorder border1 = new EmptyBorder(10, 0, 10, 20);
 		newGameHeaderLabel.setBorder(border1);
 		newGameHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		// newGameHeaderLabel.setPreferredSize(new Dimension(1000, 100));
@@ -87,7 +87,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		newGameChooseColorsLabel = new JLabel("Please choose a board style");
 		newGameChooseColorsLabel.setFont(MainWindow.orbitron.deriveFont(32f));
 		newGameChooseColorsLabel.setForeground(Color.black);
-		EmptyBorder border2 = new EmptyBorder(20, 0, 20, 0);
+		EmptyBorder border2 = new EmptyBorder(10, 0, 10, 0);
 		newGameChooseColorsLabel.setBorder(border2);
 		newGameChooseColorsLabel.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -120,7 +120,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		colorButtons.add(color1Button);
 		colorButtons.add(color2Button);
 		colorButtons.add(color3Button);
-		colorButtons.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+		colorButtons.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		colorButtons.setVisible(true);
 
 		// configure players panel (hidden until player selects a color style)
@@ -133,7 +133,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		GridLayout configLayout = new GridLayout(2, 2);
 		configLayout.setHgap(200);
 		configLayout.setVgap(20);
-		configPlayersPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 20, 50));
+		configPlayersPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
 		configPlayersPanel.setLayout(configLayout);
 		// build one sub-panel for each player (four total)
 		// icon, ask for name, name textbox, and player type combo box
@@ -223,7 +223,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		newGamePlayButton.setFont(MainWindow.orbitron);
 		newGamePlayButton.setContentAreaFilled(false);
 		newGamePlayButton.setBorderPainted(false);
-		newGamePlayButton.setBorder(BorderFactory.createEmptyBorder(15, 0, 10, 0));
+		newGamePlayButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 		newGamePlayButton.setForeground(Color.black);
 		newGamePlayButton.setAlignmentX(CENTER_ALIGNMENT);
 		newGamePlayButton.addActionListener(this);

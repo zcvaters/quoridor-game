@@ -29,6 +29,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	private JLabel selectionLabel;
 	private String filename;
 	private ArrayList<JButton> buttons;
+	private JLabel instructionsLoadGameLabel;
 
 	public LoadGameMenu() {
 
@@ -39,20 +40,27 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		// load game stuff in the center
 		// button "Back" at the bottom
 
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 1200, 800);
 		this.setOpaque(false);
 
 		// the label for the header
 		loadGameHeaderLabel = new JLabel("Load Game");
 		loadGameHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		loadGameHeaderLabel.setForeground(Color.black);
-		EmptyBorder border1 = new EmptyBorder(190, 40, 0, 0);
+		EmptyBorder border1 = new EmptyBorder(50, 40, 20, 0);
 		loadGameHeaderLabel.setBorder(border1);
 		loadGameHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
-		loadGameHeaderLabel.setFont(new Font("Dialog", Font.BOLD, 35));
 		loadGameHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		loadGameHeaderLabel.setVerticalAlignment(JLabel.CENTER);
 
+		instructionsLoadGameLabel = new JLabel("Please choose a Save to load game:");
+		instructionsLoadGameLabel.setFont(MainWindow.orbitron.deriveFont(32f));
+		instructionsLoadGameLabel.setForeground(Color.black);
+		instructionsLoadGameLabel.setAlignmentX(CENTER_ALIGNMENT);
+		instructionsLoadGameLabel.setHorizontalAlignment(JLabel.CENTER);
+		instructionsLoadGameLabel.setVerticalAlignment(JLabel.CENTER);
+		
+		
 		// the "back" button and listener
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
@@ -115,6 +123,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		BoxLayout boxLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(boxLayout);
 		this.add(loadGameHeaderLabel);
+		this.add(instructionsLoadGameLabel);
 		this.add(buttonPanel, Component.CENTER_ALIGNMENT);
 		// hide this panel
 		this.setVisible(false);

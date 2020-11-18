@@ -38,10 +38,11 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		// create a JPanel
 		super();
-		Dimension panelSize = new Dimension(1000, 1000);
+		Dimension panelSize = new Dimension(1200, 800);
 		this.setPreferredSize(panelSize);
 
 		JLabel gameLabel = new JLabel("Quoridor", SwingConstants.CENTER);
+		gameLabel.setBounds(0, 0, 1280, 400);
 		gameLabel.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 		gameLabel.setFont(MainWindow.orbitron.deriveFont(144f));
 		gameLabel.setForeground(Color.black);
@@ -50,7 +51,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		mainMenuButtons = new ArrayList<>();
 		// the buttons
 		newGameButton = new JButton("New Game");
-
+		newGameButton.setSize(50, 50);
 		loadGameButton = new JButton("Load Game");
 
 		instructionsButton = new JButton("Instructions");
@@ -64,8 +65,8 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		// add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
-		menuButtonsPanel.setBounds(0, 0, 1000, 1000);
-		EmptyBorder border1 = new EmptyBorder(200, 0, 400, 60);
+		menuButtonsPanel.setBounds(850, 500, 400, 400);
+		EmptyBorder border1 = new EmptyBorder(100, 0, 300, 40);
 		menuButtonsPanel.setBorder(border1);
 		menuButtonsPanel.setLayout(new GridLayout(4, 1));
 		menuButtonsPanel.setOpaque(false);
@@ -79,7 +80,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		defineButtonProperties(mainMenuButtons);
 
 		// add components to the panel
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 1200, 800);
 		this.setLayout(new BorderLayout());
 		this.add(gameLabel, BorderLayout.NORTH);
 		this.add(menuButtonsPanel, BorderLayout.EAST);
@@ -116,7 +117,7 @@ public class MainMenu extends JPanel implements ActionListener {
 				}
 			});
 			button.setHorizontalAlignment(SwingConstants.RIGHT);
-			button.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+			//button.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		});
 	}
 

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,8 @@ public class InGameMessagePanel extends JPanel implements ActionListener {
 		//set size
 		Dimension panelSize = new Dimension(200, 100);
         this.setPreferredSize(panelSize);
-        this.setBounds(350,350,300,100);
+        this.setBounds(725,625,400,100);
+        this.setOpaque(false);
         
         //get text
         String messageText = "Default message text.";
