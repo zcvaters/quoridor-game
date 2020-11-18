@@ -100,7 +100,7 @@ public class InputManager implements Serializable {
 	// this method tracks the mouse while it's moving (hovering) over the game
 	// board.
 	public void TrackMouseMovement(JPanel thisPanel, Point point) {
-
+		
 		// messages sent here from individual GameTiles.
 		// each GameTile has 9 sub-panels (center tile and walls)
 		// this method receives the sub-panel that detected the mouse, and the x,y point
@@ -120,11 +120,12 @@ public class InputManager implements Serializable {
 		int panelHeight = (int) panelSize.getHeight();
 
 		// get the parent of this sub panel (the GameTile that holds all 9 sub panels)
-		GameTile parent;
-		if(panelName == "centerPanel") {
-			parent = (GameTile) thisPanel.getParent().getParent();
-		}else {
-			parent = (GameTile) thisPanel.getParent();
+		GameTile parent;		
+		if(panelName.equals("centerPanel")) {
+			parent = (GameTile) thisPanel.getParent().getParent();			
+		}
+		else {			
+			parent = (GameTile) thisPanel.getParent();			
 		}
 
 		// is mouse on a corner panel?
