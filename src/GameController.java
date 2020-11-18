@@ -23,8 +23,8 @@ public class GameController {
 		this.allPlayers = players;
 		// For a new game, nextPlayer = 0. Then 1, 2, 3, 0, 1, 2, 3...
 		this.nextPlayerIndex = nextToPlay;
-    GameSettings.GetGameController().setNextPlayer(nextPlayerIndex);
 		this.currentPlayer = allPlayers[nextPlayerIndex];
+		setNextPlayer(nextToPlay);
 
 		// cache the tiles
 		this.tiles = gameBoard.GetGrid();
@@ -93,7 +93,6 @@ public class GameController {
 		System.out.println("game paused? " +GameSettings.GetGameIsPaused());
 		GameSettings.GetMainWindow().ShowMessage(nextPlayer.GetName() + ", it's your turn!");
 		currentPlayer = nextPlayer;	
-		
 		//increment the nextPlayerIndex, so the turns will advance through different players
 		nextPlayerIndex++;
 		//if past end, loop back to start

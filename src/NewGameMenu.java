@@ -3,6 +3,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class NewGameMenu extends JPanel implements ActionListener {
+public class NewGameMenu extends JPanel implements ActionListener, FocusListener {
 
 	// new game
 	JLabel newGameHeaderLabel;
@@ -70,12 +72,13 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		// size to fit frame
 		this.setBounds(0, 0, 1000, 1000);
 		this.setOpaque(false);
+		
 
 		// the labels for the header and choose colors
 		newGameHeaderLabel = new JLabel("NEW GAME");
 		newGameHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		newGameHeaderLabel.setForeground(Color.black);
-		EmptyBorder border1 = new EmptyBorder(190, 0, 20, 20);
+		EmptyBorder border1 = new EmptyBorder(80, 0, 20, 20);
 		newGameHeaderLabel.setBorder(border1);
 		newGameHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		// newGameHeaderLabel.setPreferredSize(new Dimension(1000, 100));
@@ -87,25 +90,22 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		EmptyBorder border2 = new EmptyBorder(20, 0, 20, 0);
 		newGameChooseColorsLabel.setBorder(border2);
 		newGameChooseColorsLabel.setAlignmentX(CENTER_ALIGNMENT);
-		// newGameChooseColorsLabel.setPreferredSize(new Dimension(1000, 100));
-		// newGameChooseColorsLabel.setHorizontalAlignment(JLabel.CENTER);
-		// newGameChooseColorsLabel.setVerticalAlignment(JLabel.CENTER);
 
 		// select color-buttons and listeners
 		color1Button = new JButton();
 		color1Button.setContentAreaFilled(false);
+		color1Button.setBorderPainted(false);
 		color1Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_1.png")));
-		// color1Button.setPreferredSize(new Dimension(300, 200));
 		color1Button.addActionListener(this);
 		color2Button = new JButton();
+		color2Button.setBorderPainted(false);;
 		color2Button.setContentAreaFilled(false);
 		color2Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_2.png")));
-		// color2Button.setPreferredSize(new Dimension(300, 200));
 		color2Button.addActionListener(this);
 		color3Button = new JButton();
 		color3Button.setContentAreaFilled(false);
+		color3Button.setBorderPainted(false);
 		color3Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_3.png")));
-		// color3Button.setPreferredSize(new Dimension(300, 200));
 		color3Button.addActionListener(this);
 		// put the color buttons in a sub-panel
 		colorButtons = new JPanel();
@@ -120,30 +120,34 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		colorButtons.add(color1Button);
 		colorButtons.add(color2Button);
 		colorButtons.add(color3Button);
+		colorButtons.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 		colorButtons.setVisible(true);
 
 		// configure players panel (hidden until player selects a color style)
 		showPlayersPanel = new JPanel(new GridLayout(2, 1)); // gridX4, play button, back button
+		showPlayersPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
 		showPlayersPanel.setOpaque(false);
 
 		configPlayersPanel = new JPanel();
 		configPlayersPanel.setOpaque(false);
 		GridLayout configLayout = new GridLayout(2, 2);
 		configLayout.setHgap(200);
-		// configLayout.setVgap(20);
-		configPlayersPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 50));
+		configLayout.setVgap(20);
+		configPlayersPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 20, 50));
 		configPlayersPanel.setLayout(configLayout);
 		// build one sub-panel for each player (four total)
 		// icon, ask for name, name textbox, and player type combo box
 
 		firstPanel = new JPanel();
 		firstPanel.setOpaque(false);
-
 		firstPanel.setLayout(new GridLayout(5,1));
-		firstIconLabel = new JLabel("Player Info");		
+		firstIconLabel = new JLabel("Player Info");
+		firstIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
+		firstIconLabel.setForeground(Color.black);
 		firstIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		firstIconLabel.setVerticalAlignment(JLabel.CENTER);
 		firstTextField = new JTextField("<<Your Name Here>>", 1);
+		firstTextField.addFocusListener(this);
 		firstComboBox = new JComboBox<String>(comboBoxOptions);
 		firstComboBox.addActionListener(this);
 		firstPanel.add(firstIconLabel);
@@ -154,23 +158,28 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		secondPanel.setOpaque(false);
 		secondPanel.setLayout(new GridLayout(5,1));		
 		secondIconLabel = new JLabel("Player Info");
+		secondIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
+		secondIconLabel.setForeground(Color.black);
 		secondIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		secondIconLabel.setVerticalAlignment(JLabel.CENTER);
 		secondTextField = new JTextField("<<Your Name Here>>", 1);
-		// secondTextField.setColumns(12);
+		secondTextField.addFocusListener(this);
 		secondComboBox = new JComboBox<String>(comboBoxOptions);
 		secondComboBox.addActionListener(this);
 		secondPanel.add(secondIconLabel);
 		secondPanel.add(secondTextField);
 		secondPanel.add(secondComboBox);
 
-		thirdPanel = new JPanel();    
+		thirdPanel = new JPanel();
+		thirdPanel.setOpaque(false);
 		thirdPanel.setLayout(new GridLayout(5,1));		
 		thirdIconLabel = new JLabel("Player Info");
+		thirdIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
+		thirdIconLabel.setForeground(Color.black);
 		thirdIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		thirdIconLabel.setVerticalAlignment(JLabel.CENTER);
 		thirdTextField = new JTextField("<<Your Name Here>>", 1);
-		// thirdTextField.setColumns(12);
+		thirdTextField.addFocusListener(this);
 		thirdComboBox = new JComboBox<String>(comboBoxOptions);
 		thirdComboBox.addActionListener(this);
 		thirdPanel.add(thirdIconLabel);
@@ -181,10 +190,12 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		fourthPanel.setOpaque(false);
 		fourthPanel.setLayout(new GridLayout(5,1));		
 		fourthIconLabel = new JLabel("Player Info");
+		fourthIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
+		fourthIconLabel.setForeground(Color.black);
 		fourthIconLabel.setHorizontalAlignment(JLabel.CENTER);
 		fourthIconLabel.setVerticalAlignment(JLabel.CENTER);
 		fourthTextField = new JTextField("<<Your Name Here>>", 1);
-		// fourthTextField.setColumns(12);
+		fourthTextField.addFocusListener(this);
 		fourthComboBox = new JComboBox<String>(comboBoxOptions);
 		fourthComboBox.addActionListener(this);
 		fourthPanel.add(fourthIconLabel);
@@ -212,6 +223,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		newGamePlayButton.setFont(MainWindow.orbitron);
 		newGamePlayButton.setContentAreaFilled(false);
 		newGamePlayButton.setBorderPainted(false);
+		newGamePlayButton.setBorder(BorderFactory.createEmptyBorder(15, 0, 10, 0));
 		newGamePlayButton.setForeground(Color.black);
 		newGamePlayButton.setAlignmentX(CENTER_ALIGNMENT);
 		newGamePlayButton.addActionListener(this);
@@ -260,7 +272,7 @@ public class NewGameMenu extends JPanel implements ActionListener {
 
 		});
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly
@@ -390,5 +402,21 @@ public class NewGameMenu extends JPanel implements ActionListener {
 		thirdIconLabel.setOpaque(true);
 		fourthIconLabel.setBackground(playerColorsSelected[3]);
 		fourthIconLabel.setOpaque(true);
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		JTextField src = (JTextField) e.getSource();
+		if(src.getText().equals("<<Your Name Here>>")) {
+			src.setText("");
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		JTextField src = (JTextField) e.getSource();
+		if(src.getText().equals("")) {
+			src.setText("<<Your Name Here>>");
+		}
 	}
 }

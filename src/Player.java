@@ -1,7 +1,10 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -37,6 +40,7 @@ public class Player extends JPanel{
 	
 	//player is trying to reach north, east, south, or west side of board.
 	private String playerGoal;
+	private JLabel pawnIcon;
 		
 	/* Constructor 
 	 * 
@@ -54,8 +58,8 @@ public class Player extends JPanel{
 		super();
 		
 		//size of player icon.  configure as necessary. keep smaller than game tile.
-		int playerX = 20;
-		int playerY = 20;
+		int playerX = 60;
+		int playerY = 60;
 		
 		//need to know size of the tile (player is displayed on top of tile).
 		int tileWidth = GameSettings.getTileWidth();
@@ -63,20 +67,38 @@ public class Player extends JPanel{
 		
 		//set bounds for panel. configured to center the player on the tile.
 		//params:  startX, startY, panelWidth, panelHeight.  
-		this.setBounds((tileWidth-playerX)/2,(tileHeight-playerY)/2,playerX, playerY);
-		
+		//this.setBounds((tileWidth-playerX)/2,(tileHeight-playerY)/2,tileWidth, tileHeight);
+		this.setBounds(0, 0, tileWidth, tileHeight);
 		//set panel background to player color
 		this.setBackground(color);
 		
+		JLayeredPane playerLayeredPane = new JLayeredPane();
+		playerLayeredPane.setBounds(0, 0, playerX, playerY);
+		playerLayeredPane.setVisible(true);
+		this.add(playerLayeredPane);
+		
+		
+		ImageIcon pawnStencil = new ImageIcon(getClass().getResource("/Assets/pawn_outline.png"));
+		
 		//create a label to display player's first initial
 		//if no name provided, use "X"
-		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);		 
-		JLabel nameLabel = new JLabel(Character.toString(playerInitial));		
-	    
-	    //set GridBagLayout with no constraints to have label in center.
-	    this.setLayout(new GridBagLayout());
-		this.add(nameLabel);
+		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);
+		JLabel playerInitials = new JLabel(Character.toString(playerInitial), SwingConstants.CENTER);
+		playerInitials.setBounds(0, 0, playerX, playerY);
 		
+		JLabel iconLabel = new JLabel(pawnStencil);
+		iconLabel.setBounds(0, 0, playerX, playerY);
+		
+		//pawnIcon = new JLabel();
+		
+	    //pawnIcon.setIcon(pawnStencil);
+		//pawnIcon.setBounds(0, 0, tileWidth, tileHeight);
+		
+	    //set GridBagLayout with no constraints to have label in center.
+	    this.setLayout(null);
+		this.add(iconLabel, JLayeredPane.MODAL_LAYER);
+		this.add(playerInitials, JLayeredPane.DRAG_LAYER);
+
 		//set player attributes
 		this.turnPosition = turnPosition;
 		this.playerLocation = playerLocation;
