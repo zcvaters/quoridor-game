@@ -34,8 +34,9 @@
 /InstructionsMenu$1.class
 /QuitMenu$1.class
 /Buttons.class
-/Buttons.java
 /CheckPath.class
 /AIManager.class
 /InGameMessagePanel.class
 /NewGameMenu$2.class
+/FenceUIManager.class
+/test.class
