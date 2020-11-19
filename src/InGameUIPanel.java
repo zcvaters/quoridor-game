@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,14 +47,10 @@ public class InGameUIPanel implements ActionListener {
 	private JPanel westPlayerSide;
 	private JPanel northPlayerSide;
 	private JPanel eastPlayerSide;
-	private JPanel playerPanels;
-	private JPanel playerInfo;
 	private JLabel southPlayerDetails;
 	private JLabel westPlayerDetails;
 	private JLabel northPlayerDetails;
 	private JLabel eastPlayerDetails;
-
-	private JPanel southPlayerPanel;
 
 	private JPanel playerInfoPanel;
 
@@ -122,9 +116,9 @@ public class InGameUIPanel implements ActionListener {
 		settingsPanel.setVisible(false);
 		initializeSettingsOverlay();
 		setSaveGamePanel();
-		//playerSidePanels();
+		// playerSidePanels();
 		playerStatsPanel();
-		
+
 		fences = new FenceUIManager();
 		GameSettings.setFencesUIManager(fences);
 
@@ -171,7 +165,7 @@ public class InGameUIPanel implements ActionListener {
 		inGameOverlay.add(settingsPanel, JLayeredPane.PALETTE_LAYER);
 
 	}
-	
+
 	/*
 	 * Sets Name tags for each side of the border for each player.
 	 */
@@ -181,7 +175,7 @@ public class InGameUIPanel implements ActionListener {
 		this.getNorthPlayerDetails().setText(player3);
 		this.getEastPlayerDetails().setText(player4);
 	}
-	
+
 	public void setSavePanelBG(Color bkgColor) {
 		this.getSaveGamePanel().setBackground(bkgColor);
 	}
@@ -253,66 +247,40 @@ public class InGameUIPanel implements ActionListener {
 		this.saveGamePanel = saveGamePanel;
 	}
 
-	/*
-	public void playerInfo() {
-		playerInfo = new JPanel(new BorderLayout());
-		playerInfo.setBounds(800, 100, 960, 900);
-		playerInfo.setOpaque(false);
-		playerInfo.setVisible(true);
-		
-		southPlayerPanel = new JPanel();
-		playerPanels.setBounds(900, 100, 200, 800);
-		southPlayerPanel.setBackground(Color.red);
-		southPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(southPlayerDetails, BorderLayout.SOUTH);
-
-		westPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(westPlayerDetails, BorderLayout.WEST);
-
-		northPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(northPlayerDetails, BorderLayout.NORTH);
-
-		eastPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(eastPlayerDetails, BorderLayout.EAST);
-		
-		inGameOverlay.add(playerInfo, JLayeredPane.PALETTE_LAYER);
-		//inGameOverlay.add(playerInfo, JLayeredPane.PALETTE_LAYER);
-	}
-	*/
 	public void playerStatsPanel() {
 		playerInfoPanel = new JPanel();
 		playerInfoPanel.setLayout(new GridLayout(4, 1));
 		playerInfoPanel.setBounds(800, 25, 300, 400);
 		playerInfoPanel.setOpaque(false);
-		
+
 		southPlayerInfoPanel = new JPanel();
 		southPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		southPlayerInfoPanel.setBackground(Color.blue);
 		playerInfoPanel.add(southPlayerInfoPanel);
-		
+
 		westPlayerInfoPanel = new JPanel();
 		westPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		westPlayerInfoPanel.setBackground(Color.pink);
 		playerInfoPanel.add(westPlayerInfoPanel);
-		
+
 		northPlayerInfoPanel = new JPanel();
 		northPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		northPlayerInfoPanel.setBackground(Color.gray);
 		playerInfoPanel.add(northPlayerInfoPanel);
-		
+
 		eastPlayerInfoPanel = new JPanel();
 		eastPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		eastPlayerInfoPanel.setBackground(Color.cyan);
 		playerInfoPanel.add(eastPlayerInfoPanel);
-		
+
 		inGameOverlay.add(playerInfoPanel, JLayeredPane.PALETTE_LAYER);
 	}
-	
+
 	public void southPlayerInfoPanel(Color color, String name) {
 		this.southPlayerInfoPanel.setBackground(color);
 		this.southPlayerInfoPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		southPlayerDetails = new JLabel(name);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -322,20 +290,20 @@ public class InGameUIPanel implements ActionListener {
 		gbc.insets = new Insets(5, 5, 0, 0);
 		southPlayerDetails.setForeground(Color.black);
 		southPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
-		
+
 		this.southPlayerInfoPanel.add(southPlayerDetails, gbc);
-		
+
 		fences.createSouthPlayerFences();
 		JPanel fencesSouth = fences.getSouthFencesPanel();
 		fencesSouth.setBounds(825, 60, 300, 200);
 		inGameOverlay.add(fencesSouth, JLayeredPane.DRAG_LAYER);
 	}
-	
+
 	public void westPlayerInfoPanel(Color color, String name) {
 		this.westPlayerInfoPanel.setBackground(color);
 		this.westPlayerInfoPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		westPlayerDetails = new JLabel(name);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -345,20 +313,20 @@ public class InGameUIPanel implements ActionListener {
 		gbc.insets = new Insets(5, 5, 0, 0);
 		westPlayerDetails.setForeground(Color.black);
 		westPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
-		
+
 		this.westPlayerInfoPanel.add(westPlayerDetails, gbc);
-		
+
 		fences.createWestPlayerFences();
 		JPanel fencesWest = fences.getWestFencesPanel();
 		fencesWest.setBounds(825, 160, 300, 200);
 		inGameOverlay.add(fencesWest, JLayeredPane.DRAG_LAYER);
 	}
-	
+
 	public void northPlayerInfoPanel(Color color, String name) {
 		this.northPlayerInfoPanel.setBackground(color);
 		this.northPlayerInfoPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		northPlayerDetails = new JLabel(name);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -368,20 +336,20 @@ public class InGameUIPanel implements ActionListener {
 		gbc.insets = new Insets(5, 5, 0, 0);
 		northPlayerDetails.setForeground(Color.black);
 		northPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
-		
+
 		this.northPlayerInfoPanel.add(northPlayerDetails, gbc);
-		
+
 		fences.createNorthPlayerFences();
 		JPanel fencesNorth = fences.getNorthFencesPanel();
 		fencesNorth.setBounds(825, 260, 300, 200);
 		inGameOverlay.add(fencesNorth, JLayeredPane.DRAG_LAYER);
 	}
-	
+
 	public void eastPlayerInfoPanel(Color color, String name) {
 		this.eastPlayerInfoPanel.setBackground(color);
 		this.eastPlayerInfoPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		eastPlayerDetails = new JLabel(name);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -391,9 +359,9 @@ public class InGameUIPanel implements ActionListener {
 		gbc.insets = new Insets(5, 5, 0, 0);
 		eastPlayerDetails.setForeground(Color.black);
 		eastPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
-		
+
 		this.eastPlayerInfoPanel.add(eastPlayerDetails, gbc);
-		
+
 		fences.createEastPlayerFences();
 		JPanel fencesEast = fences.getEastFencesPanel();
 		fencesEast.setBounds(825, 360, 300, 200);

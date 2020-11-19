@@ -1,19 +1,12 @@
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class FenceUIManager {
-	
+
 	private JPanel mainPane;
 
 	private List<JPanel> southFences;
@@ -29,7 +22,6 @@ public class FenceUIManager {
 	private JPanel northFencesPanel;
 
 	private JPanel eastFencesPanel;
-
 
 	/*
 	 * New game Fence UI Manager
@@ -47,7 +39,6 @@ public class FenceUIManager {
 		northFences = new ArrayList<>();
 		eastFences = new ArrayList<>();
 	}
-
 
 	/* returns collection of all fences combined */
 	public List<JPanel> getAllFences() {
@@ -67,57 +58,47 @@ public class FenceUIManager {
 	public void removePlayerFence(Player players) {
 		int wallsRemaining = players.GetWallsRemaining();
 		Player[] player = GameSettings.getPlayers();
-		if(players.GetTurnPosition() == player[0].GetTurnPosition()) {
-			
-			for(int i = southFences.size()-1; i >= wallsRemaining; i--)
-			{
-				if(southFences.get(i).isVisible()) {
+		if (players.GetTurnPosition() == player[0].GetTurnPosition()) {
+
+			for (int i = southFences.size() - 1; i >= wallsRemaining; i--) {
+				if (southFences.get(i).isVisible()) {
 					southFences.get(i).setVisible(false);
 				}
-				
+
 			}
 		}
-		if(players.GetTurnPosition() == player[1].GetTurnPosition()) {
-			for(int i = westFences.size()-1; i >= wallsRemaining; i--)
-			{
-				if(westFences.get(i).isVisible()) {
+		if (players.GetTurnPosition() == player[1].GetTurnPosition()) {
+			for (int i = westFences.size() - 1; i >= wallsRemaining; i--) {
+				if (westFences.get(i).isVisible()) {
 					westFences.get(i).setVisible(false);
 				}
-				
+
 			}
 		}
-		if(players.GetTurnPosition() == player[2].GetTurnPosition()) {
-			for(int i = northFences.size()-1; i >= wallsRemaining; i--)
-			{
-				if(northFences.get(i).isVisible()) {
+		if (players.GetTurnPosition() == player[2].GetTurnPosition()) {
+			for (int i = northFences.size() - 1; i >= wallsRemaining; i--) {
+				if (northFences.get(i).isVisible()) {
 					northFences.get(i).setVisible(false);
 				}
-				
-			}			
+
+			}
 		}
-		if(players.GetTurnPosition() == player[3].GetTurnPosition()) {
-			for(int i = eastFences.size()-1; i >= wallsRemaining; i--)
-			{
-				if(eastFences.get(i).isVisible()) {
+		if (players.GetTurnPosition() == player[3].GetTurnPosition()) {
+			for (int i = eastFences.size() - 1; i >= wallsRemaining; i--) {
+				if (eastFences.get(i).isVisible()) {
 					eastFences.get(i).setVisible(false);
 				}
-				
-			}			
-		}		
-	}
-	
-	public JPanel getWestFencesPanel() {
-		return westFencesPanel;
-	}
 
+			}
+		}
+	}
 
 	public void setWestFencesPanel(JPanel westFencesPanel) {
 		this.westFencesPanel = westFencesPanel;
 	}
 
-
 	public void removeMultipleFences(List<JPanel> fences, int amount) {
-		//TODO If needed.
+		// TODO If needed.
 	}
 
 	// Creates South Player Fences
@@ -142,7 +123,7 @@ public class FenceUIManager {
 		southFence3.setBounds(50, 0, 15, 50);
 		southFence3.setBackground(Color.blue);
 		southFencesPanel.add(southFence3);
-		
+
 		southFences.add(southFence3);
 		JPanel southFence4 = new JPanel();
 		southFence4.setBounds(75, 0, 15, 50);
@@ -155,11 +136,11 @@ public class FenceUIManager {
 		southFence5.setBackground(Color.blue);
 		southFencesPanel.add(southFence5);
 		southFences.add(southFence5);
-		
+
 		southFencesPanel.setOpaque(false);
 		setAllFencesAttributes(southFences);
 	}
-	
+
 	public void createWestPlayerFences() {
 		westFencesPanel = new JPanel();
 		westFencesPanel.setLayout(null);
@@ -181,7 +162,7 @@ public class FenceUIManager {
 		westFence3.setBounds(50, 0, 15, 50);
 		westFence3.setBackground(Color.blue);
 		westFencesPanel.add(westFence3);
-		
+
 		westFences.add(westFence3);
 		JPanel westFence4 = new JPanel();
 		westFence4.setBounds(75, 0, 15, 50);
@@ -194,11 +175,11 @@ public class FenceUIManager {
 		westFence5.setBackground(Color.blue);
 		westFencesPanel.add(westFence5);
 		westFences.add(westFence5);
-		
+
 		westFencesPanel.setOpaque(false);
 		setAllFencesAttributes(westFences);
 	}
-	
+
 	public void createNorthPlayerFences() {
 		northFencesPanel = new JPanel();
 		northFencesPanel.setLayout(null);
@@ -220,7 +201,7 @@ public class FenceUIManager {
 		northFence3.setBounds(50, 0, 15, 50);
 		northFence3.setBackground(Color.blue);
 		northFencesPanel.add(northFence3);
-		
+
 		northFences.add(northFence3);
 		JPanel northFence4 = new JPanel();
 		northFence4.setBounds(75, 0, 15, 50);
@@ -233,12 +214,11 @@ public class FenceUIManager {
 		northFence5.setBackground(Color.blue);
 		northFencesPanel.add(northFence5);
 		northFences.add(northFence5);
-		
+
 		northFencesPanel.setOpaque(false);
 		setAllFencesAttributes(northFences);
 	}
-	
-	
+
 	public void createEastPlayerFences() {
 		eastFencesPanel = new JPanel();
 		eastFencesPanel.setLayout(null);
@@ -272,30 +252,24 @@ public class FenceUIManager {
 		eastFence5.setBackground(Color.blue);
 		eastFencesPanel.add(eastFence5);
 		eastFences.add(eastFence5);
-		
+
 		eastFencesPanel.setOpaque(false);
-		setAllFencesAttributes(eastFences);		
+		setAllFencesAttributes(eastFences);
 	}
-	
-	public JPanel getEastFencesPanel() {
-		return eastFencesPanel;
-	}
+
 
 
 	public void setEastFencesPanel(JPanel eastFencesPanel) {
 		this.eastFencesPanel = eastFencesPanel;
 	}
 
-
-	public JPanel getNorthFencesPanel() {
-		return northFencesPanel;
+	public void setEastFences(List<JPanel> eastFences) {
+		this.eastFences = eastFences;
 	}
-
 
 	public void setNorthFencesPanel(JPanel northFencesPanel) {
 		this.northFencesPanel = northFencesPanel;
 	}
-
 
 	public void setAllFencesAttributes(List<JPanel> fences) {
 		GameTile[][] tiles = GameSettings.getGameTiles();
@@ -305,18 +279,17 @@ public class FenceUIManager {
 			fence.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 		});
 	}
+
+	public void setWestFences(List<JPanel> westFences) {
+		this.westFences = westFences;
+	}
 	
-	public void setReloadedFences(Player player) {
-		
+	public void setSouthFences(List<JPanel> southFences) {
+		this.southFences = southFences;
 	}
 	
 	public JPanel getSouthFencesPanel() {
 		return southFencesPanel;
-	}
-
-
-	public void setSouthFencesPanel(JPanel southFencesPanel) {
-		this.southFencesPanel = southFencesPanel;
 	}
 	
 	// Packages all fences into one collection
@@ -328,23 +301,18 @@ public class FenceUIManager {
 		allFences.add(eastFencesPanel);
 	}
 
-	// GETTERS and SETTERS
 	public List<JPanel> getWestFences() {
 		return westFences;
 	}
 
-	public void setWestFences(List<JPanel> westFences) {
-		this.westFences = westFences;
+	public void setSouthFencesPanel(JPanel southFencesPanel) {
+		this.southFencesPanel = southFencesPanel;
 	}
 
 	public List<JPanel> getSouthFences() {
 		return southFences;
 	}
 
-	public void setSouthFences(List<JPanel> southFences) {
-		this.southFences = southFences;
-	}	
-	
 	public List<JPanel> getNorthFences() {
 		return northFences;
 	}
@@ -356,8 +324,16 @@ public class FenceUIManager {
 	public List<JPanel> getEastFences() {
 		return eastFences;
 	}
-
-	public void setEastFences(List<JPanel> eastFences) {
-		this.eastFences = eastFences;
+	public JPanel getNorthFencesPanel() {
+		return northFencesPanel;
 	}
+	
+	public JPanel getEastFencesPanel() {
+		return eastFencesPanel;
+	}
+	
+	public JPanel getWestFencesPanel() {
+		return westFencesPanel;
+	}
+	
 }
