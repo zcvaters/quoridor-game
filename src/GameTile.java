@@ -42,7 +42,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	
 	//the colors for the center tile and it's walls
 	private Color tileColor;
-	private Color tileHighlightColor;
+	
 	private Color wallColor;
 	private Color bkgColor;
 	
@@ -102,7 +102,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//the color of a non-active wall border
 		this.bkgColor = bkgColor;
 		//the color of a center tile that has been highlighted (player could move to these)
-		this.tileHighlightColor = new Color(200, 0, 100);	//<-----FIX THIS!					
+		//Color tileHighlightColor = new Color(200, 0, 100);	//<-----FIX THIS!					
 		
 		//zero-indexed.
 		this.xcoord = xcoord;  //row address

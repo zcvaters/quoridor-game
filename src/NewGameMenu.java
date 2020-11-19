@@ -72,7 +72,6 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		// size to fit frame
 		this.setBounds(0, 0, 1200, 800);
 		this.setOpaque(false);
-		
 
 		// the labels for the header and choose colors
 		newGameHeaderLabel = new JLabel("NEW GAME");
@@ -98,7 +97,8 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		color1Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_1.png")));
 		color1Button.addActionListener(this);
 		color2Button = new JButton();
-		color2Button.setBorderPainted(false);;
+		color2Button.setBorderPainted(false);
+		;
 		color2Button.setContentAreaFilled(false);
 		color2Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_2.png")));
 		color2Button.addActionListener(this);
@@ -140,7 +140,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 
 		firstPanel = new JPanel();
 		firstPanel.setOpaque(false);
-		firstPanel.setLayout(new GridLayout(5,1));
+		firstPanel.setLayout(new GridLayout(5, 1));
 		firstIconLabel = new JLabel("Player Info");
 		firstIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
 		firstIconLabel.setForeground(Color.black);
@@ -156,7 +156,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 
 		secondPanel = new JPanel();
 		secondPanel.setOpaque(false);
-		secondPanel.setLayout(new GridLayout(5,1));		
+		secondPanel.setLayout(new GridLayout(5, 1));
 		secondIconLabel = new JLabel("Player Info");
 		secondIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
 		secondIconLabel.setForeground(Color.black);
@@ -172,7 +172,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 
 		thirdPanel = new JPanel();
 		thirdPanel.setOpaque(false);
-		thirdPanel.setLayout(new GridLayout(5,1));		
+		thirdPanel.setLayout(new GridLayout(5, 1));
 		thirdIconLabel = new JLabel("Player Info");
 		thirdIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
 		thirdIconLabel.setForeground(Color.black);
@@ -188,7 +188,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 
 		fourthPanel = new JPanel();
 		fourthPanel.setOpaque(false);
-		fourthPanel.setLayout(new GridLayout(5,1));		
+		fourthPanel.setLayout(new GridLayout(5, 1));
 		fourthIconLabel = new JLabel("Player Info");
 		fourthIconLabel.setFont(MainWindow.orbitron.deriveFont(14f));
 		fourthIconLabel.setForeground(Color.black);
@@ -272,7 +272,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 
 		});
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		// get the object that performed the action, respond accordingly
@@ -385,7 +385,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 			List<Integer> turnOrder = GameSettings.getPlayerIDList();
 
 			// build assets based on settings
-			BuildAssets thisBuild = new BuildAssets(tileColorSelected, // <----NEW GAME STARTS HERE
+			new BuildAssets(tileColorSelected, // <----NEW GAME STARTS HERE
 					wallColorSelected, bkgColorSelected, playerNames, playerTypes, playerColorsSelected, turnOrder);
 		}
 		GameSettings.playButtonSound();
@@ -407,7 +407,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 	@Override
 	public void focusGained(FocusEvent e) {
 		JTextField src = (JTextField) e.getSource();
-		if(src.getText().equals("<<Your Name Here>>")) {
+		if (src.getText().equals("<<Your Name Here>>")) {
 			src.setText("");
 		}
 	}
@@ -415,7 +415,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 	@Override
 	public void focusLost(FocusEvent e) {
 		JTextField src = (JTextField) e.getSource();
-		if(src.getText().equals("")) {
+		if (src.getText().equals("")) {
 			src.setText("<<Your Name Here>>");
 		}
 	}

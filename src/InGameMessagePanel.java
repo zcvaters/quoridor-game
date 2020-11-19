@@ -1,49 +1,68 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class InGameMessagePanel extends JPanel implements ActionListener {
+public class InGameMessagePanel implements ActionListener {
 	
 	private JLabel messageLabel;
 	private JButton okButton;
+	private JLabel frameLabel;
 	
 	public InGameMessagePanel() {
 		
 		//get a panel
-		super();
+		ImageIcon panelFrame = new ImageIcon("/Assets/inGameMsgPanel_frame.png");
+		frameLabel = new JLabel(panelFrame);
 		//set size
-		Dimension panelSize = new Dimension(200, 100);
-        this.setPreferredSize(panelSize);
-        this.setBounds(725,625,400,100);
-        this.setOpaque(false);
+        frameLabel.setBounds(700,600,400,200);
+        frameLabel.setOpaque(false);
         
         //get text
         String messageText = "Default message text.";
         messageLabel = new JLabel(messageText);
+        messageLabel.setFont(MainWindow.orbitron.deriveFont(15f));
+        messageLabel.setForeground(Color.black);
         EmptyBorder border1 = new EmptyBorder(20, 0, 20,0 );
 		messageLabel.setBorder(border1);
-        messageLabel.setAlignmentX(CENTER_ALIGNMENT);
+        messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         //get button
-        okButton = new JButton(" OK ");
-        okButton.setAlignmentX(CENTER_ALIGNMENT);
+        okButton = new Buttons(" OK ");
+        okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         okButton.addActionListener(this);
         
         //add text and button
-        BoxLayout boxLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
-		this.setLayout(boxLayout);
-        this.add(messageLabel);
-        this.add(okButton);
+        BoxLayout boxLayout = new BoxLayout(frameLabel, BoxLayout.PAGE_AXIS);
+        frameLabel.setLayout(boxLayout);
+        frameLabel.add(messageLabel);
+        frameLabel.add(okButton);
         //hide panel
-        this.setVisible(false);
+        frameLabel.setVisible(false);
 	}
 	
+	public JLabel getFrameLabel() {
+		return frameLabel;
+	}
+
+	public void setFrameLabel(JLabel frameLabel) {
+		this.frameLabel = frameLabel;
+	}
+
+	public JLabel getMessageLabel() {
+		return messageLabel;
+	}
+
+	public void setMessageLabel(JLabel messageLabel) {
+		this.messageLabel = messageLabel;
+	}
+
 	public void SetMessageText(String message) {
 		messageLabel.setText(message);
 	}

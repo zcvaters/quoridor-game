@@ -127,28 +127,6 @@ public class MainWindow extends JFrame {
 		mainWindow.add(newPanel, JLayeredPane.PALETTE_LAYER);
 	}
 
-	// used to display in-game messages to the players.
-	// ie: "Player 2 has next turn". or "Illegal Move".
-	public void ShowMessage(String message) {
-
-		// get the message panel
-		// update the message text
-		// display the panel
-		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
-
-		messagePanel.SetMessageText(message);
-		messagePanel.setVisible(true);
-		mainWindow.add(messagePanel, JLayeredPane.MODAL_LAYER);
-	}
-
-	public void RemoveMessage() {
-
-		InGameMessagePanel messagePanel = GameSettings.GetMessagePanel();
-		mainWindow.remove(messagePanel);
-		// refresh display for whatever was underneath this message
-		this.repaint();
-	}
-
 	public JLayeredPane getMainWindow() {
 		return mainWindow;
 	}

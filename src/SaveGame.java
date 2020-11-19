@@ -1,8 +1,5 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
-
-import javax.swing.JPanel;
 
 /*
  * Save game, streams objects for serializing to a save file.

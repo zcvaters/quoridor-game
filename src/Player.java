@@ -1,6 +1,4 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -39,7 +37,6 @@ public class Player extends JPanel {
 
 	// player is trying to reach north, east, south, or west side of board.
 	private String playerGoal;
-	private JLabel pawnIcon;
 
 	/*
 	 * Constructor
@@ -84,7 +81,7 @@ public class Player extends JPanel {
 		// create a label to display player's first initial
 		// if no name provided, use "X"
 		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);
-		JLabel playerInitials = new JLabel(Character.toString(playerInitial), SwingConstants.CENTER);
+		JLabel playerInitials = new JLabel(Character.toString(playerInitial).toUpperCase(), SwingConstants.CENTER);
 		playerInitials.setBounds(0, 0, playerX, playerY);
 
 		JLabel iconLabel = new JLabel(pawnStencil);

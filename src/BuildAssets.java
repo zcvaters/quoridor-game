@@ -104,29 +104,6 @@ public class BuildAssets {
 		// NEXT PLAYER
 		int nextPlayer = 0; // <--new game, so players[0] will be first to act;
 
-		// Build In-Game Menu UI (Panels surrounding the gameboard to display
-		// information).
-		InGameUIPanel inGameUIPanel = new InGameUIPanel();
-
-		// get ref to the middle panel, which will hold the game board.
-		inGameUIPanel.setGameBoard(gameBoard);
-		
-		
-		inGameUIPanel.southPlayerInfoPanel(players[0].GetColor(), players[0].GetName());
-		inGameUIPanel.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
-		inGameUIPanel.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
-		inGameUIPanel.eastPlayerInfoPanel(players[3].GetColor(), players[3].GetName());
-		
-		// Set Border color for each player
-		//inGameUIPanel.setBorderColors(players[0].GetColor(), players[1].GetColor(), players[2].GetColor(),
-				//players[3].GetColor());
-		// Set name tags for each player side
-		//inGameUIPanel.setPlayerDetails(players[0].GetName(), players[1].GetName(), players[2].GetName(),
-				//players[3].GetName());
-
-		// set background of the settings panel to the appropiate bkg color
-		inGameUIPanel.setSavePanelBG(bkgColor);
-
 		// add the gameboard to the middle panel of in-game UI.
 		// middlePanel.setBorder(BorderFactory.createEmptyBorder(25, 0, 0, 0));
 
@@ -134,8 +111,19 @@ public class BuildAssets {
 		// playersAttributes.addAll(Arrays.asList(players));
 		GameSettings.setPlayers(players);
 
+		// Build In-Game Menu UI (Panels surrounding the gameboard to display
+		// information).
+		InGameUIPanel inGameUIPanel = new InGameUIPanel();
+		GameSettings.setInGameUIPanel(inGameUIPanel);
+		
+		// get ref to the middle panel, which will hold the game board.
+		inGameUIPanel.setGameBoard(gameBoard);
+
+		// set background of the settings panel to the appropiate bkg color
+		inGameUIPanel.setSavePanelBG(bkgColor);
+
 		// start the game controller
-		GameController game = new GameController(inGameUIPanel, gameBoard, players, nextPlayer, true);
+		new GameController(inGameUIPanel, gameBoard, players, nextPlayer, true);
 	}
 
 	/*
@@ -156,28 +144,19 @@ public class BuildAssets {
 
 		GameSettings.inputManager.SetGridTiles(gameTiles);
 
+		// Store Player Objects in Game Settings
+		GameSettings.setPlayers(players);
+
 		// In game UI panel
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		inGameUIPanel.setGameBoard(reloadedGameBoard);
-		
-		inGameUIPanel.southPlayerInfoPanel(players[0].GetColor(), players[0].GetName());
-		inGameUIPanel.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
-		inGameUIPanel.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
-		inGameUIPanel.eastPlayerInfoPanel(players[3].GetColor(), players[3].GetName());
-
-		GameSettings.getFencesUIManger().removePlayerFence(players[0]);
-		GameSettings.getFencesUIManger().removePlayerFence(players[1]);
-		GameSettings.getFencesUIManger().removePlayerFence(players[2]);
-		GameSettings.getFencesUIManger().removePlayerFence(players[3]);
+		GameSettings.setInGameUIPanel(inGameUIPanel);
 
 		// set background of the settings panel to the appropiate bkg color
 		inGameUIPanel.setSavePanelBG(gameTiles[0][0].getBkgColor());
 
-		// Store Player Objects in Game Settings
-		GameSettings.setPlayers(players);
-
 		// Start the game controller
-		GameController game = new GameController(inGameUIPanel, reloadedGameBoard, players, nextTurn, false);
+		new GameController(inGameUIPanel, reloadedGameBoard, players, nextTurn, false);
 	}
 
 	// helper method
