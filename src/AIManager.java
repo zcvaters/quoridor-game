@@ -240,6 +240,7 @@ public class AIManager {
 		//decrement the player's wall inventory
 		//subtract one from the player's wall inventory
 		currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+		GameSettings.getFencesUIManger().removePlayerFence(currentPlayer);
 		System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 		
 		//end the turn.
@@ -524,8 +525,8 @@ public class AIManager {
 			//decrement the player's wall inventory
 			//subtract one from the player's wall inventory			
 			currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+			GameSettings.getFencesUIManger().removePlayerFence(currentPlayer);
 			System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
-			
 			//end the turn.
 			GameSettings.GetGameController().AdvanceToNextTurn();
 			return;
