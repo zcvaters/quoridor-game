@@ -29,14 +29,14 @@ public class QuitMenu extends JPanel implements ActionListener {
 		// yes and no buttons at the bottom
 
 		// the quit panel
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 1200, 800);
 		this.setOpaque(false);
 
 		// the label for the header
 		quitHeaderLabel = new JLabel("Quit Game");
 		quitHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		quitHeaderLabel.setForeground(Color.black);
-		EmptyBorder border1 = new EmptyBorder(190, 0, 0, 0);
+		EmptyBorder border1 = new EmptyBorder(100, 0, 0, 0);
 		quitHeaderLabel.setBorder(border1);
 		quitHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		quitHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
