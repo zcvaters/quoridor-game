@@ -107,8 +107,8 @@ public class GameSettings implements Serializable {
 
 		// set tile size (includes 1/2 wall width on each side)
 		// recommend 90x90 if using a 1000x1000 frame.
-		tileWidth = 60;
-		tileHeight = 60;
+		tileWidth = 40;
+		tileHeight = 40;
 
 		// set grid size for play
 		rows = 9;

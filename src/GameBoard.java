@@ -32,8 +32,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
 		// build a sub-panel to hold board
 		JPanel gridPanel = new JPanel();
-		// gridPanel.setMinimumSize(new Dimension(800, 800));
-		// gridPanel.setPreferredSize(new Dimension(800, 800));
+		//gridPanel.setMinimumSize(new Dimension(600, 600));
+		//gridPanel.setPreferredSize(new Dimension(600, 600));
 		this.add(gridPanel);
 		GridLayout tileLayout = new GridLayout(rows, cols);
 		tileLayout.setHgap(0);
