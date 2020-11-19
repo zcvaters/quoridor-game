@@ -1,5 +1,8 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
+
+import javax.swing.JPanel;
 
 /*
  * Save game, streams objects for serializing to a save file.
@@ -25,7 +28,7 @@ public class SaveGame {
 		playersInOrder = GameSettings.getPlayers();
 		gameTiles = GameSettings.getGameTiles();
 		nextToPlay = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition() - 1;  //zero indexed.
-
+		
 		try { // Catch errors in I/O if necessary.
 				// Open a file to write to Save.sav
 			FileOutputStream saveFile = new FileOutputStream(filename);
@@ -37,7 +40,7 @@ public class SaveGame {
 			save.writeObject(playersInOrder); // Saves Players order
 			save.writeObject(gameTiles); // Saves GameTile objects.
 			save.writeObject(nextToPlay); // Turn position object
-
+			
 			save.close(); // Close/flush streams
 			save.flush(); 
 			saveFile.close();

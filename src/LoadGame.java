@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JPanel;
 
 /*
  * 	LoadGame reads a stream of objects to re-build a Saved game.
@@ -40,8 +44,7 @@ public class LoadGame {
 			players = (Player[]) save.readObject(); // Restore Player Objects
 			gameTiles = (GameTile[][]) save.readObject(); // Load Game tiles
 			int nextTurn = (int) save.readObject(); // Restore next turn
-			System.out.println("next player is " +nextTurn);
-
+			
 			// Create BuildAssets Load Game constructor.
 			loadGameBuild(players, gameTiles, nextTurn);
 

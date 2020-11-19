@@ -111,6 +111,7 @@ public class BuildAssets {
 		// get ref to the middle panel, which will hold the game board.
 		inGameUIPanel.setGameBoard(gameBoard);
 		
+		
 		inGameUIPanel.southPlayerInfoPanel(players[0].GetColor(), players[0].GetName());
 		inGameUIPanel.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
 		inGameUIPanel.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
@@ -158,12 +159,16 @@ public class BuildAssets {
 		// In game UI panel
 		InGameUIPanel inGameUIPanel = new InGameUIPanel();
 		inGameUIPanel.setGameBoard(reloadedGameBoard);
-
-		//inGameUIPanel.setBorderColors(players[0].GetColor(), players[1].GetColor(), players[2].GetColor(),
-				//players[3].GetColor());
-		//inGameUIPanel.setPlayerDetails(players[0].GetName(), players[1].GetName(), players[2].GetName(),
-				//players[3].GetName());
 		
+		inGameUIPanel.southPlayerInfoPanel(players[0].GetColor(), players[0].GetName());
+		inGameUIPanel.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
+		inGameUIPanel.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
+		inGameUIPanel.eastPlayerInfoPanel(players[3].GetColor(), players[3].GetName());
+
+		GameSettings.getFencesUIManger().removePlayerFence(players[0]);
+		GameSettings.getFencesUIManger().removePlayerFence(players[1]);
+		GameSettings.getFencesUIManger().removePlayerFence(players[2]);
+		GameSettings.getFencesUIManger().removePlayerFence(players[3]);
 
 		// set background of the settings panel to the appropiate bkg color
 		inGameUIPanel.setSavePanelBG(gameTiles[0][0].getBkgColor());

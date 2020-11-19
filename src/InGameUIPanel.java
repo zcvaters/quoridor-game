@@ -67,6 +67,7 @@ public class InGameUIPanel implements ActionListener {
 	private JPanel northPlayerInfoPanel;
 
 	private JPanel eastPlayerInfoPanel;
+	private FenceUIManager fences;
 
 	// constructor
 	public InGameUIPanel() {
@@ -123,6 +124,10 @@ public class InGameUIPanel implements ActionListener {
 		setSaveGamePanel();
 		//playerSidePanels();
 		playerStatsPanel();
+		
+		fences = new FenceUIManager();
+		GameSettings.setFencesUIManager(fences);
+
 	}
 
 	public void initializeSettingsOverlay() {
@@ -277,26 +282,26 @@ public class InGameUIPanel implements ActionListener {
 	public void playerStatsPanel() {
 		playerInfoPanel = new JPanel();
 		playerInfoPanel.setLayout(new GridLayout(4, 1));
-		playerInfoPanel.setBounds(725, 25, 400, 600);
+		playerInfoPanel.setBounds(800, 25, 300, 400);
 		playerInfoPanel.setOpaque(false);
 		
 		southPlayerInfoPanel = new JPanel();
-		southPlayerInfoPanel.setBounds(0, 0, 400, 201);
+		southPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		southPlayerInfoPanel.setBackground(Color.blue);
 		playerInfoPanel.add(southPlayerInfoPanel);
 		
 		westPlayerInfoPanel = new JPanel();
-		westPlayerInfoPanel.setBounds(0, 0, 400, 200);
+		westPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		westPlayerInfoPanel.setBackground(Color.pink);
 		playerInfoPanel.add(westPlayerInfoPanel);
 		
 		northPlayerInfoPanel = new JPanel();
-		northPlayerInfoPanel.setBounds(0, 0, 400, 200);
+		northPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		northPlayerInfoPanel.setBackground(Color.gray);
 		playerInfoPanel.add(northPlayerInfoPanel);
 		
 		eastPlayerInfoPanel = new JPanel();
-		eastPlayerInfoPanel.setBounds(0, 0, 400, 200);
+		eastPlayerInfoPanel.setBounds(0, 0, 300, 100);
 		eastPlayerInfoPanel.setBackground(Color.cyan);
 		playerInfoPanel.add(eastPlayerInfoPanel);
 		
@@ -319,6 +324,11 @@ public class InGameUIPanel implements ActionListener {
 		southPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
 		
 		this.southPlayerInfoPanel.add(southPlayerDetails, gbc);
+		
+		fences.createSouthPlayerFences();
+		JPanel fencesSouth = fences.getSouthFencesPanel();
+		fencesSouth.setBounds(825, 60, 300, 200);
+		inGameOverlay.add(fencesSouth, JLayeredPane.DRAG_LAYER);
 	}
 	
 	public void westPlayerInfoPanel(Color color, String name) {
@@ -337,6 +347,11 @@ public class InGameUIPanel implements ActionListener {
 		westPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
 		
 		this.westPlayerInfoPanel.add(westPlayerDetails, gbc);
+		
+		fences.createWestPlayerFences();
+		JPanel fencesWest = fences.getWestFencesPanel();
+		fencesWest.setBounds(825, 160, 300, 200);
+		inGameOverlay.add(fencesWest, JLayeredPane.DRAG_LAYER);
 	}
 	
 	public void northPlayerInfoPanel(Color color, String name) {
@@ -355,6 +370,11 @@ public class InGameUIPanel implements ActionListener {
 		northPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
 		
 		this.northPlayerInfoPanel.add(northPlayerDetails, gbc);
+		
+		fences.createNorthPlayerFences();
+		JPanel fencesNorth = fences.getNorthFencesPanel();
+		fencesNorth.setBounds(825, 260, 300, 200);
+		inGameOverlay.add(fencesNorth, JLayeredPane.DRAG_LAYER);
 	}
 	
 	public void eastPlayerInfoPanel(Color color, String name) {
@@ -373,6 +393,11 @@ public class InGameUIPanel implements ActionListener {
 		eastPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
 		
 		this.eastPlayerInfoPanel.add(eastPlayerDetails, gbc);
+		
+		fences.createEastPlayerFences();
+		JPanel fencesEast = fences.getEastFencesPanel();
+		fencesEast.setBounds(825, 360, 300, 200);
+		inGameOverlay.add(fencesEast, JLayeredPane.DRAG_LAYER);
 	}
 
 	public JLabel getSouthPlayerDetails() {
@@ -444,7 +469,7 @@ public class InGameUIPanel implements ActionListener {
 	}
 
 	public void setGameBoard(JPanel gameBoard) {
-		gameBoard.setBounds(15, 25, 700, 700);
+		gameBoard.setBounds(10, 10, 750, 750);
 		inGameOverlay.add(gameBoard, JLayeredPane.DEFAULT_LAYER);
 	}
 
