@@ -93,6 +93,7 @@ public class GameController {
 		System.out.println("game paused? " +GameSettings.GetGameIsPaused());
 		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
 		GameSettings.getInGameUIPanel().showMessagelabel();
+		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
 		currentPlayer = nextPlayer;	
 		//increment the nextPlayerIndex, so the turns will advance through different players
 		nextPlayerIndex++;

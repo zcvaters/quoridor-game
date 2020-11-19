@@ -568,6 +568,7 @@ public class InGameUIPanel implements ActionListener {
 		if(selected.equals(okButton)) {			
 			//gameplay can continue
 			GameSettings.GetGameController().BeginTurn();
+			okButton.setVisible(false);
 		}
 
 		// Settings Panel Action Listeners Control Flow
