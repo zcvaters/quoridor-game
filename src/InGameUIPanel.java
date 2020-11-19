@@ -588,10 +588,12 @@ public class InGameUIPanel implements ActionListener {
 				saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
 			}
+			GameSettings.SetGameIsPaused(true);
 
 		}
 		if (selected.equals(resumeGameButton)) {
 			settingsPanel.setVisible(false);
+			GameSettings.SetGameIsPaused(false);
 		}
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
