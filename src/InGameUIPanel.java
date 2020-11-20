@@ -271,7 +271,7 @@ public class InGameUIPanel implements ActionListener {
 		ImageIcon inGameSavingPanelBG = new ImageIcon(getClass().getResource("/Assets/inGameSettingsPanel_GameSave_BG.png"));
 		saveGamePanel = new JLabel(inGameSavingPanelBG);
 		saveGamePanel.setLayout(new GridBagLayout());
-		saveGamePanel.setBounds(230, 200, 300, 300);
+		saveGamePanel.setBounds(240, 200, 300, 300);
 		saveGamePanel.setOpaque(false);
 
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
