@@ -1,5 +1,6 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /*
  * Save game, streams objects for serializing to a save file.
@@ -20,6 +21,15 @@ public class SaveGame {
 	 * 	@param: String filename, the save file.
 	 */
 	public static void saveGameObjs(String filename) {
+		
+		//before saving, turn off any exising goalTiles that have been displayed
+		//deactivate the goal tile highights for the next player.
+		ArrayList<GameTile> goalTiles = GameSettings.getGoalTiles();
+		for(GameTile thisTile : goalTiles) {
+			thisTile.DeactivateGoalPanel();
+		}
+		goalTiles.clear();
+		GameSettings.setGoalTiles(goalTiles);
 		
 		// Instantiate the necessary collections.
 		playersInOrder = GameSettings.getPlayers();

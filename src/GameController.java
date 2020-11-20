@@ -146,7 +146,8 @@ public class GameController {
 	public void BeginTurn() {
 
 		//activate the goal tiles for this player (show a gold star icon)
-		ActivateGoalTiles(currentPlayer);	
+		ActivateGoalTiles(currentPlayer);
+		GameSettings.setGoalTiles(goalTiles);
 		
 		//get a structure to hold the gametiles that can be reached by player.
 		ArrayList<GameTile> legalTiles = new ArrayList<GameTile>();

@@ -91,6 +91,9 @@ public class GameSettings implements Serializable {
 	// storage for the individual tiles needed to comprise a gameboard.
 	// passed here by BuildAssets upon creation.
 	static GameTile[][] gameTiles;
+	
+	//arraylist of 9 specific goal tiles for the current player.
+	static ArrayList<GameTile> goalTiles;
 
 	// Storage for the players Objects
 	static Player[] players;
@@ -227,6 +230,10 @@ public class GameSettings implements Serializable {
 	public static GameTile[][] getGameTiles() {
 		return gameTiles;
 	}
+	
+	public static ArrayList<GameTile> getGoalTiles() {
+		return goalTiles;
+	}
 
 	// get computer-generated name
 	public static String GetRandomName() {
@@ -325,6 +332,10 @@ public class GameSettings implements Serializable {
 		// BuildAssets, in constructor, when building a new game board
 		// LoadGame, in LoadFromFile(), when loading previously saved files.
 		gameTiles = allTiles;
+	}
+	
+	public static void setGoalTiles(ArrayList<GameTile> currentGoalTiles) {
+		goalTiles = currentGoalTiles;
 	}
 
 	public static void setPlayers(Player[] players2) {
