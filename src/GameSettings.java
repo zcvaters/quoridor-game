@@ -22,7 +22,9 @@ public class GameSettings implements Serializable {
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
 	static GameBoard gameBoard;
-	
+	static FenceUIManager fenceUIManager;
+	static InGameUIPanel inGameUIPanel;
+
 	// the in game message panel. has it's own methods for setting in-game text to display
 	static InGameMessagePanel messagePanel;	
 
@@ -189,6 +191,18 @@ public class GameSettings implements Serializable {
 	public static QuitMenu GetQuitMenu() {
 		return quitMenu;
 	}
+	
+	public static FenceUIManager getFencesUIManger() {
+		return fenceUIManager;
+	}
+	
+	public static InGameUIPanel getInGameUIPanel() {
+		return inGameUIPanel;
+	}
+
+	public static void setInGameUIPanel(InGameUIPanel inGameUIPanel) {
+		GameSettings.inGameUIPanel = inGameUIPanel;
+	}
 
 	// public static InGameMessagePanel GetMessagePanel() {
 	// return messagePanel;
@@ -261,6 +275,9 @@ public class GameSettings implements Serializable {
 		return messagePanel;
 	}
 	
+	
+	
+	
 	// SETTERS
 
 	public static void SetMessagePanel(InGameMessagePanel messagePanel) {
@@ -297,6 +314,10 @@ public class GameSettings implements Serializable {
 	
 	public static void setGameBoard(GameBoard gameBoard) {
 		GameSettings.gameBoard = gameBoard;
+	}
+	
+	public static void setFencesUIManager(FenceUIManager fenceUIManager) {
+		GameSettings.fenceUIManager = fenceUIManager;
 	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {

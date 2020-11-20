@@ -33,12 +33,12 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 
 		// the instructions panel
 		// size to fit frame
-		this.setBounds(0, 0, 1000, 1000);
+		this.setBounds(0, 0, 1200, 800);
 		this.setOpaque(false);
 
 		// the label for the header
 		instructionsHeaderLabel = new JLabel("How To Play");
-		EmptyBorder border1 = new EmptyBorder(190, 0, 0, 0);
+		EmptyBorder border1 = new EmptyBorder(20, 15, 0, 15);
 		instructionsHeaderLabel.setBorder(border1);
 		instructionsHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		instructionsHeaderLabel.setFont(MainWindow.orbitron.deriveFont(30f));

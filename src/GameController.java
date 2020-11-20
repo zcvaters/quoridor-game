@@ -91,7 +91,9 @@ public class GameController {
 		//pause the game, lock the controls (activated when player clicks on message)
 		GameSettings.SetGameIsPaused(true);
 		System.out.println("game paused? " +GameSettings.GetGameIsPaused());
-		GameSettings.GetMainWindow().ShowMessage(nextPlayer.GetName() + ", it's your turn!");
+		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
+		GameSettings.getInGameUIPanel().showMessagelabel();
+		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
 		currentPlayer = nextPlayer;	
 		//increment the nextPlayerIndex, so the turns will advance through different players
 		nextPlayerIndex++;
@@ -103,7 +105,7 @@ public class GameController {
   
 	public void BeginTurn() {
 		//remove the popup notification
-		GameSettings.GetMainWindow().RemoveMessage();
+		//GameSettings.getInGameUIPanel().hideMessageLabel();
 		
 		//get a structure to hold the gametiles that can be reached by player.
 		ArrayList<GameTile> legalTiles = new ArrayList<GameTile>();
@@ -139,8 +141,8 @@ public class GameController {
 		
 		//get the number of rows and cols on gameboard
 		//we need this zero indexed, so subtract one.
-		int rows = GameSettings.GetRows() - 1; 
-		int cols = GameSettings.GetCols() - 1;
+		//int rows = GameSettings.GetRows() - 1; 
+		//int cols = GameSettings.GetCols() - 1;
 		//get the gameTile that the player is standing on		
 		GameTile location = currentPlayer.GetTile();
 		//get the x, y, address of this tile

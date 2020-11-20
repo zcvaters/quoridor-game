@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -240,6 +239,7 @@ public class AIManager {
 		//decrement the player's wall inventory
 		//subtract one from the player's wall inventory
 		currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+		GameSettings.getFencesUIManger().removePlayerFence(currentPlayer);
 		System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 		
 		//end the turn.
@@ -326,10 +326,10 @@ public class AIManager {
 		Player[] allPlayers = GameSettings.getPlayers();
 		
 		//get ref to all the game tiles
-		GameTile[][] gridTiles = GameSettings.getGameTiles();
+		//GameTile[][] gridTiles = GameSettings.getGameTiles();
 		
 		//get all walls that are currently in play
-		ArrayList<JPanel> allLockedWalls = GameSettings.GetInputManager().getAllLockedWalls();
+		//ArrayList<JPanel> allLockedWalls = GameSettings.GetInputManager().getAllLockedWalls();
 		
 		//get an array to hold the panels that comprise the wall about to be placed
 		JPanel[] tempWalls = new JPanel[8];
@@ -385,7 +385,7 @@ public class AIManager {
 		//try and block that player with a wall in the appropriate direction.
 		//if there is already a wall between closest player and goal, this player should attempt to move towards it's goal instead.
 		opponentGoalDirection = closestPlayerToGoal.GetPlayerGoal();
-		Boolean wallPlaced = false;
+		//Boolean wallPlaced = false;
 		Random randomizer = new Random();
 		int direction = 0;
 		switch (opponentGoalDirection) {
@@ -524,8 +524,8 @@ public class AIManager {
 			//decrement the player's wall inventory
 			//subtract one from the player's wall inventory			
 			currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
+			GameSettings.getFencesUIManger().removePlayerFence(currentPlayer);
 			System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
-			
 			//end the turn.
 			GameSettings.GetGameController().AdvanceToNextTurn();
 			return;

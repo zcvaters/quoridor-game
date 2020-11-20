@@ -1,19 +1,23 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /* InGameUIPanel class. This class contains all the UI elements for the game in a overlay.
  * 
@@ -32,12 +36,12 @@ public class InGameUIPanel implements ActionListener {
 	GridBagConstraints gbc = new GridBagConstraints();
 
 	private JPanel uiPanel;
-	private JPanel settingsPanel;
+	private JLabel settingsPanel;
 	private JButton resumeGameButton;
 	private JButton saveGameButton;
 	private JButton backToMenuButton;
 	private JButton quitGameButton;
-	private JPanel saveGamePanel;
+	private JLabel saveGamePanel;
 	private JButton saveGame1;
 	private JButton saveGame2;
 	private JButton saveGame3;
@@ -47,41 +51,53 @@ public class InGameUIPanel implements ActionListener {
 	private JPanel westPlayerSide;
 	private JPanel northPlayerSide;
 	private JPanel eastPlayerSide;
-	private JPanel playerPanels;
-	private JPanel playerInfo;
 	private JLabel southPlayerDetails;
 	private JLabel westPlayerDetails;
 	private JLabel northPlayerDetails;
 	private JLabel eastPlayerDetails;
+
+	private JPanel playerInfoPanel;
+
+	private JPanel southPlayerInfoPanel;
+
+	private JPanel westPlayerInfoPanel;
+
+	private JPanel northPlayerInfoPanel;
+
+	private JPanel eastPlayerInfoPanel;
+	private FenceUIManager fences;
+
+	private JLabel frameLabel;
+
+	private JLabel messageLabel;
+
+	private Buttons okButton;
 
 	// constructor
 	public InGameUIPanel() {
 
 		// Create layered Pane
 		inGameOverlay = new JLayeredPane();
-		inGameOverlay.setBounds(0, 0, 1000, 1000);
+		inGameOverlay.setBounds(0, 0, 1280, 800);
 		inGameOverlay.setLayout(null);
 		inGameOverlay.setVisible(true);
 
 		// Create Main Panel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
-		mainPanel.setBounds(0, 0, 1000, 1000);
+		mainPanel.setBounds(0, 0, 1280, 800);
 		mainPanel.setOpaque(false);
 		mainPanel.setVisible(true);
 		mainPanel.add(inGameOverlay);
 
 		// UI Panel to be exist on mainPanel
 		uiPanel = new JPanel();
-		uiPanel.setBounds(0, 0, 1000, 1000);
+		uiPanel.setBounds(0, 0, 1280, 800);
 		uiPanel.setLayout(null);
 		uiPanel.setOpaque(false);
 		uiPanel.setVisible(true);
-		settingsButton = new JButton();
-		settingsButton.setOpaque(false);
-		settingsButton.setContentAreaFilled(false);
-		settingsButton.setBorderPainted(false);
-		settingsButton.setBounds(900, 40, 50, 50);
+		settingsButton = new Buttons("");
+		settingsButton.setBounds(1125, 5, 50, 50);
 		settingsButton.setIcon(new ImageIcon(getClass().getResource("/Assets/settings_button.png")));
 		settingsButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -99,23 +115,46 @@ public class InGameUIPanel implements ActionListener {
 		mainPanel.add(uiPanel, JLayeredPane.PALETTE_LAYER);
 
 		// Settings Panel for in Game Settings
-		settingsPanel = new JPanel();
+		ImageIcon inGameSettingsPanelBG = new ImageIcon(getClass().getResource("/Assets/inGameSettingsPanel_BG.png"));
+		settingsPanel = new JLabel(inGameSettingsPanelBG);
 		settingsPanel.setLayout(new GridBagLayout());
-		settingsPanel.setBounds(0, 0, 1000, 1000);
+		settingsPanel.setBounds(500, 200, 300, 300);
 		settingsPanel.setOpaque(false);
 
 		settingsPanel.setVisible(false);
 		initializeSettingsOverlay();
 		setSaveGamePanel();
-		playerSidePanels();
-		playerInfo();
+		// playerSidePanels();
+		playerStatsPanel();
+		
+		messagePanel();
+		frameLabel.setVisible(true);
+
+		this.fences = new FenceUIManager();
+		GameSettings.setFencesUIManager(fences);
+		Player[] players = GameSettings.getPlayers();
+		
+		this.southPlayerInfoPanel(players[0].GetColor(), players[0].GetName());
+		this.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
+		this.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
+		this.eastPlayerInfoPanel(players[3].GetColor(), players[3].GetName());
+		
+		
+		
+		fences.removePlayerFence(players[0]);
+		fences.removePlayerFence(players[1]);
+		fences.removePlayerFence(players[2]);
+		fences.removePlayerFence(players[3]);
+
 	}
 
 	public void initializeSettingsOverlay() {
-		resumeGameButton = new JButton("Resume");
-		resumeGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
-		resumeGameButton.setForeground(Color.black);
+		//resumeGameButton = new JButton("Resume");
+		resumeGameButton = new Buttons("Resume");
+		resumeGameButton.setFont(MainWindow.orbitron.deriveFont(24f));
 		resumeGameButton.setVisible(true);
+		resumeGameButton.setContentAreaFilled(false);
+		resumeGameButton.setOpaque(false);
 		resumeGameButton.addActionListener(this);
 		resumeGameButton.setBounds(0, 0, 60, 60);
 		gbc.gridx = 1;
@@ -123,27 +162,27 @@ public class InGameUIPanel implements ActionListener {
 		gbc.fill = GridBagConstraints.BOTH;
 		settingsPanel.add(resumeGameButton, gbc);
 
-		saveGameButton = new JButton("Save Game");
-		saveGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
-		saveGameButton.setForeground(Color.black);
+		saveGameButton = new Buttons("Save Game");
+		saveGameButton.setFont(MainWindow.orbitron.deriveFont(24f));
+		saveGameButton.setOpaque(false);
 		saveGameButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		settingsPanel.add(saveGameButton, gbc);
 
-		backToMenuButton = new JButton("Back To Main Menu");
-		backToMenuButton.setFont(MainWindow.orbitron.deriveFont(15f));
-		backToMenuButton.setForeground(Color.black);
+		backToMenuButton = new Buttons("Main Menu");
+		backToMenuButton.setFont(MainWindow.orbitron.deriveFont(24f));
+		backToMenuButton.setOpaque(false);
 		backToMenuButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.BOTH;
 		settingsPanel.add(backToMenuButton, gbc);
 
-		quitGameButton = new JButton("Quit Game");
-		quitGameButton.setFont(MainWindow.orbitron.deriveFont(15f));
-		quitGameButton.setForeground(Color.black);
+		quitGameButton = new Buttons("Quit Game");
+		quitGameButton.setFont(MainWindow.orbitron.deriveFont(24f));
+		quitGameButton.setOpaque(false);
 		quitGameButton.addActionListener(this);
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -153,16 +192,37 @@ public class InGameUIPanel implements ActionListener {
 
 	}
 	
-	/*
-	 *  Sets Game Board borders for each player
-	 */
-	public void setBorderColors(Color player1, Color player2, Color player3, Color player4) {
-		this.getSouthPlayerSide().setBackground(player1);
-		this.getWestPlayerSide().setBackground(player2);
-		this.getNorthPlayerSide().setBackground(player3);
-		this.getEastPlayerSide().setBackground(player4);
+	public void messagePanel() {
+		//get a panel
+		ImageIcon panelFrame = new ImageIcon(getClass().getResource("/Assets/inGameMsgPanel_frame.png"));
+		frameLabel = new JLabel(panelFrame);
+		//set size
+        frameLabel.setBounds(775,500,400,200);
+        
+        //get text
+        String messageText = "Default message text.";
+        messageLabel = new JLabel(messageText);
+        messageLabel.setFont(MainWindow.orbitron.deriveFont(15f));
+        messageLabel.setForeground(Color.black);
+        EmptyBorder border1 = new EmptyBorder(20, 0, 20,0 );
+		messageLabel.setBorder(border1);
+        messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //get button
+        okButton = new Buttons("OK");
+        okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        okButton.addActionListener(this);
+        
+        //add text and button
+        BoxLayout boxLayout = new BoxLayout(frameLabel, BoxLayout.PAGE_AXIS);
+        frameLabel.setLayout(boxLayout);
+        frameLabel.add(messageLabel);
+        frameLabel.add(okButton);
+        //hide panel
+        frameLabel.setVisible(false);
+        
+        inGameOverlay.add(frameLabel, JLayeredPane.DRAG_LAYER);
 	}
-	
+
 	/*
 	 * Sets Name tags for each side of the border for each player.
 	 */
@@ -172,46 +232,51 @@ public class InGameUIPanel implements ActionListener {
 		this.getNorthPlayerDetails().setText(player3);
 		this.getEastPlayerDetails().setText(player4);
 	}
-	
+
 	public void setSavePanelBG(Color bkgColor) {
 		this.getSaveGamePanel().setBackground(bkgColor);
 	}
 
 	public void setSaveGamePanel() {
-		saveGamePanel = new JPanel(new GridBagLayout());
-		saveGamePanel.setBounds(380, 420, 250, 125);
+		ImageIcon inGameSavingPanelBG = new ImageIcon(getClass().getResource("/Assets/inGameSettingsPanel_GameSave_BG.png"));
+		saveGamePanel = new JLabel(inGameSavingPanelBG);
+		saveGamePanel.setLayout(new GridBagLayout());
+		saveGamePanel.setBounds(500, 200, 300, 300);
 		saveGamePanel.setOpaque(false);
 
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
-		instructSaveLabel.setFont(MainWindow.orbitron.deriveFont(11f));
-		instructSaveLabel.setOpaque(true);
-		instructSaveLabel.setForeground(Color.BLACK);
+		instructSaveLabel.setFont(MainWindow.orbitron.deriveFont(12f));
+		instructSaveLabel.setOpaque(false);
+		instructSaveLabel.setForeground(Color.black);
 		instructSaveLabel.setBackground(Color.white);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		saveGamePanel.add(instructSaveLabel, gbc);
 
-		saveGame1 = new JButton("Save 1");
-		saveGame1.setFont(MainWindow.orbitron.deriveFont(15f));
-		saveGame1.setForeground(Color.black);
-		saveGame1.setBounds(0, 0, 60, 60);
+		//saveGame1 = new JButton("Save 1");
+		saveGame1 = new Buttons("Save 1");
+		saveGame1.setFont(MainWindow.orbitron.deriveFont(24f));
+		saveGame1.setOpaque(false);
+		//saveGame1.setBounds(0, 0, 100, 60);
 		gbc.gridx = 2;
 		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.insets = new Insets(10, 0, 0, 0);
 		saveGame1.addActionListener(this);
 		saveGamePanel.add(saveGame1, gbc);
 
-		saveGame2 = new JButton("Save 2");
-		saveGame2.setFont(MainWindow.orbitron.deriveFont(15f));
-		saveGame2.setForeground(Color.black);
+		saveGame2 = new Buttons("Save 2");
+		saveGame2.setFont(MainWindow.orbitron.deriveFont(24f));
+		saveGame2.setOpaque(false);
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		saveGame2.addActionListener(this);
 		saveGamePanel.add(saveGame2, gbc);
 
-		saveGame3 = new JButton("Save 3");
-		saveGame3.setFont(MainWindow.orbitron.deriveFont(15f));
-		saveGame3.setForeground(Color.black);
+		saveGame3 = new Buttons("Save 3");
+		saveGame3.setFont(MainWindow.orbitron.deriveFont(24f));
+		saveGame3.setOpaque(false);
 		gbc.gridx = 2;
 		gbc.gridy = 3;
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -224,9 +289,9 @@ public class InGameUIPanel implements ActionListener {
 		savedLabel.setVisible(true);
 		saveGamePanel.add(savedLabel, gbc);
 
-		backToSettingsButton = new JButton("Back");
-		backToSettingsButton.setFont(MainWindow.orbitron.deriveFont(15f));
-		backToSettingsButton.setForeground(Color.black);
+		backToSettingsButton = new Buttons("Back");
+		backToSettingsButton.setFont(MainWindow.orbitron.deriveFont(24f));
+		backToSettingsButton.setOpaque(false);
 		gbc.gridx = 2;
 		gbc.gridy = 5;
 		backToSettingsButton.addActionListener(this);
@@ -236,70 +301,170 @@ public class InGameUIPanel implements ActionListener {
 		saveGamePanel.setVisible(false);
 	}
 
-	public JPanel getSaveGamePanel() {
+	public JLabel getSaveGamePanel() {
 		return saveGamePanel;
 	}
 
-	public void setSaveGamePanel(JPanel saveGamePanel) {
+	public void setSaveGamePanel(JLabel saveGamePanel) {
 		this.saveGamePanel = saveGamePanel;
 	}
 
-	public void playerSidePanels() {
-		playerPanels = new JPanel();
-		playerPanels.setLayout(new BorderLayout());
-		playerPanels.setOpaque(false);
-		playerPanels.setBounds(125, 125, 725, 730);
-		southPlayerSide = new JPanel();
-		// southPlayerSide.setBounds(138, 820, 702, 15);
-		southPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		southPlayerSide.setBackground(Color.red);
-		southPlayerSide.setVisible(true);
-		playerPanels.add(southPlayerSide, BorderLayout.SOUTH);
+	public void playerStatsPanel() {
+		playerInfoPanel = new JPanel();
+		playerInfoPanel.setLayout(new GridLayout(4, 1));
+		playerInfoPanel.setBounds(800, 25, 300, 400);
+		playerInfoPanel.setOpaque(false);
 
-		westPlayerSide = new JPanel();
-		// westPlayerSide.setBounds(125, 140, 15, 700);
-		westPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		westPlayerSide.setBackground(Color.blue);
-		westPlayerSide.setVisible(true);
-		playerPanels.add(westPlayerSide, BorderLayout.WEST);
+		southPlayerInfoPanel = new JPanel();
+		southPlayerInfoPanel.setBounds(0, 0, 300, 100);
+		southPlayerInfoPanel.setBackground(Color.blue);
+		playerInfoPanel.add(southPlayerInfoPanel);
 
-		northPlayerSide = new JPanel();
-		northPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		// northPlayerSide.setBounds(125, 105, 725, 15);
-		northPlayerSide.setBackground(Color.red);
-		northPlayerSide.setVisible(true);
-		playerPanels.add(northPlayerSide, BorderLayout.NORTH);
+		westPlayerInfoPanel = new JPanel();
+		westPlayerInfoPanel.setBounds(0, 0, 300, 100);
+		westPlayerInfoPanel.setBackground(Color.pink);
+		playerInfoPanel.add(westPlayerInfoPanel);
 
-		eastPlayerSide = new JPanel();
-		eastPlayerSide.setBorder(BorderFactory.createLineBorder(Color.black, 2, false));
-		// eastPlayerSide.setBounds(850, 125, 15, 725);
-		eastPlayerSide.setBackground(Color.red);
-		eastPlayerSide.setVisible(true);
-		playerPanels.add(eastPlayerSide, BorderLayout.EAST);
+		northPlayerInfoPanel = new JPanel();
+		northPlayerInfoPanel.setBounds(0, 0, 300, 100);
+		northPlayerInfoPanel.setBackground(Color.gray);
+		playerInfoPanel.add(northPlayerInfoPanel);
 
-		inGameOverlay.add(playerPanels, JLayeredPane.PALETTE_LAYER);
+		eastPlayerInfoPanel = new JPanel();
+		eastPlayerInfoPanel.setBounds(0, 0, 300, 100);
+		eastPlayerInfoPanel.setBackground(Color.cyan);
+		playerInfoPanel.add(eastPlayerInfoPanel);
 
+		inGameOverlay.add(playerInfoPanel, JLayeredPane.PALETTE_LAYER);
 	}
 
-	public void playerInfo() {
-		playerInfo = new JPanel(new BorderLayout());
-		playerInfo.setBounds(10, 40, 960, 900);
-		playerInfo.setOpaque(false);
-		playerInfo.setVisible(true);
+	public void southPlayerInfoPanel(Color color, String name) {
+		this.southPlayerInfoPanel.setBackground(color);
+		this.southPlayerInfoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
 
-		southPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(southPlayerDetails, BorderLayout.SOUTH);
+		southPlayerDetails = new JLabel(name);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(5, 5, 0, 0);
+		southPlayerDetails.setForeground(Color.black);
+		southPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
 
-		westPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(westPlayerDetails, BorderLayout.WEST);
+		this.southPlayerInfoPanel.add(southPlayerDetails, gbc);
 
-		northPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(northPlayerDetails, BorderLayout.NORTH);
+		fences.createSouthPlayerFences();
+		JPanel fencesSouth = fences.getSouthFencesPanel();
+		fencesSouth.setBounds(825, 60, 300, 200);
+		inGameOverlay.add(fencesSouth, JLayeredPane.DRAG_LAYER);
+	}
 
-		eastPlayerDetails = new JLabel("", SwingConstants.CENTER);
-		playerInfo.add(eastPlayerDetails, BorderLayout.EAST);
+	public void westPlayerInfoPanel(Color color, String name) {
+		this.westPlayerInfoPanel.setBackground(color);
+		this.westPlayerInfoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
 
-		inGameOverlay.add(playerInfo, JLayeredPane.PALETTE_LAYER);
+		westPlayerDetails = new JLabel(name);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(5, 5, 0, 0);
+		westPlayerDetails.setForeground(Color.black);
+		westPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
+
+		this.westPlayerInfoPanel.add(westPlayerDetails, gbc);
+
+		fences.createWestPlayerFences();
+		JPanel fencesWest = fences.getWestFencesPanel();
+		fencesWest.setBounds(825, 160, 300, 200);
+		inGameOverlay.add(fencesWest, JLayeredPane.DRAG_LAYER);
+	}
+
+	public void northPlayerInfoPanel(Color color, String name) {
+		this.northPlayerInfoPanel.setBackground(color);
+		this.northPlayerInfoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		northPlayerDetails = new JLabel(name);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(5, 5, 0, 0);
+		northPlayerDetails.setForeground(Color.black);
+		northPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
+
+		this.northPlayerInfoPanel.add(northPlayerDetails, gbc);
+
+		fences.createNorthPlayerFences();
+		JPanel fencesNorth = fences.getNorthFencesPanel();
+		fencesNorth.setBounds(825, 260, 300, 200);
+		inGameOverlay.add(fencesNorth, JLayeredPane.DRAG_LAYER);
+	}
+
+	public void eastPlayerInfoPanel(Color color, String name) {
+		this.eastPlayerInfoPanel.setBackground(color);
+		this.eastPlayerInfoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		eastPlayerDetails = new JLabel(name);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.insets = new Insets(5, 5, 0, 0);
+		eastPlayerDetails.setForeground(Color.black);
+		eastPlayerDetails.setFont(MainWindow.orbitron.deriveFont(16f));
+
+		this.eastPlayerInfoPanel.add(eastPlayerDetails, gbc);
+
+		fences.createEastPlayerFences();
+		JPanel fencesEast = fences.getEastFencesPanel();
+		fencesEast.setBounds(825, 360, 300, 200);
+		inGameOverlay.add(fencesEast, JLayeredPane.DRAG_LAYER);
+	}
+	
+	public void hideMessageLabel() {
+		this.messageLabel.setVisible(false);
+		this.okButton.setVisible(false);
+	}
+	
+	public void showMessagelabel() {
+		this.messageLabel.setVisible(true);
+		this.okButton.setVisible(true);
+	}
+	
+	public Buttons getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(Buttons okButton) {
+		this.okButton = okButton;
+	}
+	public JLabel getFrameLabel() {
+		return frameLabel;
+	}
+
+	public void setFrameLabel(JLabel frameLabel) {
+		this.frameLabel = frameLabel;
+	}
+	
+	public JLabel getMessageLabel() {
+		return messageLabel;
+	}
+
+	public void setMessageLabel(JLabel messageLabel) {
+		this.messageLabel = messageLabel;
+	}
+	
+	public void setMessageLabelText(String text) {
+		this.messageLabel.setText(text);
 	}
 
 	public JLabel getSouthPlayerDetails() {
@@ -371,7 +536,7 @@ public class InGameUIPanel implements ActionListener {
 	}
 
 	public void setGameBoard(JPanel gameBoard) {
-		gameBoard.setBounds(125, 125, 725, 725);
+		gameBoard.setBounds(10, 10, 730, 730);
 		inGameOverlay.add(gameBoard, JLayeredPane.DEFAULT_LAYER);
 	}
 
@@ -398,6 +563,13 @@ public class InGameUIPanel implements ActionListener {
 
 		// Get the object that the event happened
 		Object selected = event.getSource();
+		
+		/* Message Panel */
+		if(selected.equals(okButton)) {			
+			//gameplay can continue
+			GameSettings.GetGameController().BeginTurn();
+			okButton.setVisible(false);
+		}
 
 		// Settings Panel Action Listeners Control Flow
 		if (selected.equals(settingsButton)) {
@@ -417,10 +589,12 @@ public class InGameUIPanel implements ActionListener {
 				saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
 			}
+			GameSettings.SetGameIsPaused(true);
 
 		}
 		if (selected.equals(resumeGameButton)) {
 			settingsPanel.setVisible(false);
+			GameSettings.SetGameIsPaused(false);
 		}
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
