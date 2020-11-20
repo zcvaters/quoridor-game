@@ -71,19 +71,13 @@ public class Player extends JPanel {
 		// set panel background to player color
 		this.setBackground(color);
 
-		JLayeredPane playerLayeredPane = new JLayeredPane();
-		playerLayeredPane.setBounds(0, 0, playerX, playerY);
-		playerLayeredPane.setVisible(true);
-		this.add(playerLayeredPane);
-
-		ImageIcon pawnStencil = new ImageIcon(getClass().getResource("/Assets/pawn_outline.png"));
-
 		// create a label to display player's first initial
 		// if no name provided, use "X"
 		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);
 		JLabel playerInitials = new JLabel(Character.toString(playerInitial).toUpperCase(), SwingConstants.CENTER);
 		playerInitials.setBounds(0, 0, playerX, playerY);
-
+		
+		ImageIcon pawnStencil = new ImageIcon(getClass().getResource("/Assets/pawn_outline.png"));
 		JLabel iconLabel = new JLabel(pawnStencil);
 		iconLabel.setBounds(0, 0, playerX, playerY);
 
