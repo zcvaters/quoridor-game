@@ -4,66 +4,51 @@ import java.awt.Color;
  * The GameState holds a list of assets and attributes that define a game in progress (possibly just starting). 
  */
 public class GameState {
-
-	// can be 1, 2, or 3.
-	// Provides reference to which colour set to use for tiles/walls/player
-	// int gameColorsId;
-
-	// dont need colors? players and tiles will have their own color attribs!
-
-	// no Turn Order. 1,2,3,4...1,2,3,4...
-
+	
 	// list of player objects. Must contain 4 Players.
 	Player[] players;
 	// the tile set that the game is using
-	GameTile[][] gameTiles;
-	// the number of turn that have been played
-	int turnCount;
+	GameTile[][] gameTiles;	
 	// the player who has the next turn (playerID 1, if a new game)
-	Player nextPlayer;
+	int currentPlayerIndex;
 
 	/*
-	 * Constructor - GameState (all assets needed to start/resume game)
+	 * Constructor - GameState 
+	 * A snapshot of a game in progress.  Like an autosave.
+	 * Should be implemented at the beginning of each turn.
+	 * Could be used for networking between clients and a server.
+	 * Could also be used for undo, or replay entire game from any point.
 	 * 
 	 * @Params: players = a collection of 4 pre-built players gameTiles = human or
 	 * computer? accepts "h" or "c". isDifficult = difficulty level for AI play.
 	 * true = hard/challenging. false = easy.
 	 */
-	public GameState(Color tileColor, Color wallColor, int turnNum, Player next) {
+	public GameState(Player[] currentPlayers, GameTile[][] currentTiles, int currentPlayerIndex) {
 
-		/// FIX THIS UP!
-
+		this.players = currentPlayers;
+		this.gameTiles = currentTiles;
+		//could use a nextPlayerIndex instead, if saving GameState at the end of a turn.
+		this.currentPlayerIndex = currentPlayerIndex; 
+		
+		//these items can be used to rebuild any game
+		//they can easily be passed through the BuildAssets constructor.
+		
+		//could save these to GameSettings (arrayList?) for reload capability
+		//GameSettings.SaveGameState(this);   
+		
+		//could also send this GameState to a server for network play.
+		
 	}
-
+	
 	public Player[] getPlayers() {
 		return players;
 	}
 
 	public GameTile[][] getGameTiles() {
 		return gameTiles;
-	}
-
-	public int getTurnCount() {
-		return turnCount;
-	}
-
-	public Player getNextPlayer() {
-		return nextPlayer;
-	}
-
-	public void setPlayers(Player[] players) {
-		this.players = players;
-	}
-
-	public void setGameTiles(GameTile[][] gameTiles) {
-		this.gameTiles = gameTiles;
-	}
-
-	public void setTurnCount(int turnCount) {
-		this.turnCount = turnCount;
-	}
-
-	public void setNextPlayer(Player nextPlayer) {
-		this.nextPlayer = nextPlayer;
-	}
+	}	
+	
+	public int getCurrentPlayerIndex() {
+		return currentPlayerIndex;
+	}	
 }
