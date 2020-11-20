@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,6 +21,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
 
 /* InGameUIPanel class. This class contains all the UI elements for the game in a overlay.
  * 
@@ -73,6 +77,14 @@ public class InGameUIPanel implements ActionListener {
 
 	private Buttons okButton;
 
+	private LocalTime time;
+
+	private JLabel lastSaveTime;
+	
+	DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("hh:mm a").toFormatter();
+
+	private JLabel winnerLabel;
+
 	// constructor
 	public InGameUIPanel() {
 
@@ -118,7 +130,7 @@ public class InGameUIPanel implements ActionListener {
 		ImageIcon inGameSettingsPanelBG = new ImageIcon(getClass().getResource("/Assets/inGameSettingsPanel_BG.png"));
 		settingsPanel = new JLabel(inGameSettingsPanelBG);
 		settingsPanel.setLayout(new GridBagLayout());
-		settingsPanel.setBounds(500, 200, 300, 300);
+		settingsPanel.setBounds(240, 200, 300, 300);
 		settingsPanel.setOpaque(false);
 
 		settingsPanel.setVisible(false);
@@ -138,8 +150,6 @@ public class InGameUIPanel implements ActionListener {
 		this.westPlayerInfoPanel(players[1].GetColor(), players[1].GetName());
 		this.northPlayerInfoPanel(players[2].GetColor(), players[2].GetName());
 		this.eastPlayerInfoPanel(players[3].GetColor(), players[3].GetName());
-		
-		
 		
 		fences.removePlayerFence(players[0]);
 		fences.removePlayerFence(players[1]);
@@ -197,7 +207,7 @@ public class InGameUIPanel implements ActionListener {
 		ImageIcon panelFrame = new ImageIcon(getClass().getResource("/Assets/inGameMsgPanel_frame.png"));
 		frameLabel = new JLabel(panelFrame);
 		//set size
-        frameLabel.setBounds(775,500,400,200);
+        frameLabel.setBounds(760,520,400,200);
         
         //get text
         String messageText = "Default message text.";
@@ -212,15 +222,35 @@ public class InGameUIPanel implements ActionListener {
         okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         okButton.addActionListener(this);
         
+        winnerLabel = new JLabel();
+        winnerLabel.setFont(MainWindow.orbitron.deriveFont(12f));
+        winnerLabel.setForeground(Color.black);
+        winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        lastSaveTime = new JLabel();
+        lastSaveTime.setFont(MainWindow.orbitron.deriveFont(15f));
+        lastSaveTime.setForeground(Color.black);
+        lastSaveTime.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+        lastSaveTime.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setLastSaveTime();
+        
         //add text and button
         BoxLayout boxLayout = new BoxLayout(frameLabel, BoxLayout.PAGE_AXIS);
         frameLabel.setLayout(boxLayout);
         frameLabel.add(messageLabel);
         frameLabel.add(okButton);
+        frameLabel.add(winnerLabel);
+        frameLabel.add(lastSaveTime);
         //hide panel
         frameLabel.setVisible(false);
         
         inGameOverlay.add(frameLabel, JLayeredPane.DRAG_LAYER);
+	}
+	
+
+
+	public void setLastSaveTime() {
+		lastSaveTime.setText("Last Save in this Session: " + ((time == null) ? "No save." : time.format(formatter)));
 	}
 
 	/*
@@ -241,14 +271,13 @@ public class InGameUIPanel implements ActionListener {
 		ImageIcon inGameSavingPanelBG = new ImageIcon(getClass().getResource("/Assets/inGameSettingsPanel_GameSave_BG.png"));
 		saveGamePanel = new JLabel(inGameSavingPanelBG);
 		saveGamePanel.setLayout(new GridBagLayout());
-		saveGamePanel.setBounds(500, 200, 300, 300);
+		saveGamePanel.setBounds(230, 200, 300, 300);
 		saveGamePanel.setOpaque(false);
 
 		JLabel instructSaveLabel = new JLabel("To save a Game. Choose a save Slot", SwingConstants.CENTER);
 		instructSaveLabel.setFont(MainWindow.orbitron.deriveFont(12f));
 		instructSaveLabel.setOpaque(false);
 		instructSaveLabel.setForeground(Color.black);
-		instructSaveLabel.setBackground(Color.white);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
 		saveGamePanel.add(instructSaveLabel, gbc);
@@ -312,7 +341,7 @@ public class InGameUIPanel implements ActionListener {
 	public void playerStatsPanel() {
 		playerInfoPanel = new JPanel();
 		playerInfoPanel.setLayout(new GridLayout(4, 1));
-		playerInfoPanel.setBounds(800, 25, 300, 400);
+		playerInfoPanel.setBounds(800, 70, 300, 400);
 		playerInfoPanel.setOpaque(false);
 
 		southPlayerInfoPanel = new JPanel();
@@ -357,7 +386,7 @@ public class InGameUIPanel implements ActionListener {
 
 		fences.createSouthPlayerFences();
 		JPanel fencesSouth = fences.getSouthFencesPanel();
-		fencesSouth.setBounds(825, 60, 300, 200);
+		fencesSouth.setBounds(825, 110, 300, 200);
 		inGameOverlay.add(fencesSouth, JLayeredPane.DRAG_LAYER);
 	}
 
@@ -380,7 +409,7 @@ public class InGameUIPanel implements ActionListener {
 
 		fences.createWestPlayerFences();
 		JPanel fencesWest = fences.getWestFencesPanel();
-		fencesWest.setBounds(825, 160, 300, 200);
+		fencesWest.setBounds(825, 210, 300, 200);
 		inGameOverlay.add(fencesWest, JLayeredPane.DRAG_LAYER);
 	}
 
@@ -403,7 +432,7 @@ public class InGameUIPanel implements ActionListener {
 
 		fences.createNorthPlayerFences();
 		JPanel fencesNorth = fences.getNorthFencesPanel();
-		fencesNorth.setBounds(825, 260, 300, 200);
+		fencesNorth.setBounds(825, 310, 300, 200);
 		inGameOverlay.add(fencesNorth, JLayeredPane.DRAG_LAYER);
 	}
 
@@ -426,7 +455,7 @@ public class InGameUIPanel implements ActionListener {
 
 		fences.createEastPlayerFences();
 		JPanel fencesEast = fences.getEastFencesPanel();
-		fencesEast.setBounds(825, 360, 300, 200);
+		fencesEast.setBounds(825, 410, 300, 200);
 		inGameOverlay.add(fencesEast, JLayeredPane.DRAG_LAYER);
 	}
 	
@@ -556,6 +585,13 @@ public class InGameUIPanel implements ActionListener {
 		this.inGameOverlay = inGameOverlay;
 	}
 
+	public JLabel getWinnerLabel() {
+		return winnerLabel;
+	}
+
+	public void setWinnerLabel(JLabel winnerLabel) {
+		this.winnerLabel = winnerLabel;
+	}
 	/*
 	 * Action Listener Implementations for InGameUIPanel.
 	 */
@@ -568,7 +604,7 @@ public class InGameUIPanel implements ActionListener {
 		if(selected.equals(okButton)) {			
 			//gameplay can continue
 			GameSettings.GetGameController().BeginTurn();
-			okButton.setVisible(false);
+			okButton.setEnabled(false);
 		}
 
 		// Settings Panel Action Listeners Control Flow
@@ -616,21 +652,21 @@ public class InGameUIPanel implements ActionListener {
 		}
 		if (selected.equals(saveGame1)) {
 			SaveGame.saveGameObjs("Save1.sav");
-			saveGame1.setText("Saved To Save 1 Slot");
-			saveGame1.setBackground(Color.GREEN);
-			saveGame1.setEnabled(false);
+			saveGame1.setText("Saved: Slot 1");
+			time = LocalTime.now();
+			this.setLastSaveTime();
 		}
 		if (selected.equals(saveGame2)) {
 			SaveGame.saveGameObjs("Save2.sav");
-			saveGame2.setText("Saved to Save 2 Slot");
-			saveGame2.setBackground(Color.GREEN);
-			saveGame2.setEnabled(false);
+			saveGame2.setText("Saved: Slot 2");
+			time = LocalTime.now();
+			this.setLastSaveTime();
 		}
 		if (selected.equals(saveGame3)) {
 			SaveGame.saveGameObjs("Save3.sav");
-			saveGame3.setText("Saved to Save 3 Slot");
-			saveGame3.setBackground(Color.GREEN);
-			saveGame3.setEnabled(false);
+			saveGame3.setText("Saved: Slot 3");
+			time = LocalTime.now();
+			this.setLastSaveTime();
 		}
 		if (selected.equals(backToSettingsButton)) {
 			this.saveGamePanel.setVisible(false);
