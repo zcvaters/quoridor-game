@@ -65,8 +65,8 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		// add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
-		menuButtonsPanel.setBounds(850, 500, 400, 400);
-		EmptyBorder border1 = new EmptyBorder(100, 0, 300, 40);
+		menuButtonsPanel.setBounds(0, 0, 400, 400);
+		EmptyBorder border1 = new EmptyBorder(100, 100, 300, 550);
 		menuButtonsPanel.setBorder(border1);
 		menuButtonsPanel.setLayout(new GridLayout(4, 1));
 		menuButtonsPanel.setOpaque(false);

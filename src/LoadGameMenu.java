@@ -52,7 +52,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		loadGameHeaderLabel.setVerticalAlignment(JLabel.CENTER);
 
-		instructionsLoadGameLabel = new JLabel("Please choose a Save to load game:");
+		instructionsLoadGameLabel = new JLabel("Please select a save file");
 		instructionsLoadGameLabel.setFont(MainWindow.orbitron.deriveFont(32f));
 		instructionsLoadGameLabel.setForeground(Color.black);
 		instructionsLoadGameLabel.setAlignmentX(CENTER_ALIGNMENT);

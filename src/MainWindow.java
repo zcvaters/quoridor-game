@@ -52,13 +52,12 @@ public class MainWindow extends JFrame {
 		this.add(mainWindow);
 
 		// add the background image to this frame (wrapped in a JLabel).
-		// panels displayed on top (ie: instructions panel) will be transparent except
-		// for text/buttons
-		//ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
-		//JLabel frameBackground = new JLabel(backgroundImage);
-		//frameBackground.setBounds(0, 0, 1200, 800); //TODO: Updated background image
+		// panels displayed on top (ie: instructions panel) will be transparent except for text and buttons
+		ImageIcon backgroundImage = new ImageIcon(getClass().getResource("/Assets/menuBkg.png"));
+		JLabel frameBackground = new JLabel(backgroundImage);
+		frameBackground.setBounds(0, 0, 1200, 800); //TODO: Updated background image
 		// background image is on DEFAULT (bottom) layer.
-		//mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
+		mainWindow.add(frameBackground, JLayeredPane.DEFAULT_LAYER);
 
 		// store a static ref to this window in GameSettings.
 		// can be accessed anywhere by GameSettings.GetMainWindow()
