@@ -70,6 +70,8 @@ public class GameController {
 								"!!\nYou are the winner!");
 			
 			//pop up a message for quit/new game here.
+			GameSettings.getInGameUIPanel().getWinnerLabel().setText("Congratulations " +currentPlayer.GetName()+
+								"!!\nYou are the winner!");
 			
 			//pause the game, lock the controls (activated when player clicks on message)
 			GameSettings.SetGameIsPaused(true);
@@ -93,7 +95,7 @@ public class GameController {
 		System.out.println("game paused? " +GameSettings.GetGameIsPaused());
 		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
 		GameSettings.getInGameUIPanel().showMessagelabel();
-		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
+		GameSettings.getInGameUIPanel().getOkButton().setEnabled(true);
 		currentPlayer = nextPlayer;	
 		//increment the nextPlayerIndex, so the turns will advance through different players
 		nextPlayerIndex++;
