@@ -141,6 +141,12 @@ public class InputManager implements Serializable {
 			HandleMouseOverInput(parent, "c");
 			return;
 		}
+		
+		//next check to see if the current player has any walls left in inventory.
+		//if no walls left, no need to check wall panels.
+		if(GameController.GetCurrentPlayer().GetWallsRemaining() <= 0) {
+			return;
+		}
 
 		// is user trying to place a wall on the left side of a tile?
 		// if so, is it upper-left or lower left?

@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class GameController {
 
 	// cache ref to players and turn info
-	Player[] allPlayers;
+	private static Player[] allPlayers;
 	// index for keeping track of turns for players (0-3)
-	int nextPlayerIndex;
-	Player currentPlayer;
+	private static int nextPlayerIndex;
+	private static Player currentPlayer;
 
 	// store reference to collection of tiles
 	GameTile[][] tiles;
@@ -47,13 +47,13 @@ public class GameController {
 		AdvanceToNextTurn();	
 	}
 
-	// GETTERS and setters.  <---------------------------(MOVE THIS TO GAMESETTINGS!)
-	public Player GetCurrentPlayer() {
+	// GETTERS and setters.  
+	public static Player GetCurrentPlayer() {
 		// return the player taking the current turn
 		return currentPlayer;
 	}
   
-  public int getNextPlayer() {
+	public int getNextPlayer() {
 		return this.nextPlayerIndex;
 	}
 	
