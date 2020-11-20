@@ -136,6 +136,8 @@ public class MainMenu extends JPanel implements ActionListener {
 		}
 		// was 'load game' requested on main menu panel?
 		if (selected.equals(loadGameButton)) {
+			//update the load game buttons to display file timestamps
+			GameSettings.GetLoadGameMenu().ConfigureSaveButtonLabels();
 			JPanel loadGamePanel = (JPanel) GameSettings.GetLoadGameMenu();
 			mainWindow.ShowPanel(loadGamePanel);
 		}

@@ -7,7 +7,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,6 +40,10 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	private String filename;
 	private ArrayList<JButton> buttons;
 	private JLabel instructionsLoadGameLabel;
+	
+	private String save1ButtonText;
+	private String save2ButtonText;
+	private String save3ButtonText;
 
 	public LoadGameMenu() {
 
@@ -40,7 +55,10 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		// button "Back" at the bottom
 
 		this.setBounds(0, 0, 1200, 800);
-		this.setOpaque(false);
+		this.setOpaque(false);		
+		
+		//add appropriate text for save button labels
+		ConfigureSaveButtonLabels();
 
 		// the label for the header
 		loadGameHeaderLabel = new JLabel("Load Game");
@@ -66,7 +84,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		Insets buttonInsets = new Insets(10, 10, 0, 0);
 
-		loadGameSave1 = new JButton("Save 1");
+		loadGameSave1 = new JButton(save1ButtonText);
 		loadGameSave1.setContentAreaFilled(false);
 		loadGameSave1.setBorderPainted(false);
 		loadGameSave1.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -77,7 +95,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameSave1.addActionListener(this);
 		buttonPanel.add(loadGameSave1, gbc);
 
-		loadGameSave2 = new JButton("Save 2");
+		loadGameSave2 = new JButton(save2ButtonText);
 		loadGameSave2.setContentAreaFilled(false);
 		loadGameSave2.setBorderPainted(false);
 		loadGameSave2.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -87,7 +105,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameSave2.addActionListener(this);
 		buttonPanel.add(loadGameSave2, gbc);
 
-		loadGameSave3 = new JButton("Save 3");
+		loadGameSave3 = new JButton(save3ButtonText);
 		loadGameSave3.setContentAreaFilled(false);
 		loadGameSave3.setBorderPainted(false);
 		loadGameSave3.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -141,6 +159,95 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 	public void setSelectionLabel(String label, Color col) {
 		selectionLabel.setText(label);
 		selectionLabel.setForeground(col);
+	}
+	
+	public void ConfigureSaveButtonLabels() {
+		//this method checks for the existance of any prev save files.
+		//if they exist, configure the button label with the creation timestamp
+		//if they do not exist, mark slot as [EMPTY].
+		boolean save1Exists = new File("Save1.sav").exists();
+		System.out.println("Save 1 exists = " +save1Exists);
+		boolean save2Exists = new File("Save2.sav").exists();
+		System.out.println("Save 2 exists = " +save2Exists);
+		boolean save3Exists = new File("Save3.sav").exists();
+		System.out.println("Save 3 exists = " +save3Exists);
+		
+		
+		String save1Name = "Save1.sav";
+		String save2Name = "Save2.sav";
+		String save3Name = "Save3.sav";
+
+        File save1File = new File(save1Name);
+        File save2File = new File(save2Name);
+        File save3File = new File(save3Name);
+        
+        Path save1Path = save1File.toPath();
+        Path save2Path = save2File.toPath();
+        Path save3Path = save3File.toPath();
+        
+        String save1TimeStamp = "";
+        String save2TimeStamp = "";
+        String save3TimeStamp = "";
+        
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm:ss");
+        
+        if(save1Exists) {
+        	BasicFileAttributes fileAttrib = null;
+    		try {
+    			fileAttrib = Files.readAttributes(save1Path,
+    			        BasicFileAttributes.class);
+    		} catch (IOException e) {
+    			System.out.println("Cannot read Save1 attributes!");
+    			e.printStackTrace();
+    		}
+
+    		FileTime creationTime = fileAttrib.lastModifiedTime();
+    		LocalDateTime localCreationTime = creationTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    		save1TimeStamp = localCreationTime.format(formatter);        	
+        }
+        else {
+        	save1TimeStamp = "[EMPTY]";
+        }
+        
+        if(save2Exists) {
+        	BasicFileAttributes fileAttrib = null;
+    		try {
+    			fileAttrib = Files.readAttributes(save2Path,
+    			        BasicFileAttributes.class);
+    		} catch (IOException e) {
+    			System.out.println("Cannot read Save2 attributes!");
+    			e.printStackTrace();
+    		}
+
+    		FileTime creationTime = fileAttrib.lastModifiedTime();
+    		LocalDateTime localCreationTime = creationTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    		save2TimeStamp = localCreationTime.format(formatter);        	
+        }
+        else {
+        	save2TimeStamp = "[EMPTY]";
+        }
+        
+        if(save3Exists) {
+        	BasicFileAttributes fileAttrib = null;
+    		try {
+    			fileAttrib = Files.readAttributes(save1Path,
+    			        BasicFileAttributes.class);
+    		} catch (IOException e) {
+    			System.out.println("Cannot read Save3 attributes!");
+    			e.printStackTrace();
+    		}
+
+    		FileTime creationTime = fileAttrib.lastModifiedTime();
+    		LocalDateTime localCreationTime = creationTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    		save3TimeStamp = localCreationTime.format(formatter);        	
+        }
+        else {
+        	save3TimeStamp = "[EMPTY]";
+        }
+			
+		save1ButtonText = "Slot 1: " +save1TimeStamp;
+		save2ButtonText = "Slot 2: " +save2TimeStamp;
+		save3ButtonText = "Slot 3: " +save3TimeStamp;
 	}
 
 	public void buttonHoverAction(JButton button) {

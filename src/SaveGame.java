@@ -25,6 +25,7 @@ public class SaveGame {
 		//before saving, turn off any exising goalTiles that have been displayed
 		//deactivate the goal tile highights for the next player.
 		ArrayList<GameTile> goalTiles = GameSettings.getGoalTiles();
+		
 		for(GameTile thisTile : goalTiles) {
 			thisTile.DeactivateGoalPanel();
 		}

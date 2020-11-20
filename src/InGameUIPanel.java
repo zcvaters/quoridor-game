@@ -41,6 +41,7 @@ public class InGameUIPanel implements ActionListener {
 
 	private JPanel uiPanel;
 	private JLabel settingsPanel;
+	private boolean settingsMenuIsActive = false;
 	private JButton resumeGameButton;
 	private JButton saveGameButton;
 	private JButton backToMenuButton;
@@ -601,7 +602,7 @@ public class InGameUIPanel implements ActionListener {
 		Object selected = event.getSource();
 		
 		/* Message Panel */
-		if(selected.equals(okButton)) {			
+		if(selected.equals(okButton) && !settingsMenuIsActive) {			
 			//gameplay can continue
 			GameSettings.GetGameController().BeginTurn();
 			okButton.setEnabled(false);
@@ -609,27 +610,31 @@ public class InGameUIPanel implements ActionListener {
 
 		// Settings Panel Action Listeners Control Flow
 		if (selected.equals(settingsButton)) {
-			// Selected button was settings button
+			// Selected button was settings button		
 
 			if (settingsPanel.isVisible()) {
 				// If the settings panel is visible, toggle it off and game board on
 				// saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
+				settingsMenuIsActive = false;
 			} else {
 				// The settings panel is not visible set visible
 				settingsPanel.setVisible(true);
+				settingsMenuIsActive = true;
 				// gameBoard.setEnabled(false);
 			}
 
 			if (this.saveGamePanel.isVisible()) {
 				saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
+				settingsMenuIsActive = false;
 			}
 			GameSettings.SetGameIsPaused(true);
 
 		}
 		if (selected.equals(resumeGameButton)) {
 			settingsPanel.setVisible(false);
+			settingsMenuIsActive = false;
 			GameSettings.SetGameIsPaused(false);
 		}
 		if (selected.equals(backToMenuButton)) {

@@ -40,6 +40,7 @@ public class GameController {
 		
 		//configure for displaying goal tiles. jlayeredpanes
 		goalTiles = new ArrayList<GameTile>();
+		GameSettings.setGoalTiles(goalTiles);
 		goalPanels = new ArrayList<JPanel>();
 		goldStarIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
 		for(int i = 0; i < GameSettings.GetRows(); i++) {
