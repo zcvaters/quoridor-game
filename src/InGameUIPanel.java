@@ -566,7 +566,7 @@ public class InGameUIPanel implements ActionListener {
 	}
 
 	public void setGameBoard(JPanel gameBoard) {
-		gameBoard.setBounds(10, 10, 730, 730);
+		gameBoard.setBounds(10, 15, 730, 730);
 		inGameOverlay.add(gameBoard, JLayeredPane.DEFAULT_LAYER);
 	}
 
@@ -611,7 +611,7 @@ public class InGameUIPanel implements ActionListener {
 		// Settings Panel Action Listeners Control Flow
 		if (selected.equals(settingsButton)) {
 			// Selected button was settings button		
-
+			
 			if (settingsPanel.isVisible()) {
 				// If the settings panel is visible, toggle it off and game board on
 				// saveGamePanel.setVisible(false);
@@ -629,6 +629,7 @@ public class InGameUIPanel implements ActionListener {
 				settingsPanel.setVisible(false);
 				settingsMenuIsActive = false;
 			}
+			okButton.setEnabled(false);
 			GameSettings.SetGameIsPaused(true);
 
 		}
@@ -636,6 +637,7 @@ public class InGameUIPanel implements ActionListener {
 			settingsPanel.setVisible(false);
 			settingsMenuIsActive = false;
 			GameSettings.SetGameIsPaused(false);
+			okButton.setEnabled(true);
 		}
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
@@ -643,6 +645,7 @@ public class InGameUIPanel implements ActionListener {
 			settingsPanel.setVisible(false);
 			mainPanel.setVisible(false);
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
+			GameSettings.GetLoadGameMenu().ConfigureSaveButtonLabels();
 		}
 		if (selected.equals(quitGameButton)) {
 			System.exit(0);

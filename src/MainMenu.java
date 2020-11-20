@@ -50,13 +50,13 @@ public class MainMenu extends JPanel implements ActionListener {
 		// four buttons (newGame, loadGame, instructions, quit)
 		mainMenuButtons = new ArrayList<>();
 		// the buttons
-		newGameButton = new JButton("New Game");
+		newGameButton = new Buttons("New Game");
 		newGameButton.setSize(50, 50);
-		loadGameButton = new JButton("Load Game");
+		loadGameButton = new Buttons("Load Game");
 
-		instructionsButton = new JButton("Instructions");
+		instructionsButton = new Buttons("Instructions");
 
-		quitButton = new JButton("Quit");
+		quitButton = new Buttons("Quit");
 
 		mainMenuButtons.add(newGameButton);
 		mainMenuButtons.add(loadGameButton);
@@ -66,7 +66,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		// add buttons to sub panel (for organization)
 		menuButtonsPanel = new JPanel();
 		menuButtonsPanel.setBounds(0, 0, 400, 400);
-		EmptyBorder border1 = new EmptyBorder(100, 100, 300, 550);
+		EmptyBorder border1 = new EmptyBorder(100, 450, 300, 450);
 		menuButtonsPanel.setBorder(border1);
 		menuButtonsPanel.setLayout(new GridLayout(4, 1));
 		menuButtonsPanel.setOpaque(false);
@@ -83,7 +83,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		this.setBounds(0, 0, 1200, 800);
 		this.setLayout(new BorderLayout());
 		this.add(gameLabel, BorderLayout.NORTH);
-		this.add(menuButtonsPanel, BorderLayout.EAST);
+		this.add(menuButtonsPanel, BorderLayout.CENTER);
 
 		this.setOpaque(false);
 		this.setVisible(true);
@@ -104,19 +104,8 @@ public class MainMenu extends JPanel implements ActionListener {
 			button.setContentAreaFilled(false);
 			button.setFont(MainWindow.orbitron);
 			button.addActionListener(this);
-			button.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					button.setForeground(new Color(140, 15, 15));
-					GameSettings.playButtonSound();
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					button.setForeground(Color.black);
-				}
-			});
-			button.setHorizontalAlignment(SwingConstants.RIGHT);
+			button.setHorizontalAlignment(SwingConstants.CENTER);
+			button.setAlignmentY(CENTER_ALIGNMENT);
 			//button.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		});
 	}

@@ -74,7 +74,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		this.setOpaque(false);
 
 		// the labels for the header and choose colors
-		newGameHeaderLabel = new JLabel("NEW GAME");
+		newGameHeaderLabel = new JLabel("New Game");
 		newGameHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		newGameHeaderLabel.setForeground(Color.black);
 		EmptyBorder border1 = new EmptyBorder(10, 0, 10, 20);
@@ -98,7 +98,6 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		color1Button.addActionListener(this);
 		color2Button = new JButton();
 		color2Button.setBorderPainted(false);
-		;
 		color2Button.setContentAreaFilled(false);
 		color2Button.setIcon(new ImageIcon(getClass().getResource("/Assets/color_combo_2.png")));
 		color2Button.addActionListener(this);

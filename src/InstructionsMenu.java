@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -63,13 +61,12 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		// the "back" button and listener
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
-		instructionsBackButton = new JButton("Back");
+		instructionsBackButton = new Buttons("Back");
 		instructionsBackButton.setForeground(Color.black);
 		instructionsBackButton.setContentAreaFilled(false);
 		instructionsBackButton.setBorderPainted(false);
 		instructionsBackButton.setAlignmentX(CENTER_ALIGNMENT);
 		instructionsBackButton.setFont(MainWindow.orbitron.deriveFont(30f));
-		buttonHoverAction(instructionsBackButton);
 		buttonPanel.add(instructionsBackButton);
 		instructionsBackButton.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		instructionsBackButton.addActionListener(this);
@@ -105,21 +102,6 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		return text;
 	}
 
-	public void buttonHoverAction(JButton button) {
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				button.setForeground(new Color(140, 15, 15));
-				GameSettings.playButtonSound();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.black);
-			}
-
-		});
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -130,7 +112,6 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		if (selected.equals(instructionsBackButton)) {
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
-		GameSettings.playButtonSound();
 	}
 
 }

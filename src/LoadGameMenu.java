@@ -84,7 +84,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		Insets buttonInsets = new Insets(10, 10, 0, 0);
 
-		loadGameSave1 = new JButton(save1ButtonText);
+		loadGameSave1 = new Buttons(save1ButtonText);
 		loadGameSave1.setContentAreaFilled(false);
 		loadGameSave1.setBorderPainted(false);
 		loadGameSave1.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -95,7 +95,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameSave1.addActionListener(this);
 		buttonPanel.add(loadGameSave1, gbc);
 
-		loadGameSave2 = new JButton(save2ButtonText);
+		loadGameSave2 = new Buttons(save2ButtonText);
 		loadGameSave2.setContentAreaFilled(false);
 		loadGameSave2.setBorderPainted(false);
 		loadGameSave2.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -105,7 +105,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameSave2.addActionListener(this);
 		buttonPanel.add(loadGameSave2, gbc);
 
-		loadGameSave3 = new JButton(save3ButtonText);
+		loadGameSave3 = new Buttons(save3ButtonText);
 		loadGameSave3.setContentAreaFilled(false);
 		loadGameSave3.setBorderPainted(false);
 		loadGameSave3.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -115,7 +115,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		loadGameSave3.addActionListener(this);
 		buttonPanel.add(loadGameSave3, gbc);
 
-		loadGameBackButton = new JButton("Back");
+		loadGameBackButton = new Buttons("Back");
 		loadGameBackButton.setContentAreaFilled(false);
 		loadGameBackButton.setBorderPainted(false);
 		loadGameBackButton.setFont(MainWindow.orbitron.deriveFont(24f));
@@ -126,11 +126,6 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		buttonPanel.add(loadGameBackButton, gbc);
 		buttonPanel.setOpaque(false);
 		loadGameBackButton.addActionListener(this);
-
-		buttonHoverAction(loadGameSave1);
-		buttonHoverAction(loadGameSave2);
-		buttonHoverAction(loadGameSave3);
-		buttonHoverAction(loadGameBackButton);
 
 		selectionLabel = new JLabel("", SwingConstants.CENTER);
 		gbc.gridx = 0;
@@ -230,7 +225,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
         if(save3Exists) {
         	BasicFileAttributes fileAttrib = null;
     		try {
-    			fileAttrib = Files.readAttributes(save1Path,
+    			fileAttrib = Files.readAttributes(save3Path,
     			        BasicFileAttributes.class);
     		} catch (IOException e) {
     			System.out.println("Cannot read Save3 attributes!");
@@ -248,22 +243,6 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		save1ButtonText = "Slot 1: " +save1TimeStamp;
 		save2ButtonText = "Slot 2: " +save2TimeStamp;
 		save3ButtonText = "Slot 3: " +save3TimeStamp;
-	}
-
-	public void buttonHoverAction(JButton button) {
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				button.setForeground(new Color(140, 15, 15));
-				GameSettings.playButtonSound();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.black);
-			}
-
-		});
 	}
 
 	@Override

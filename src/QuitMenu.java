@@ -57,21 +57,19 @@ public class QuitMenu extends JPanel implements ActionListener {
 
 		// yes/no buttons and listeners
 		JPanel buttonPanel = new JPanel();
-		quitYesButton = new JButton("Yes");
+		quitYesButton = new Buttons("Yes");
 		quitYesButton.setFont(MainWindow.orbitron.deriveFont(24f));
 		quitYesButton.setForeground(Color.black);
 		quitYesButton.setOpaque(false);
 		quitYesButton.setBorderPainted(false);
 		quitYesButton.setContentAreaFilled(false);
-		buttonHoverAction(quitYesButton);
 		quitYesButton.addActionListener(this);
-		quitNoButton = new JButton("No");
+		quitNoButton = new Buttons("No");
 		quitNoButton.setFont(MainWindow.orbitron.deriveFont(24f));
 		quitNoButton.setForeground(Color.black);
 		quitNoButton.setOpaque(false);
 		quitNoButton.setBorderPainted(false);
 		quitNoButton.setContentAreaFilled(false);
-		buttonHoverAction(quitNoButton);
 		quitNoButton.addActionListener(this);
 		buttonPanel.add(quitYesButton);
 		buttonPanel.add(quitNoButton);
@@ -86,21 +84,6 @@ public class QuitMenu extends JPanel implements ActionListener {
 		this.setVisible(false);
 	}
 
-	public void buttonHoverAction(JButton button) {
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				button.setForeground(new Color(140, 15, 15));
-				GameSettings.playButtonSound();
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.black);
-			}
-
-		});
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
