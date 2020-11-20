@@ -405,7 +405,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		//note:  playerPanel is defined as a JPanel, it's ok because Player extends JPanel.
 		goalPanel = goalIndication;
 		//turn on panel
-		goalPanel.setOpaque(true);
+		goalPanel.setOpaque(false);
 		goalPanel.setVisible(true);
 		//add gold star on top of the tile 
 		tile.add(goalPanel, JLayeredPane.PALETTE_LAYER);		

@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -43,17 +44,14 @@ public class GameController {
 		goldStarIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
 		for(int i = 0; i < GameSettings.GetRows(); i++) {
 			JPanel thisPanel = new JPanel();			
-			thisPanel.setBounds(0, 0, 50, 50);
+			thisPanel.setBounds(0, 0, 60, 60);
 			//thisPanel.setVisible(true);
 			//thisPanel.setOpaque(false);
 			
 			ImageIcon starIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
-			JLabel starLabel = new JLabel(starIcon);
-			//starLabel.setOpaque(false);
-			starLabel.setBounds(0, 0, 50, 50);
-			thisPanel.setLayout(null);
-			thisPanel.add(starLabel, JLayeredPane.MODAL_LAYER);
-			
+			JLabel starLabel = new JLabel(starIcon);			
+			thisPanel.setLayout(new GridBagLayout());  //no constraints, so label is centered h/v.
+			thisPanel.add(starLabel);			
 			goalPanels.add(thisPanel);
 		}
 
@@ -120,12 +118,11 @@ public class GameController {
 			}
 		}
 		
-		//illuminate the goal for the next player.  first clear existing tiles.
+		//deactivate the goal tile highights for the next player.
 		for(GameTile thisTile : goalTiles) {
 			thisTile.DeactivateGoalPanel();
 		}
-		goalTiles.clear();
-		ActivateGoalTiles(nextPlayer);		
+		goalTiles.clear();			
 		
 		//pause the game, lock the controls (activated when player clicks on message)
 		GameSettings.SetGameIsPaused(true);
@@ -147,8 +144,9 @@ public class GameController {
 	}
   
 	public void BeginTurn() {
-		//remove the popup notification
-		//GameSettings.getInGameUIPanel().hideMessageLabel();
+
+		//activate the goal tiles for this player (show a gold star icon)
+		ActivateGoalTiles(currentPlayer);	
 		
 		//get a structure to hold the gametiles that can be reached by player.
 		ArrayList<GameTile> legalTiles = new ArrayList<GameTile>();
