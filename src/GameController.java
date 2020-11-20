@@ -1,4 +1,10 @@
+import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 public class GameController {
 
@@ -7,6 +13,11 @@ public class GameController {
 	// index for keeping track of turns for players (0-3)
 	private static int nextPlayerIndex;
 	private static Player currentPlayer;
+	
+	//when a player takes a turn, these tiles are illuminated as the goal.
+	private static ArrayList<GameTile> goalTiles;
+	private static ArrayList<JPanel> goalPanels;
+	private static ImageIcon goldStarIcon;
 
 	// store reference to collection of tiles
 	GameTile[][] tiles;
@@ -25,11 +36,31 @@ public class GameController {
 		this.nextPlayerIndex = nextToPlay;
 		this.currentPlayer = allPlayers[nextPlayerIndex];
 		setNextPlayer(nextToPlay);
+		
+		//configure for displaying goal tiles. jlayeredpanes
+		goalTiles = new ArrayList<GameTile>();
+		goalPanels = new ArrayList<JPanel>();
+		goldStarIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
+		for(int i = 0; i < GameSettings.GetRows(); i++) {
+			JPanel thisPanel = new JPanel();			
+			thisPanel.setBounds(0, 0, 50, 50);
+			//thisPanel.setVisible(true);
+			//thisPanel.setOpaque(false);
+			
+			ImageIcon starIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
+			JLabel starLabel = new JLabel(starIcon);
+			//starLabel.setOpaque(false);
+			starLabel.setBounds(0, 0, 50, 50);
+			thisPanel.setLayout(null);
+			thisPanel.add(starLabel, JLayeredPane.MODAL_LAYER);
+			
+			goalPanels.add(thisPanel);
+		}
 
 		// cache the tiles
 		this.tiles = gameBoard.GetGrid();
-    //if this is a new game, place the players on the tiles.
-    //otherwise players are already located on a tile.
+		//if this is a new game, place the players on the tiles.
+		//otherwise players are already located on a tile.
 		if (isNewGame) {
 			// put the players in position on the board
 			for (Player thisPlayer : players) {
@@ -80,13 +111,19 @@ public class GameController {
 		Player nextPlayer = allPlayers[nextPlayerIndex];				
 		//System.out.println("Advancing to next turn. Next player is " +nextPlayer.GetName());
 		
-		//loop through the tiles, deactivate all highlights
+		//loop through the tiles, deactivate all move-hint highlights
 		for(int x = 0; x < GameSettings.GetRows(); x++) {
 			for(int y = 0; y < GameSettings.GetCols(); y++) {				
 				tiles[x][y].DeactivateTile();				
 			}
-		}		
+		}
 		
+		//illuminate the goal for the next player.  first clear existing tiles.
+		for(GameTile thisTile : goalTiles) {
+			thisTile.DeactivateGoalPanel();
+		}
+		goalTiles.clear();
+		ActivateGoalTiles(nextPlayer);		
 		
 		//pause the game, lock the controls (activated when player clicks on message)
 		GameSettings.SetGameIsPaused(true);
@@ -94,7 +131,10 @@ public class GameController {
 		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
 		GameSettings.getInGameUIPanel().showMessagelabel();
 		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
-		currentPlayer = nextPlayer;	
+		
+		//current player will BeginTurn()
+		currentPlayer = nextPlayer;
+		
 		//increment the nextPlayerIndex, so the turns will advance through different players
 		nextPlayerIndex++;
 		//if past end, loop back to start
@@ -126,6 +166,56 @@ public class GameController {
 			legalTiles = FindLegalTiles(currentPlayer);
 			ActivateLegalTiles(legalTiles);
 		}
+	}
+	
+	private void ActivateGoalTiles(Player thisPlayer) {
+		
+		String goal = thisPlayer.GetPlayerGoal();
+		
+		int row = 0;
+		int col = 0;
+		
+		switch(goal) {
+		
+		case "north":
+			//get the northern border tiles
+			row = 0;
+			for(int i = 0; i < GameSettings.GetCols(); i++) {
+				goalTiles.add(tiles[row][i]);
+			}
+			break;
+			
+		case "east":
+			//get the eastern border tiles
+			col = GameSettings.GetCols() - 1;
+			for(int i = 0; i < GameSettings.GetRows(); i++) {
+				goalTiles.add(tiles[i][col]);
+			}
+			break;
+			
+		case "south":
+			//get the southern border tiles
+			row = GameSettings.GetRows() - 1;
+			for(int i = 0; i < GameSettings.GetCols(); i++) {
+				goalTiles.add(tiles[row][i]);
+			}
+			break;
+			
+		case "west":
+			//get the western border tiles
+			col = 0;
+			for(int i = 0; i < GameSettings.GetRows(); i++) {
+				goalTiles.add(tiles[i][col]);
+			}
+			break;		
+		}
+		
+		for(int i = 0; i < GameSettings.GetRows(); i++) {
+			//an appropriate number of goal panels were created in this constructor.
+			goalTiles.get(i).ActivateGoalPanel(goalPanels.get(i));
+			System.out.println(goalTiles.get(i).GetXCoord()+ ", " +goalTiles.get(i).GetYCoord());
+		}
+		
 	}
 	
 	private ArrayList<GameTile> FindLegalTiles(Player currentPlayer) {

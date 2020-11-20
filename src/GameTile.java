@@ -73,6 +73,8 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	
 	//this var will hold the panel for whichever player is standing on the tile
 	JPanel playerPanel;
+	//for the icon indicating if this tile is someone's goal
+	JPanel goalPanel;
 	
 	//container for holding any wall borders that player has legally placed in play.  
 	ArrayList<JPanel> lockedWalls;
@@ -196,8 +198,10 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		centerPanel.addMouseListener(this);
 		centerPanel.addMouseMotionListener(this);
 		tile.add(centerPanel, JLayeredPane.PALETTE_LAYER);
-		playerPanel = new JPanel();  //<-- empty placeholder.  players will be swapped in here later.		
-		tile.add(playerPanel, JLayeredPane.MODAL_LAYER);
+		playerPanel = new JPanel();  //<-- empty placeholder.  players will be swapped in here later.
+		goalPanel = new JPanel();
+		tile.add(goalPanel, JLayeredPane.DRAG_LAYER);
+		tile.add(playerPanel, JLayeredPane.MODAL_LAYER);		
 		tile.setName("tile");
 		tile.setBackground(tileColor);
 		tile.setOpaque(true);		
@@ -315,7 +319,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	public Player GetPlayer() {		
 		return (Player)playerPanel;		
 	}
-	//getter to determine if a player is standing on this tile (bool).
+	//getter to determine if a player is standing on this tile (boolean!).
 	public Boolean PlayerIsHere() {		
 		return playerIsHere;		
 	}
@@ -395,6 +399,21 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		if(panelToRemove.getBackground() == wallColor) {
 			panelToRemove.setBackground(bkgColor);
 		}		
+	}
+	
+	public void ActivateGoalPanel(JPanel goalIndication) {		
+		//note:  playerPanel is defined as a JPanel, it's ok because Player extends JPanel.
+		goalPanel = goalIndication;
+		//turn on panel
+		goalPanel.setOpaque(true);
+		goalPanel.setVisible(true);
+		//add gold star on top of the tile 
+		tile.add(goalPanel, JLayeredPane.PALETTE_LAYER);		
+	}
+	
+	public void DeactivateGoalPanel() {
+		tile.remove(goalPanel);		
+		repaint();		
 	}
 	
 	//LOCK CHANGES TO TILE BORDERS
