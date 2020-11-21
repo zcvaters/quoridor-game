@@ -605,7 +605,6 @@ public class InGameUIPanel implements ActionListener {
 		if(selected.equals(okButton) && !settingsMenuIsActive) {			
 			//gameplay can continue
 			GameSettings.GetGameController().BeginTurn();
-			okButton.setEnabled(false);
 		}
 
 		// Settings Panel Action Listeners Control Flow
@@ -616,12 +615,10 @@ public class InGameUIPanel implements ActionListener {
 				// If the settings panel is visible, toggle it off and game board on
 				// saveGamePanel.setVisible(false);
 				settingsPanel.setVisible(false);
-				settingsMenuIsActive = false;
 			} else {
 				// The settings panel is not visible set visible
 				settingsPanel.setVisible(true);
 				settingsMenuIsActive = true;
-				// gameBoard.setEnabled(false);
 			}
 
 			if (this.saveGamePanel.isVisible()) {
@@ -629,7 +626,6 @@ public class InGameUIPanel implements ActionListener {
 				settingsPanel.setVisible(false);
 				settingsMenuIsActive = false;
 			}
-			okButton.setEnabled(false);
 			GameSettings.SetGameIsPaused(true);
 
 		}
@@ -637,7 +633,6 @@ public class InGameUIPanel implements ActionListener {
 			settingsPanel.setVisible(false);
 			settingsMenuIsActive = false;
 			GameSettings.SetGameIsPaused(false);
-			okButton.setEnabled(true);
 		}
 		if (selected.equals(backToMenuButton)) {
 			// If back to menu is selected, toggle this panel off, show mainMenu Panel
