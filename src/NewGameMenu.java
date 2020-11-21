@@ -288,7 +288,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 				tileColorSelected = GameSettings.getTileColor(0); // <---zero indexed!
 				wallColorSelected = GameSettings.getWallColor(0);
 				bkgColorSelected = GameSettings.getBkgColor(0);
-				playerColorsSelected = GameSettings.getPlayerColors(0);
+				playerColorsSelected = GameSettings.getPlayerColors(0);				
 			}
 			// was it color option #2?
 			if (selected.equals(color2Button)) {
@@ -306,6 +306,8 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 				bkgColorSelected = GameSettings.getBkgColor(2);
 				playerColorsSelected = GameSettings.getPlayerColors(2);
 			}
+			//set wall color selected in GameSettings
+			GameSettings.setActiveWallColor(wallColorSelected);
 			// after setting colors, display the "configure players" options
 			DisplayPlayerColors();
 			showPlayersPanel.setVisible(true);

@@ -22,7 +22,6 @@ public class GameSettings implements Serializable {
 	static InstructionsMenu instructionsMenu;
 	static QuitMenu quitMenu;
 	static GameBoard gameBoard;
-	static FenceUIManager fenceUIManager;
 	static InGameUIPanel inGameUIPanel;
 
 	// the in game message panel. has it's own methods for setting in-game text to display
@@ -81,7 +80,10 @@ public class GameSettings implements Serializable {
 	static Color[][] playerColors = { { player1Color1, player2Color1, player3Color1, player4Color1 },
 			{ player1Color2, player2Color2, player3Color2, player4Color2 },
 			{ player1Color3, player2Color3, player3Color3, player4Color3 } };
-
+	
+	//set upon selection by user
+	static Color activeWallColor;
+	
 	// store collection of names that AI can use
 	static String[] computerNames;
 
@@ -195,9 +197,6 @@ public class GameSettings implements Serializable {
 		return quitMenu;
 	}
 	
-	public static FenceUIManager getFencesUIManger() {
-		return fenceUIManager;
-	}
 	
 	public static InGameUIPanel getInGameUIPanel() {
 		return inGameUIPanel;
@@ -256,6 +255,10 @@ public class GameSettings implements Serializable {
 	// use index 0, 1, or 2
 	public static Color getWallColor(int wallIndex) {
 		return wallColors[wallIndex];
+	}
+	
+	public static Color getActiveWallColor() {
+		return activeWallColor;
 	}
 
 	// returns a single color
@@ -322,10 +325,6 @@ public class GameSettings implements Serializable {
 	public static void setGameBoard(GameBoard gameBoard) {
 		GameSettings.gameBoard = gameBoard;
 	}
-	
-	public static void setFencesUIManager(FenceUIManager fenceUIManager) {
-		GameSettings.fenceUIManager = fenceUIManager;
-	}
 
 	public static void setGameTiles(GameTile[][] allTiles) {
 		// this is only set by two methods:
@@ -336,6 +335,10 @@ public class GameSettings implements Serializable {
 	
 	public static void setGoalTiles(ArrayList<GameTile> currentGoalTiles) {
 		goalTiles = currentGoalTiles;
+	}
+	
+	public static void setActiveWallColor(Color selectedColor) {
+		activeWallColor = selectedColor;
 	}
 
 	public static void setPlayers(Player[] players2) {

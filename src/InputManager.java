@@ -537,7 +537,9 @@ public class InputManager implements Serializable {
 		
 		//subtract one from the player's wall inventory
 		thisPlayer.setWallsRemaining(thisPlayer.GetWallsRemaining() - 1);
-		GameSettings.getFencesUIManger().removePlayerFence(thisPlayer);
+		//update playerUI display
+		System.out.println("reached here");
+		GameSettings.getInGameUIPanel().UpdatePlayerInfoDisplay();
 		System.out.println(thisPlayer.GetName() + " placed a wall.  They have " +thisPlayer.GetWallsRemaining()+ " walls remining.");
 		//end the turn and advance to the next turn.
 		gameController.AdvanceToNextTurn();	
