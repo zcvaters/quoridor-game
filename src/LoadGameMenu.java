@@ -239,10 +239,23 @@ public class LoadGameMenu extends JPanel implements ActionListener {
         else {
         	save3TimeStamp = "[EMPTY]";
         }
-			
+		
+        //configure text for buttons
 		save1ButtonText = "Slot 1: " +save1TimeStamp;
 		save2ButtonText = "Slot 2: " +save2TimeStamp;
 		save3ButtonText = "Slot 3: " +save3TimeStamp;
+		
+		//apply text to buttons
+		if(loadGameSave1 != null) {
+			loadGameSave1.setText(save1ButtonText);
+		}
+		if(loadGameSave2 != null) {
+			loadGameSave2.setText(save2ButtonText);
+		}
+		if(loadGameSave3 != null) {
+			loadGameSave3.setText(save3ButtonText);
+		}
+		
 	}
 
 	@Override
