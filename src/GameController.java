@@ -153,6 +153,8 @@ public class GameController {
 		//get a structure to hold the gametiles that can be reached by player.
 		ArrayList<GameTile> legalTiles = new ArrayList<GameTile>();
 		
+		
+		
 		//Handle AI here
 		if(currentPlayer.GetType() == "c") {
 			//this is a computer player
