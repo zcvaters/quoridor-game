@@ -408,7 +408,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 		goalPanel.setOpaque(false);
 		goalPanel.setVisible(true);
 		//add gold star on top of the tile 
-		tile.add(goalPanel, JLayeredPane.PALETTE_LAYER);		
+		tile.add(goalPanel, JLayeredPane.DRAG_LAYER);		
 	}
 	
 	public void DeactivateGoalPanel() {

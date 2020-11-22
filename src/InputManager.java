@@ -468,7 +468,7 @@ public class InputManager implements Serializable {
 	public void HandleMouseClick(JPanel thisPanel) {
 		// user clicked the mouse on thisPanel
 		// what do they want to do?
-		
+		System.out.println("reached here");
 		//if game is paused (ie: showing a message panel), no action here
 		if(GameSettings.GetGameIsPaused()) {
 			return;
@@ -538,7 +538,7 @@ public class InputManager implements Serializable {
 		//subtract one from the player's wall inventory
 		thisPlayer.setWallsRemaining(thisPlayer.GetWallsRemaining() - 1);
 		//update playerUI display
-		System.out.println("reached here");
+		
 		GameSettings.getInGameUIPanel().UpdatePlayerInfoDisplay();
 		System.out.println(thisPlayer.GetName() + " placed a wall.  They have " +thisPlayer.GetWallsRemaining()+ " walls remining.");
 		//end the turn and advance to the next turn.
