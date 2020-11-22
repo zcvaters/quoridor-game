@@ -47,7 +47,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
-		java.net.URL helpURL = getClass().getResource("/Assets/instructions.html");
+		java.net.URL helpURL = getClass().getResource("/Assets/Instructions/instructions.html");
 		if (helpURL != null) {
 		    try {
 		        editorPane.setPage(helpURL);

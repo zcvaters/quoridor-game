@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
 
 		// get a frame
 		super("Quoridor");
-		this.setIconImage(new ImageIcon(getClass().getResource("/Assets/frameIcon.png")).getImage()); // menubar icon.
+		this.setIconImage(new ImageIcon(getClass().getResource("/Assets/frame_icon.png")).getImage()); // menubar icon.
 
 		// Custom font.
 		try {

@@ -42,30 +42,30 @@ public class GameSettings implements Serializable {
 	static int tileWidth;
 	static int tileHeight;
 
-	// COLORS
-	public static final Color tileColor1 = new Color(85, 27, 20);
+	// COLORS: Each color palette is designed to be accessible to anyones vision
+	public static final Color tileColor1 = new Color(59, 64, 66);
 	public static final Color wallColor1 = new Color(109, 61, 20);
 	public static final Color bkgColor1 = new Color(0, 0, 0);
-	public static final Color player1Color1 = new Color(137, 185, 184);
-	public static final Color player2Color1 = new Color(88, 66, 47);
-	public static final Color player3Color1 = new Color(238, 180, 89);
-	public static final Color player4Color1 = new Color(205, 197, 180);
+	public static final Color player1Color1 = new Color(255, 194, 10);
+	public static final Color player2Color1 = new Color(12, 123, 220);
+	public static final Color player3Color1 = new Color(26, 255, 26);
+	public static final Color player4Color1 = new Color(95, 0, 14);
 
 	public static final Color tileColor2 = new Color(97, 60, 31);
 	public static final Color wallColor2 = new Color(237, 213, 183);
 	public static final Color bkgColor2 = new Color(47, 47, 47);
-	public static final Color player1Color2 = new Color(230, 223, 125);
-	public static final Color player2Color2 = new Color(130, 225, 230);
-	public static final Color player3Color2 = new Color(230, 172, 129);
-	public static final Color player4Color2 = new Color(209, 151, 230);
+	public static final Color player1Color2 = new Color(136, 54, 22);
+	public static final Color player2Color2 = new Color(0, 108, 209);
+	public static final Color player3Color2 = new Color(24, 254, 98);
+	public static final Color player4Color2 = new Color(211, 95, 183);
 
-	public static final Color tileColor3 = new Color(128, 58, 17);
-	public static final Color wallColor3 = new Color(7, 26, 200);
-	public static final Color bkgColor3 = new Color(0, 0, 0);
-	public static final Color player1Color3 = new Color(216, 191, 216);
-	public static final Color player2Color3 = new Color(210, 105, 30);
-	public static final Color player3Color3 = new Color(135, 206, 235);
-	public static final Color player4Color3 = new Color(255, 250, 205);
+	public static final Color tileColor3 = new Color(101, 78, 49);
+	public static final Color wallColor3 = new Color(128, 0, 7);
+	public static final Color bkgColor3 = new Color(0, 46, 78);
+	public static final Color player1Color3 = new Color(230, 97, 0);
+	public static final Color player2Color3 = new Color(93, 58, 155);
+	public static final Color player3Color3 = new Color(26, 133, 255);
+	public static final Color player4Color3 = new Color(212, 17, 89);
 	
 	public static final File buttonHoverSound = new File("/Assets/Sounds/button_sound.wav");
 
