@@ -5,8 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,10 +14,7 @@ import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -161,11 +156,11 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 		//if they exist, configure the button label with the creation timestamp
 		//if they do not exist, mark slot as [EMPTY].
 		boolean save1Exists = new File("Save1.sav").exists();
-		System.out.println("Save 1 exists = " +save1Exists);
+		//System.out.println("Save 1 exists = " +save1Exists);
 		boolean save2Exists = new File("Save2.sav").exists();
-		System.out.println("Save 2 exists = " +save2Exists);
+		//System.out.println("Save 2 exists = " +save2Exists);
 		boolean save3Exists = new File("Save3.sav").exists();
-		System.out.println("Save 3 exists = " +save3Exists);
+		//System.out.println("Save 3 exists = " +save3Exists);
 		
 		
 		String save1Name = "Save1.sav";

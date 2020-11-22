@@ -96,7 +96,12 @@ public class Player extends JPanel {
 		this.playerLocation = playerLocation;
 		SetPlayerGoal(playerLocation);
 		this.playerType = type;
-		this.playerName = name;
+		if(name.equals("<<Your Name Here>>")) {
+			this.playerName = "Player " + turnPosition;
+		}else {
+			this.playerName = name;
+		}
+		
 		this.playerColor = color;
 		this.playerIsDifficult = isDifficult;
 

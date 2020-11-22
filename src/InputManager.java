@@ -468,14 +468,12 @@ public class InputManager implements Serializable {
 	public void HandleMouseClick(JPanel thisPanel) {
 		// user clicked the mouse on thisPanel
 		// what do they want to do?
-		System.out.println("reached here");
 		//if game is paused (ie: showing a message panel), no action here
 		if(GameSettings.GetGameIsPaused()) {
 			return;
-		}
-		
-		GameController gameController = GameSettings.GetGameController();			
-		Player thisPlayer = gameController.GetCurrentPlayer();
+		}		
+				
+		Player thisPlayer = GameController.GetCurrentPlayer();
 
 		// trying to move the player?
 		if (thisPanel.getName().equals("centerPanel")) {
@@ -492,7 +490,7 @@ public class InputManager implements Serializable {
 				//update the player's location attribute to store new location.
 				thisPlayer.setTile(tile);				
 				//end the turn and advance to the next turn.
-				gameController.AdvanceToNextTurn();				
+				GameSettings.GetGameController().AdvanceToNextTurn();				
 			}			
 			return;
 		}
@@ -509,14 +507,14 @@ public class InputManager implements Serializable {
 		
 		//check player's inventory.  if they have used all their walls, no action
 		if(thisPlayer.GetWallsRemaining() <= 0) {
-			System.out.println("Sorry, " +thisPlayer.GetName()+ ", you have no walls remaining.");
+			//System.out.println("Sorry, " +thisPlayer.GetName()+ ", you have no walls remaining.");
 			return;
 		}
 
 		// else, not clicking on center, and we have temp walls from mouseover. 
 		//check if this wall would block any players from reaching the goal
 		if(CheckPath.ThisWallBlocksGoal(tempWalls)) {
-			System.out.println("This wall would block at least one player!  Cannot place wall here.");
+			//System.out.println("This wall would block at least one player!  Cannot place wall here.");
 			return;
 		}		
 		
@@ -540,9 +538,9 @@ public class InputManager implements Serializable {
 		//update playerUI display
 		
 		GameSettings.getInGameUIPanel().UpdatePlayerInfoDisplay();
-		System.out.println(thisPlayer.GetName() + " placed a wall.  They have " +thisPlayer.GetWallsRemaining()+ " walls remining.");
+		//System.out.println(thisPlayer.GetName() + " placed a wall.  They have " +thisPlayer.GetWallsRemaining()+ " walls remining.");
 		//end the turn and advance to the next turn.
-		gameController.AdvanceToNextTurn();	
+		GameSettings.GetGameController().AdvanceToNextTurn();	
 
 	}
 }

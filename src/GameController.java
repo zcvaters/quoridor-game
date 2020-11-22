@@ -1,10 +1,9 @@
-import java.awt.Color;
+
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class GameController {
@@ -17,8 +16,7 @@ public class GameController {
 	
 	//when a player takes a turn, these tiles are illuminated as the goal.
 	private static ArrayList<GameTile> goalTiles;
-	private static ArrayList<JPanel> goalPanels;
-	private static ImageIcon goldStarIcon;
+	private static ArrayList<JPanel> goalPanels;	
 
 	// store reference to collection of tiles
 	GameTile[][] tiles;
@@ -32,17 +30,16 @@ public class GameController {
 
 		// copy ref to GameSettings
 		GameSettings.SetGameController(this);
-		this.allPlayers = players;
+		GameController.allPlayers = players;
 		// For a new game, nextPlayer = 0. Then 1, 2, 3, 0, 1, 2, 3...
-		this.nextPlayerIndex = nextToPlay;
-		this.currentPlayer = allPlayers[nextPlayerIndex];
+		GameController.nextPlayerIndex = nextToPlay;
+		GameController.currentPlayer = allPlayers[nextPlayerIndex];
 		setNextPlayer(nextToPlay);
 		
 		//configure for displaying goal tiles. jlayeredpanes
 		goalTiles = new ArrayList<GameTile>();
 		GameSettings.setGoalTiles(goalTiles);
 		goalPanels = new ArrayList<JPanel>();
-		goldStarIcon = new ImageIcon(getClass().getResource("/Assets/goldStar.png"));
 		for(int i = 0; i < GameSettings.GetRows(); i++) {
 			JPanel thisPanel = new JPanel();			
 			thisPanel.setBounds(0, 0, 60, 60);
@@ -84,11 +81,11 @@ public class GameController {
 	}
   
 	public int getNextPlayer() {
-		return this.nextPlayerIndex;
+		return GameController.nextPlayerIndex;
 	}
 	
 	public void setNextPlayer(int nextPlayer) {
-		this.nextPlayerIndex = nextPlayer;
+		GameController.nextPlayerIndex = nextPlayer;
 	}
 	
 	public void AdvanceToNextTurn() {
@@ -96,10 +93,7 @@ public class GameController {
 		GameSettings.SetGameIsOver(false);
 		
 		//before advancing, check to see if the current player has (just) won the game.
-		if(currentPlayer.PlayerHasWon()) {
-			//print a congratulations.  end game.
-			System.out.println("Congratulations " +currentPlayer.GetName()+
-								"!!\nYou are the winner!");
+		if(currentPlayer.PlayerHasWon()) {		
 			
 			//pop up a message for quit/new game here.
 			GameSettings.getInGameUIPanel().getWinnerLabel().setText("Congratulations " +currentPlayer.GetName()+
@@ -129,8 +123,7 @@ public class GameController {
 		goalTiles.clear();			
 		
 		//pause the game, lock the controls (activated when player clicks on message)
-		GameSettings.SetGameIsPaused(true);
-		System.out.println("game paused? " +GameSettings.GetGameIsPaused());
+		GameSettings.SetGameIsPaused(true);		
 		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
 		GameSettings.getInGameUIPanel().showMessagelabel();
 		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
@@ -221,7 +214,6 @@ public class GameController {
 		for(int i = 0; i < GameSettings.GetRows(); i++) {
 			//an appropriate number of goal panels were created in this constructor.
 			goalTiles.get(i).ActivateGoalPanel(goalPanels.get(i));
-			System.out.println(goalTiles.get(i).GetXCoord()+ ", " +goalTiles.get(i).GetYCoord());
 		}
 		
 	}

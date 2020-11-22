@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,7 +81,8 @@ public class InGameUIPanel implements ActionListener {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setBounds(0, 0, 1280, 800);
-		mainPanel.setOpaque(false);
+		mainPanel.setBackground(Color.white);
+		mainPanel.setOpaque(true);
 		mainPanel.setVisible(true);
 		mainPanel.add(inGameOverlay);
 
@@ -130,8 +130,7 @@ public class InGameUIPanel implements ActionListener {
 
 	}
 	
-	public void UpdatePlayerInfoDisplay() {
-		System.out.println("this ran");
+	public void UpdatePlayerInfoDisplay() {		
 		if(playerInfoPanel != null) {
 			
 			inGameOverlay.remove(playerInfoPanel);

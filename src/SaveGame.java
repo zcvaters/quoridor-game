@@ -35,7 +35,8 @@ public class SaveGame {
 		// Instantiate the necessary collections.
 		playersInOrder = GameSettings.getPlayers();
 		gameTiles = GameSettings.getGameTiles();
-		nextToPlay = GameSettings.GetGameController().GetCurrentPlayer().GetTurnPosition() - 1;  //zero indexed.
+		GameSettings.GetGameController();
+		nextToPlay = GameController.GetCurrentPlayer().GetTurnPosition() - 1;  //zero indexed.
 		
 		try { // Catch errors in I/O if necessary.
 				// Open a file to write to Save.sav

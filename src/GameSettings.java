@@ -125,7 +125,8 @@ public class GameSettings implements Serializable {
 		cols = 9;
 
 		// create names
-		computerNames = new String[] { "Robyn", "Yousuf", "Shannon", "Dave", "Lemar", "Oscar", "Winnie" };
+		computerNames = new String[] { "Robyn", "Yousuf", "Shannon", "Dave", "Lemar", "Oscar", "Winnie",
+										"Frank", "Jamal", "Karina", "Rollo", "James", "Olaf", "Brian"};
 
 		// create a random list for assigning player ID's
 		playerIDList = new ArrayList<>();
