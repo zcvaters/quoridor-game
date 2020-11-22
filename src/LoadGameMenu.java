@@ -279,6 +279,7 @@ public class LoadGameMenu extends JPanel implements ActionListener {
 
 		// was 'back' requested on load game panel?
 		if (selected.equals(loadGameBackButton)) {
+			selectionLabel.setText("");
 			GameSettings.GetMainWindow().ShowPanel(GameSettings.GetMainMenu());
 		}
 		GameSettings.playButtonSound();
