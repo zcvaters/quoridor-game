@@ -367,7 +367,7 @@ public class GameTile extends JPanel implements MouseListener, MouseMotionListen
 	
 	
 	public void ActivateTile() {		
-		Border yellowLine = BorderFactory.createLineBorder(Color.YELLOW, 3);
+		Border yellowLine = BorderFactory.createLineBorder(new Color(234, 177, 5), 4);
 		tile.setBorder(yellowLine);
 		//set as active
 		canAcceptPlayer = true;

@@ -75,6 +75,8 @@ public class Player extends JPanel {
 		// if no name provided, use "X"
 		char playerInitial = (name.charAt(0) == '<') ? 'X' : name.charAt(0);
 		JLabel playerInitials = new JLabel(Character.toString(playerInitial).toUpperCase(), SwingConstants.CENTER);
+		playerInitials.setFont(MainWindow.orbitron.deriveFont(14f));
+		playerInitials.setForeground(Color.black);
 		playerInitials.setBounds(0, 0, playerX, playerY);
 		
 		ImageIcon pawnStencil = new ImageIcon(getClass().getResource("/Assets/pawn_outline.png"));
