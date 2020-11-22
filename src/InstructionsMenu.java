@@ -4,9 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -44,19 +46,40 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		instructionsHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		instructionsHeaderLabel.setVerticalAlignment(JLabel.CENTER);
 
+		JEditorPane editorPane = new JEditorPane();
+		editorPane.setEditable(false);
+		java.net.URL helpURL = getClass().getResource("/Assets/instructions.html");
+		if (helpURL != null) {
+		    try {
+		        editorPane.setPage(helpURL);
+		    } catch (IOException e) {
+		        System.err.println("Attempted to read a bad URL: " + helpURL);
+		    }
+		} else {
+		    System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
+		}
+
+		//Put the editor pane in a scroll pane.
+		JScrollPane editorScrollPane = new JScrollPane(editorPane);
+		editorScrollPane.setVerticalScrollBarPolicy(
+		                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		editorScrollPane.setPreferredSize(new Dimension(250, 145));
+		editorScrollPane.setMinimumSize(new Dimension(10, 10));
 		// instructions text
 		JPanel instructionsPanel = new JPanel();
 		EmptyBorder border2 = new EmptyBorder(50, 15, 0, 15);
 		instructionsPanel.setOpaque(false);
 		instructionsPanel.setBorder(border2);
-		JTextArea instructionsText = new JTextArea();
-		instructionsText.setFont(new Font("Dialog", Font.PLAIN, 14));
-		instructionsText.setText(GetInstructionsText());
-		JScrollPane instructionsScrollPane = new JScrollPane(instructionsText, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		//JTextArea instructionsText = new JTextArea();
+		//instructionsText.setFont(new Font("Dialog", Font.PLAIN, 14));
+		//instructionsText.setText(GetInstructionsText());
+		JScrollPane instructionsScrollPane = new JScrollPane(editorPane, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		instructionsScrollPane.setOpaque(false);
 		instructionsScrollPane.setPreferredSize(new Dimension(900, 500));
-		instructionsPanel.add(instructionsScrollPane);
+		editorPane.setPreferredSize(new Dimension(900, 500));
+		editorPane.setOpaque(false);
+		instructionsPanel.add(editorPane);
 
 		// the "back" button and listener
 		JPanel buttonPanel = new JPanel();
@@ -81,18 +104,18 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 
 	private String GetInstructionsText() {
 		String text = "\nStarting a New Game\n\n"
-				+ "Begin by starting a New Game, choose your set colours these are for the board colour and each pawn colour.\n"
-				+ "You can also choose each players name and if they're a human player or if they're the computer AI.\n"
-				+ "There must be four players to begin. Computer can be set to Easy or Hard difficulty. \n"
-				+ "Click Start to begin play!\n\n" + "Start Of Play\n\n"
+				+ "Begin by starting a New Game, choose your colour set. Each colour set modifies the board colour and each pawn colour.\n"
+				+ "You can also choose each players name and if they're a human player or if they're are a computer AI.\n"
+				+ "There must be four players to begin. Each Computer AI can be set to Easy or Hard difficulty. \n"
+				+ "Click Let's Play when you're all set up to begin play!\n\n" + "Start Of Play\n\n"
 				+ "Each player starts at one side of the board, each player is given 5 fences. \n"
-				+ "Every player has a unique pawn and a matching side of the board. \n"
+				+ "Every player has a unique pawn and a different goal to win the game. \n"
 				+ "The players goal is to reach the opposite side they started on. First to get there wins!\n"
 				+ "The starting pawn is determined randomly each session.\n"
 				+ "At the start of the match the board is empty except for the starting positions of each pawn.\n\n"
 				+ "Taking A Turn\n\n"
 				+ "A pawn can move one square at a time, horizontally or vertically, forwards or backwards, never diagonally.\n"
-				+ "Fences block a players way and must be moved around by the player.  Fences take up two total squares.\n"
+				+ "Fences block a players path, Fences never move once they're placed. Fences take up two total squares.\n"
 				+ "Face to Face pawns can jump over eachother or go in any other direction they choose.\n"
 				+ "Face to Face pawns may also go diagonal if there is a fence behind their opponent.\n"
 				+ "Face to Face pawns may not jump over more than one pawn at a time.\n"
