@@ -102,6 +102,9 @@ public class GameSettings implements Serializable {
 
 	// for locking controls/input when necessary (ie: between turn changes)
 	static Boolean gameIsPaused;
+	
+	//flag for game over
+	static Boolean gameIsOver;
 
 	/*
 	 * Constructor - GameSettings
@@ -281,6 +284,10 @@ public class GameSettings implements Serializable {
 		return gameIsPaused;
 	}
 	
+	public static Boolean GetGameIsOver() {
+		return gameIsOver;
+	}	
+	
 	public static InGameMessagePanel GetMessagePanel() {
 		return messagePanel;
 	}
@@ -347,6 +354,10 @@ public class GameSettings implements Serializable {
 
 	public static void SetGameIsPaused(Boolean isPaused) {
 		GameSettings.gameIsPaused = isPaused;
+	}
+	
+	public static void SetGameIsOver(Boolean isFinished) {
+		GameSettings.gameIsOver = isFinished;
 	}
 
 	public static void SetGameController(GameController controller) {

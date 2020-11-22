@@ -93,6 +93,8 @@ public class GameController {
 	
 	public void AdvanceToNextTurn() {
 		
+		GameSettings.SetGameIsOver(false);
+		
 		//before advancing, check to see if the current player has (just) won the game.
 		if(currentPlayer.PlayerHasWon()) {
 			//print a congratulations.  end game.
@@ -105,6 +107,7 @@ public class GameController {
 			
 			//pause the game, lock the controls (activated when player clicks on message)
 			GameSettings.SetGameIsPaused(true);
+			GameSettings.SetGameIsOver(true);
 			return;
 		}
 		

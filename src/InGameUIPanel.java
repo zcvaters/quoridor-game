@@ -394,7 +394,7 @@ public class InGameUIPanel implements ActionListener {
 		Object selected = event.getSource();
 		
 		/* Message Panel */
-		if(selected.equals(okButton) && !settingsMenuIsActive) {			
+		if(selected.equals(okButton) && !settingsMenuIsActive && !GameSettings.GetGameIsOver()) {			
 			//gameplay can continue
 			GameSettings.GetGameController().BeginTurn();
 		}

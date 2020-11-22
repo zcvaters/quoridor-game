@@ -52,7 +52,7 @@ public class AIManager {
 			if(turnDecision >= chanceIndex) {
 				//try to place a wall
 				//pick a tile somewhere near the middle of the board, and turn on a wall in random direction.			
-				PlaceEasyWall(currentPlayer);			
+				PlaceEasyWall(currentPlayer, legalTiles);			
 			}
 			else {
 				//try to move the pawn, generally closer to goal, may be random.			
@@ -178,11 +178,12 @@ public class AIManager {
 		GameSettings.GetGameController().AdvanceToNextTurn();		
 	}
 
-	private static void PlaceEasyWall(Player currentPlayer) {
+	private static void PlaceEasyWall(Player currentPlayer, ArrayList<GameTile> legalTiles) {
 		Boolean foundLocation = false;
 		JPanel[] tempWalls = new JPanel[8];
-		
-		while(!foundLocation) {
+		int maxTries = 20;
+		int tryCount = 0;
+		while(!foundLocation && (tryCount < maxTries)) {
 			
 			//SHOULD PUT A COUNTER HERE.  
 			//let computer try for 50-100 iterations. if still no wall placement avail, move instead.
@@ -214,7 +215,16 @@ public class AIManager {
 			else {
 				//found a valid set for display.  break while loop
 				foundLocation = true;
-			}			
+			}
+			//increase num tries.  if too many, break while loop.
+			tryCount++;
+		}
+		
+		//check if we found a location, or failed on numTries.  
+		//if failed on numTries, attempt to move instead.
+		if(!foundLocation) {
+			MakeEasyMove(currentPlayer, legalTiles);
+			return;
 		}
 		
 		//found a suitable set of 8 panels for a wall.  ok to place.
@@ -239,7 +249,8 @@ public class AIManager {
 		//decrement the player's wall inventory
 		//subtract one from the player's wall inventory
 		currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
-		System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
+		GameSettings.getInGameUIPanel().UpdatePlayerInfoDisplay();
+		//System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 		
 		//end the turn.
 		GameSettings.GetGameController().AdvanceToNextTurn();		
@@ -323,12 +334,6 @@ public class AIManager {
 		
 		//get ref to all players
 		Player[] allPlayers = GameSettings.getPlayers();
-		
-		//get ref to all the game tiles
-		//GameTile[][] gridTiles = GameSettings.getGameTiles();
-		
-		//get all walls that are currently in play
-		//ArrayList<JPanel> allLockedWalls = GameSettings.GetInputManager().getAllLockedWalls();
 		
 		//get an array to hold the panels that comprise the wall about to be placed
 		JPanel[] tempWalls = new JPanel[8];
@@ -523,7 +528,8 @@ public class AIManager {
 			//decrement the player's wall inventory
 			//subtract one from the player's wall inventory			
 			currentPlayer.setWallsRemaining(currentPlayer.GetWallsRemaining() - 1);
-			System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
+			GameSettings.getInGameUIPanel().UpdatePlayerInfoDisplay();
+			//System.out.println(currentPlayer.GetName() + " placed a wall.  They have " +currentPlayer.GetWallsRemaining()+ " walls remining.");
 			//end the turn.
 			GameSettings.GetGameController().AdvanceToNextTurn();
 			return;
