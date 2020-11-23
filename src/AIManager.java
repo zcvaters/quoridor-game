@@ -149,8 +149,7 @@ public class AIManager {
 			//now, set a probability that AI will choose closest tile, or random tile
 			//can adjust this. 0-100. higher = more prob of taking a "best" move.
 			int chooseClosestProbability = 60;
-			int randomNumber = randomizer.nextInt(100);
-			System.out.println("Random Number is " +randomNumber);
+			int randomNumber = randomizer.nextInt(100);			
 			
 			if(randomNumber <= chooseClosestProbability) {
 				//select the closest tile to the goal

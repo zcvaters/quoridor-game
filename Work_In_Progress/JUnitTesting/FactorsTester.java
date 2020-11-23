@@ -79,36 +79,39 @@ class FactorsTester {
 	}
 	
 	@Test
-	void testFactor1() {
-		// TEST 1: should succeed because 1 valid and is a factor of 1.
-		assertTrue(FactorsUtility.factor(1, 1));
-		
+	void testFactor1()
+	{	
+		// TEST 1: should throw the exception because both parameters are less than 0
+		assertThrows(IllegalArgumentException.class, () -> FactorsUtility.factor(-1, -1));
+	}
+
+	@Test
+	void testFactor2()
+	{	
+		// TEST 2: should throw the div by zero exception because second parameter is 0
+		assertThrows(java.lang.ArithmeticException.class, () -> FactorsUtility.factor(1, 0));
 	}
 	
 	@Test
-	void testFactor2() {
-		// TEST 2: should throw an IllegalArgumentException exeption because a is less than 0.
-		assertThrows(IllegalArgumentException.class, () -> FactorsUtility.factor(-1, 5));
+	void testFactor3()
+	{	
+		// TEST 3: should succeed, as 0%5 == 0.
+		assertTrue(FactorsUtility.factor(0, 5));
 	}
 	
 	@Test
-	void testFactor3() {
-		// TEST 3: Should succeed because a and b are valid parameters just not a is not a factor of b.
-		boolean expected = false;
-		assertEquals(expected, FactorsUtility.factor(2, 3));
+	void testFactor4()
+	{	
+		// TEST 4: should succeed, as 7 is not a factor of 20
+		assertFalse(FactorsUtility.factor(20, 7));
 	}
 	
 	@Test
-	void testFactor4() {
-		// TEST 4: Should succeed for however, b is smaller than a so it's expected to return false.
-		boolean expected = false;
-		assertEquals(expected, FactorsUtility.factor(5, 2));
+	void testFactor5()
+	{	
+		// TEST 5: should succeed, as 3 is a factor of 51
+		assertTrue(FactorsUtility.factor(51, 3));
 	}
 	
-	@Test
-	void testFactor5() {
-		// TEST 5: should throw the exception because the parameter values are less than 1.
-		assertThrows(IllegalArgumentException.class, () -> FactorsUtility.factor(-5, -1));
-	}
 
 }
