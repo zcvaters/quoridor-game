@@ -235,7 +235,7 @@ public class InGameUIPanel implements ActionListener {
 	
 
 
-	public void setLastSaveTime() {
+	public void setLastSaveTime() { 
 		if(time == null) {
 			lastSaveTime.setText("No saved games this session");
 		}

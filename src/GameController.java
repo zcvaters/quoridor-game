@@ -119,7 +119,7 @@ public class GameController {
 		for(GameTile thisTile : goalTiles) {
 			thisTile.DeactivateGoalPanel();
 		}
-		goalTiles.clear();			
+		goalTiles.clear();	 		
 		
 		//pause the game, lock the controls (activated when player clicks on message)
 		GameSettings.SetGameIsPaused(true);		

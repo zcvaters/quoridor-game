@@ -11,7 +11,7 @@ public class PlayerInfoDisplay extends JPanel{
 	
 	// Constructor
 	public PlayerInfoDisplay() {
-
+ 
 		// get a JPanel, which we will add the 4 playerinfo sub-panels
 		super();
 		// set the layout for the playerInfo panel to include a 1x4 table (single
