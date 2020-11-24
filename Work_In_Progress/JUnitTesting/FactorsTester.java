@@ -47,7 +47,7 @@ class FactorsTester {
 	
 	@Test
 	void testGetFactors2() {
-		// TEST 2: Should should succeed because 1 has no factors, therefore should return an empty list.
+		// TEST 2: Should should succeed because 1 has no other factors, therefore should return an empty list.
 		ArrayList<Integer> factors = new ArrayList<>();
 		assertEquals(factors, FactorsUtility.getFactors(1));
 	}
