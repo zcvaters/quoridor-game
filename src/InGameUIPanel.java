@@ -198,13 +198,13 @@ public class InGameUIPanel implements ActionListener {
         //get text
         String messageText = "Default message text.";
         messageLabel = new JLabel(messageText);
-        messageLabel.setFont(MainWindow.orbitron.deriveFont(15f));
+        messageLabel.setFont(MainWindow.orbitron.deriveFont(20f));
         messageLabel.setForeground(Color.black);
-        EmptyBorder border1 = new EmptyBorder(20, 0, 20,0 );
+        EmptyBorder border1 = new EmptyBorder(20, 0, 40,0 );
 		messageLabel.setBorder(border1);
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         //get button
-        okButton = new Buttons("OK");
+        okButton = new Buttons("Click to Start Turn");
         okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         okButton.addActionListener(this);
         
@@ -236,7 +236,13 @@ public class InGameUIPanel implements ActionListener {
 
 
 	public void setLastSaveTime() {
-		lastSaveTime.setText("Last Save in this Session: " + ((time == null) ? "No save." : time.format(formatter)));
+		if(time == null) {
+			lastSaveTime.setText("No saved games this session");
+		}
+		else {
+			lastSaveTime.setText("Last Save in this Session: " + time.format(formatter));
+		}
+		//lastSaveTime.setText("Last Save in this Session: " + ((time == null) ? "No save." : time.format(formatter)));
 	}	
 
 	public void setSavePanelBG(Color bkgColor) {

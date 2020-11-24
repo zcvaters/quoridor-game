@@ -20,6 +20,18 @@ public class PlayerInfoDisplay extends JPanel{
 		this.setLayout(thisLayout);
 		this.setVisible(true);
 		this.setOpaque(false);
+		Border panelBorder = BorderFactory.createLineBorder(Color.BLACK, 8);
+		this.setBorder(panelBorder);
+		
+		//add a title
+		JLabel titleLabel = new JLabel("Quoridor");
+		titleLabel.setBorder(BorderFactory.createEmptyBorder(30, 10, 50, 10));
+		titleLabel.setBackground(Color.white);
+		titleLabel.setFont(MainWindow.orbitron.deriveFont(50f));
+		titleLabel.setForeground(Color.black);
+		titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+		titleLabel.setOpaque(true);
+		this.add(titleLabel);
 
 		// get the players
 		Player[] players = GameSettings.getPlayers();

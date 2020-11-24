@@ -123,7 +123,7 @@ public class GameController {
 		
 		//pause the game, lock the controls (activated when player clicks on message)
 		GameSettings.SetGameIsPaused(true);		
-		GameSettings.getInGameUIPanel().setMessageLabelText(nextPlayer.GetName() + ", it's your turn!");
+		GameSettings.getInGameUIPanel().setMessageLabelText("Your Turn, " +nextPlayer.GetName());
 		GameSettings.getInGameUIPanel().showMessagelabel();
 		GameSettings.getInGameUIPanel().getOkButton().setVisible(true);
 		GameSettings.getInGameUIPanel().getOkButton().setEnabled(true);
