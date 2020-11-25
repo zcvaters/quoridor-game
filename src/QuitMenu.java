@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ public class QuitMenu extends JPanel implements ActionListener {
 		quitHeaderLabel = new JLabel("Quit Game");
 		quitHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		quitHeaderLabel.setForeground(Color.black);
-		EmptyBorder border1 = new EmptyBorder(100, 0, 0, 0);
+		EmptyBorder border1 = new EmptyBorder(200, 0, 0, 0);
 		quitHeaderLabel.setBorder(border1);
 		quitHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
 		quitHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -45,12 +46,11 @@ public class QuitMenu extends JPanel implements ActionListener {
 		// "are you sure" message
 		JPanel quitTextPanel = new JPanel();
 		quitTextPanel.setPreferredSize(new Dimension(100, 100));
-		EmptyBorder border2 = new EmptyBorder(200, 0, 50, 0);
+		EmptyBorder border2 = new EmptyBorder(100, 0, 25, 0);
 		quitHeaderLabel.setBorder(border2);
 		quitTextLabel = new JLabel("Are You Sure You Want to Quit?");
 		quitTextLabel.setFont(MainWindow.orbitron.deriveFont(36f));
-		quitTextLabel.setForeground(new Color(89, 44, 28));
-		quitTextLabel.setHorizontalAlignment(JLabel.CENTER);
+		quitTextLabel.setForeground(Color.black);
 		quitTextLabel.setVerticalAlignment(JLabel.CENTER);
 		quitTextPanel.add(quitTextLabel);
 		quitTextPanel.setOpaque(false);
@@ -59,17 +59,9 @@ public class QuitMenu extends JPanel implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		quitYesButton = new Buttons("Yes");
 		quitYesButton.setFont(MainWindow.orbitron.deriveFont(24f));
-		quitYesButton.setForeground(Color.black);
-		quitYesButton.setOpaque(false);
-		quitYesButton.setBorderPainted(false);
-		quitYesButton.setContentAreaFilled(false);
 		quitYesButton.addActionListener(this);
 		quitNoButton = new Buttons("No");
 		quitNoButton.setFont(MainWindow.orbitron.deriveFont(24f));
-		quitNoButton.setForeground(Color.black);
-		quitNoButton.setOpaque(false);
-		quitNoButton.setBorderPainted(false);
-		quitNoButton.setContentAreaFilled(false);
 		quitNoButton.addActionListener(this);
 		buttonPanel.add(quitYesButton);
 		buttonPanel.add(quitNoButton);

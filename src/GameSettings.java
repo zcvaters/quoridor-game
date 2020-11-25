@@ -160,7 +160,6 @@ public class GameSettings implements Serializable {
 	    }
 	    catch (Exception exc)
 	    {
-	        exc.printStackTrace(System.out);
 	    }
 	}
 
