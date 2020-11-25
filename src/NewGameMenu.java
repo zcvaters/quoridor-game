@@ -208,7 +208,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		configPlayersPanel.add(fourthPanel);
 
 		// the "back" button and listener
-		newGameBackButton = new JButton("Back");
+		newGameBackButton = new Buttons("Back");
 		newGameBackButton.setFont(MainWindow.orbitron);
 		newGameBackButton.setForeground(Color.black);
 		newGameBackButton.setContentAreaFilled(false);
@@ -218,7 +218,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		buttonHoverAction(newGameBackButton);
 
 		// the "Let's Play!" button and listener
-		newGamePlayButton = new JButton("Let's Play!");
+		newGamePlayButton = new Buttons("Let's Play!");
 		newGamePlayButton.setFont(MainWindow.orbitron);
 		newGamePlayButton.setContentAreaFilled(false);
 		newGamePlayButton.setBorderPainted(false);

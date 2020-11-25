@@ -216,7 +216,7 @@ public class InGameUIPanel implements ActionListener {
         lastSaveTime = new JLabel();
         lastSaveTime.setFont(MainWindow.orbitron.deriveFont(15f));
         lastSaveTime.setForeground(Color.black);
-        lastSaveTime.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
+        lastSaveTime.setBorder(BorderFactory.createEmptyBorder(40, 0, 0, 0));
         lastSaveTime.setAlignmentX(Component.CENTER_ALIGNMENT);
         setLastSaveTime();
         
@@ -242,7 +242,6 @@ public class InGameUIPanel implements ActionListener {
 		else {
 			lastSaveTime.setText("Last Save in this Session: " + time.format(formatter));
 		}
-		//lastSaveTime.setText("Last Save in this Session: " + ((time == null) ? "No save." : time.format(formatter)));
 	}	
 
 	public void setSavePanelBG(Color bkgColor) {

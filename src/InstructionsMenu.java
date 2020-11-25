@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -40,7 +41,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		EmptyBorder border1 = new EmptyBorder(20, 15, 0, 15);
 		instructionsHeaderLabel.setBorder(border1);
 		instructionsHeaderLabel.setAlignmentX(CENTER_ALIGNMENT);
-		instructionsHeaderLabel.setFont(MainWindow.orbitron.deriveFont(30f));
+		instructionsHeaderLabel.setFont(MainWindow.orbitron.deriveFont(72f));
 		instructionsHeaderLabel.setForeground(Color.black);
 		instructionsHeaderLabel.setHorizontalAlignment(JLabel.CENTER);
 		instructionsHeaderLabel.setVerticalAlignment(JLabel.CENTER);
@@ -55,9 +56,10 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		        System.err.println("Attempted to read a bad URL: " + helpURL);
 		    }
 		} else {
-		    System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
+		    System.err.println("Couldn't find file: Instructions.html");
 		}
 
+		editorPane.setFont(MainWindow.orbitron.deriveFont(15f));
 		//Put the editor pane in a scroll pane.
 		JScrollPane editorScrollPane = new JScrollPane(editorPane);
 		editorScrollPane.setVerticalScrollBarPolicy(
@@ -75,11 +77,15 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		instructionsScrollPane.setPreferredSize(new Dimension(900, 500));
 		editorPane.setPreferredSize(new Dimension(900, 600));
 		editorPane.setOpaque(false);
+		editorPane.setBackground(new Color(0, 0, 0, 0));
 		instructionsScrollPane.setOpaque(false);
-		//instructionsScrollPane.add(editorPane);
 		instructionsPanel.add(instructionsScrollPane);
 		instructionsPanel.setOpaque(false);
-
+		
+		/* Sets the text pane to transparent */
+		instructionsScrollPane.getViewport().setOpaque(false);
+		instructionsScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		instructionsScrollPane.setBackground(new Color(0, 0, 0, 0));
 		// the "back" button and listener
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
