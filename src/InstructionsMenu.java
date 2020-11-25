@@ -59,6 +59,7 @@ public class InstructionsMenu extends JPanel implements ActionListener {
 		    System.err.println("Couldn't find file: Instructions.html");
 		}
 
+		editorPane.setFont(MainWindow.orbitron.deriveFont(15f));
 		//Put the editor pane in a scroll pane.
 		JScrollPane editorScrollPane = new JScrollPane(editorPane);
 		editorScrollPane.setVerticalScrollBarPolicy(
