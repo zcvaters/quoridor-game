@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -214,6 +215,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		newGameBackButton.setContentAreaFilled(false);
 		newGameBackButton.setBorderPainted(false);
 		newGameBackButton.setAlignmentX(CENTER_ALIGNMENT);
+		newGameBackButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 		newGameBackButton.addActionListener(this);
 		buttonHoverAction(newGameBackButton);
 
@@ -225,8 +227,9 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		newGamePlayButton.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 		newGamePlayButton.setForeground(Color.black);
 		newGamePlayButton.setAlignmentX(CENTER_ALIGNMENT);
+		newGamePlayButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 		newGamePlayButton.addActionListener(this);
-		buttonHoverAction(newGamePlayButton);
+		buttonHoverAction(newGamePlayButton);		
 
 		// add the buttons to a panel
 		playBackButtonsPanel = new JPanel();
@@ -234,7 +237,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		BoxLayout buttonsLayout = new BoxLayout(playBackButtonsPanel, BoxLayout.Y_AXIS);
 		playBackButtonsPanel.setLayout(buttonsLayout);
 		playBackButtonsPanel.add(newGamePlayButton);
-		playBackButtonsPanel.add(newGameBackButton);
+		playBackButtonsPanel.add(newGameBackButton);		
 
 		// add configPlayers panel and buttons to showPlayersPanel
 		showPlayersPanel.add(configPlayersPanel);
@@ -243,7 +246,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		// hide configPlayersPanel for now. Activated when needed.
 		showPlayersPanel.setVisible(false);
 
-		// add components to the panel
+		// add components to the panel		
 		BoxLayout newPanelLayout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(newPanelLayout);
 		this.add(newGameHeaderLabel);

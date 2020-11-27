@@ -20,6 +20,10 @@ public class Buttons extends JButton implements MouseListener {
 	public void setButtonBackground(Color color) {
 		this.setBackground(color);
 	}
+	
+	public void setButtonForeground(Color textColor) {
+		this.setForeground(textColor);
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 
@@ -204,7 +205,7 @@ public class InGameUIPanel implements ActionListener {
 		messageLabel.setBorder(border1);
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         //get button
-        okButton = new Buttons("Click to Start Turn");
+        okButton = new Buttons(" > Click When Ready <"); 
         okButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         okButton.addActionListener(this);
         
@@ -337,6 +338,10 @@ public class InGameUIPanel implements ActionListener {
 	public void setOkButton(Buttons okButton) {
 		this.okButton = okButton;
 	}
+	
+	public void setOkButtonIsVisible(boolean isVisible) {
+		okButton.setVisible(isVisible);
+	}
 	public JLabel getFrameLabel() {
 		return frameLabel;
 	}
@@ -400,6 +405,7 @@ public class InGameUIPanel implements ActionListener {
 		/* Message Panel */
 		if(selected.equals(okButton) && !settingsMenuIsActive && !GameSettings.GetGameIsOver()) {			
 			//gameplay can continue
+			setOkButtonIsVisible(false);
 			GameSettings.GetGameController().BeginTurn();
 		}
 

@@ -115,6 +115,9 @@ public class GameController {
 			}
 		}
 		
+		//turn on the click-when-ready button in message panel
+		GameSettings.getInGameUIPanel().setOkButtonIsVisible(true);
+		
 		//deactivate the goal tile highights for the next player.
 		for(GameTile thisTile : goalTiles) {
 			thisTile.DeactivateGoalPanel();
