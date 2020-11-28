@@ -71,7 +71,7 @@ public class PlayerInfoDisplay extends JPanel{
 			}
 			else {
 				playerWallPanel.setLayout(new BoxLayout(playerWallPanel, BoxLayout.LINE_AXIS));
-				playerPanel.setBorder(BorderFactory.createEmptyBorder(40, 0, 10, 0));
+				playerPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 10, 10));
 			}
 			playerWallPanel.setOpaque(false);
 			
