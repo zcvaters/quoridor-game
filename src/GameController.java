@@ -154,7 +154,7 @@ public class GameController {
 		
 		
 		//Handle AI here
-		if(currentPlayer.GetType() == "c") {
+		if(currentPlayer.GetType().equals("c")) {
 			//this is a computer player
 			legalTiles = FindLegalTiles(currentPlayer);
 			ActivateLegalTiles(legalTiles);
