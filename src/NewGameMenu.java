@@ -281,6 +281,7 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 		Object selected = event.getSource();
 
 		// NEW GAME
+		
 
 		// did the user click on any of the color buttons in the new game panel?
 		if (selected.equals(color1Button) || selected.equals(color2Button) || selected.equals(color3Button)) {
@@ -315,13 +316,21 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 			DisplayPlayerColors();
 			showPlayersPanel.setVisible(true);
 		}
+		
+		ArrayList<String> namesUsed = new ArrayList<String>();		
 
 		// did user click on a player-type combo box (dropdown menu)?
 		if (selected.equals(firstComboBox)) {
 			// if combo box was changed to "Computer", generate and display a random name
 			String focus = firstComboBox.getSelectedItem().toString();
 			if (focus.equals("Computer(Easy)") || focus.equals("Computer(Hard)")) {
-				firstTextField.setText(GameSettings.GetRandomName());
+				String randomName = "";
+				do {
+					randomName = GameSettings.GetRandomName();
+				} 
+				while(namesUsed.contains(randomName));
+				namesUsed.add(randomName);
+				firstTextField.setText(randomName);				
 			}
 			if (focus.equals("Human")) {
 				firstTextField.setText("<<Your Name Here>>");
@@ -332,7 +341,13 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 			// if combo box was changed to "Computer", generate and display a random name
 			String focus = secondComboBox.getSelectedItem().toString();
 			if (focus.equals("Computer(Easy)") || focus.equals("Computer(Hard)")) {
-				secondTextField.setText(GameSettings.GetRandomName());
+				String randomName = "";
+				do {
+					randomName = GameSettings.GetRandomName();
+				} 
+				while(namesUsed.contains(randomName));
+				namesUsed.add(randomName);
+				secondTextField.setText(randomName);
 			}
 			if (focus.equals("Human")) {
 				secondTextField.setText("<<Your Name Here>>");
@@ -343,7 +358,13 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 			// if combo box was changed to "Computer", generate and display a random name
 			String focus = thirdComboBox.getSelectedItem().toString();
 			if (focus.equals("Computer(Easy)") || focus.equals("Computer(Hard)")) {
-				thirdTextField.setText(GameSettings.GetRandomName());
+				String randomName = "";
+				do {
+					randomName = GameSettings.GetRandomName();
+				} 
+				while(namesUsed.contains(randomName));
+				namesUsed.add(randomName);
+				thirdTextField.setText(randomName);
 			}
 			if (focus.equals("Human")) {
 				thirdTextField.setText("<<Your Name Here>>");
@@ -354,7 +375,13 @@ public class NewGameMenu extends JPanel implements ActionListener, FocusListener
 			// if combo box was changed to "Computer", generate and display a random name
 			String focus = fourthComboBox.getSelectedItem().toString();
 			if (focus.equals("Computer(Easy)") || focus.equals("Computer(Hard)")) {
-				fourthTextField.setText(GameSettings.GetRandomName());
+				String randomName = "";
+				do {
+					randomName = GameSettings.GetRandomName();
+				} 
+				while(namesUsed.contains(randomName));
+				namesUsed.add(randomName);
+				fourthTextField.setText(randomName);
 			}
 			if (focus.equals("Human")) {
 				fourthTextField.setText("<<Your Name Here>>");

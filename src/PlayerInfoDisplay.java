@@ -28,10 +28,12 @@ public class PlayerInfoDisplay extends JPanel{
 		JLabel titleLabel = new JLabel("Quoridor");
 		titleLabel.setBorder(BorderFactory.createEmptyBorder(40, 10, 50, 10));
 		titleLabel.setBackground(Color.WHITE);
-		titleLabel.setFont(MainWindow.orbitron.deriveFont(30f));
+		titleLabel.setFont(MainWindow.orbitron.deriveFont(20f));
 		titleLabel.setForeground(Color.black);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+		Border titleBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
+		titleLabel.setBorder(titleBorder);
 		titleLabel.setOpaque(true);
 		
 

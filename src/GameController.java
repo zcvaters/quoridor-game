@@ -95,8 +95,8 @@ public class GameController {
 		if(currentPlayer.PlayerHasWon()) {		
 			
 			//pop up a message for quit/new game here.
-			GameSettings.getInGameUIPanel().getWinnerLabel().setText("Congratulations " +currentPlayer.GetName()+
-								"!!\nYou are the winner!");
+			GameSettings.getInGameUIPanel().getWinnerLabel().setText(currentPlayer.GetName()+
+								" is the winner!");
 			
 			//pause the game, lock the controls (activated when player clicks on message)
 			GameSettings.SetGameIsPaused(true);
