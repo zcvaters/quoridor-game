@@ -209,7 +209,7 @@ public class InGameUIPanel implements ActionListener {
         okButton.addActionListener(this);
         
         winnerLabel = new JLabel();
-        winnerLabel.setFont(MainWindow.orbitron.deriveFont(12f));
+        winnerLabel.setFont(MainWindow.orbitron.deriveFont(20f));
         winnerLabel.setForeground(Color.black);
         winnerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
