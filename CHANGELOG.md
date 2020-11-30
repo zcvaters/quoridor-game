@@ -1,13 +1,16 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+---
 
-## [0.0.4] - 2020-11-25
+## [0.0.3] - 2020-11-25 - Final Release
+
 ### Added
+
 - Player remaining fences UI
 - Save Load enhancements
 - Disable move tracking when menu visible
@@ -19,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Date and time of current saved game in Load Game menu
 - Match winner announcement
 ### Changed
+
 - Color palette changes
 - AI tweaks
 - Frame size 1000 x 1000 -> 1200 x 800
@@ -29,19 +33,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Numerous Bug fixes
 - Main menu UI placements, now centered
 - Menu background
+- AI naming, random names cannot be duplicated
 
 ### Removed
+
 - Player Home Base colors
 - Surrounding player labels
 - Player box color
 - Save game success color indicator
 
-# [Released]
-
-## [0.0.3]
-### Added
-- Take a turn
-- AI
+---
 
 ## [0.0.2] - 2020-11-09
 ### Added
