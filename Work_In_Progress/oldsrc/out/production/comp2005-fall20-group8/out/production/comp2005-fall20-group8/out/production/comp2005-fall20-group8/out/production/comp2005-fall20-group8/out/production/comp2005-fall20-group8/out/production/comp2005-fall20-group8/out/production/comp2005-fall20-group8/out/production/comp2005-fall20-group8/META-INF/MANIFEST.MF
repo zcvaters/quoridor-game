@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: GameFrame
-Class-Path: /home/repos/comp2005-fall20-group8/src
-
