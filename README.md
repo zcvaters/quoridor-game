@@ -1,2 +1,4 @@
-# comp2005-fall20-group8
-Quoridor Game - MUN CS2005 Fall 2020 Group 8 Project
+# Quoridor Game Clone
+* A iterative design process of a quoridor game clone.
+
+* Group Project for a software engineering course.
